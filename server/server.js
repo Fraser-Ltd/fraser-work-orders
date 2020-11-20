@@ -10,9 +10,9 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
-const editUserRouter = require('./routes/editUser.router');
-const resCoordinatorRouter = require('./routes/resCoordinator.router');
-const workOrdersRouter = require('./routes/workOrders.router');
+const editUserRouter = require('./routes/edit_user.router');
+const resCoordinatorRouter = require('./routes/res_coordinator.router');
+const workOrdersRouter = require('./routes/work_order.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
