@@ -7,7 +7,7 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import allUsersSaga from './all_users.saga';
 import workOrdersSaga from './work_orders.saga';
-import resCoordinatorSaga from './res_coordinator.saga';
+import propertiesSaga from './properties.saga';
 
 
 // rootSaga is the primary saga.
@@ -23,6 +23,6 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     workOrdersSaga(),
-    resCoordinatorSaga(),
+    propertiesSaga(),
   ]);
 }

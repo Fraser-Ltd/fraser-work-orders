@@ -5,9 +5,9 @@ import axios from 'axios';
 
 
 
-function* resCoordinatorSaga(){
+function* propertiesSaga(){
 
 
 }
 
-export default resCoordinatorSaga;
+export default propertiesSaga;
