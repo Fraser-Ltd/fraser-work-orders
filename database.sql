@@ -25,6 +25,13 @@ CREATE TABLE "properties"
     "resident_coordinator" INT REFERENCES "user"
 );
 
+CREATE TABLE "units"
+(
+    "id" SERIAL PRIMARY KEY,
+    "property_id" INT REFERENCES "properties",
+    "unit" VARCHAR (50)
+);
+
 CREATE TABLE "work_orders"
 (
     "id" SERIAL PRIMARY KEY,
@@ -47,15 +54,9 @@ CREATE TABLE "work_orders"
     "remarks" VARCHAR (255),
     "unit_id" INT REFERENCES "units",
     "tenant_not_home" BOOLEAN DEFAULT FALSE,
-    "date_completed" TIMESTAMP DEFAULT NULL,
+    "date_completed" TIMESTAMP DEFAULT NULL
 );
 
-CREATE TABLE "units"
-(
-    "id" SERIAL PRIMARY KEY,
-    "property_id" INT REFERENCES "properties",
-    "unit" VARCHAR (50)
-);
 
 INSERT INTO "user" ("username", "password", "role", "email", "first_name", "last_name")
 VALUES ('pkalibabky', 'pk1234', 1, 'pkalibabky@fraserltd.org', 'Patty', 'Kalibabky')
@@ -69,8 +70,8 @@ VALUES('Fraser 4', '717 South University Drive, Fargo');
 INSERT INTO "units" ("property_id", "unit")
 VALUES (1, 'Apt 1');
 
-INSERT INTO "resident_coordinator" ("user_id", "property_id")
-VALUES (1, 1);
+-- INSERT INTO "resident_coordinator" ("user_id", "property_id")
+-- VALUES (1, 1);
 
 INSERT INTO "work_orders" ("property_id", "work_to_be_done", "added_by_id", "remarks", "unit_id")
 VALUES (1, 'Fix light', 1, '', 1);
