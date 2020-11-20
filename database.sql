@@ -54,7 +54,8 @@ CREATE TABLE "work_orders"
     "remarks" VARCHAR (255),
     "unit_id" INT REFERENCES "units",
     "tenant_not_home" BOOLEAN DEFAULT FALSE,
-    "date_completed" TIMESTAMP DEFAULT NULL
+    "date_completed" TIMESTAMP DEFAULT NULL,
+    "priorty" INT 
 );
 
 
