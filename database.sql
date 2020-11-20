@@ -6,7 +6,8 @@ CREATE TABLE "user"
     "role" INT,
     "email" VARCHAR (80) UNIQUE NOT NULL,
     "first_name" VARCHAR (80) UNIQUE NOT NULL,
-    "last_name" VARCHAR (80) UNIQUE NOT NULL
+    "last_name" VARCHAR (80) UNIQUE NOT NULL,
+    "archive_employee" BOOLEAN DEFAULT FALSE
 );
 
 --FUTURE STRETCH GOAL FOR EXPANSION 
