@@ -32,6 +32,8 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+//(put) for the admin user
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful
