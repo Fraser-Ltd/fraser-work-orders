@@ -1,7 +1,5 @@
 const express = require('express');
-const {
-  rejectUnauthenticated,
-} = require('../modules/authentication-middleware');
+const { rejectUnauthenticated,} = require('../modules/authentication-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
@@ -21,10 +19,10 @@ router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
 
-  const queryText = `INSERT INTO "user" (username, password)
-    VALUES ($1, $2) RETURNING id`;
+  const queryText = `INSERT INTO "user" (username, password, role, email, first_name, last_name)
+  values($1,$2,$3,$4,$5,$6) RETURNING id`;
   pool
-    .query(queryText, [username, password])
+    .query(queryText, [username, password, req.body.role, req.body.email, req.body.firstName, req.body.lastName])
     .then(() => res.sendStatus(201))
     .catch((err) => {
         console.log(err);
