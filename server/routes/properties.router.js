@@ -1,7 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const { rejectUnauthenticated };
+const { rejectUnauthenticated, } = require('../modules/authentication-middleware');
 
 // GET Route /api/properties/
 // Will deliver the entire property list

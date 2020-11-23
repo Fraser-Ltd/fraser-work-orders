@@ -106,18 +106,18 @@ router.post('/', rejectUnauthenticated, (req, res) =>{
 router.put('/', rejectUnauthenticated, (req, res) => {
     console.log('in workOrderRouter')
     const { permissionToEnter, doorHanger, emergency,
-        workToBeDone, detailsOfWorkDone, timeIn, timeOut, status, assignedTo, reacInspection, smokeDetectors, 
-        housekeepingInspection, exterminating, remarks, unitId, tenantNotHome, dateCompleted, priority, workOrderId } = req.body
+        workToBeDone, detailsOfWorkDone, status, assignedTo, reacInspection, smokeDetectors, 
+        housekeepingInspection, exterminating, remarks, unitId, tenantNotHome, priority, workOrderId } = req.body
     const queryText = `UPDATE "work_orders" SET "permission_to_enter"=$1, "door_hanger"=$2, "emergency"=$3,
-        "work_to_be_done"=$4, "details_of_work_done"=$5, "time_in"=$6, "time_out"=$7, "status"=$8, "assigned_to"=$9, 
-        "reac_inspection"=$10, "smoke_detectors"=$11, "housekeeping_inspection"=$12, "exterminating"=$13, 
-        "remarks"=$14, "unit_id"=$15, "tenant_not_home"=$16, "date_completed"=$17, "priority"=$18 
-        WHERE "id"=$19`;
+        "work_to_be_done"=$4, "details_of_work_done"=$5, "status"=$6, "assigned_to"=$7, 
+        "reac_inspection"=$8, "smoke_detectors"=$9, "housekeeping_inspection"=$10, "exterminating"=$11, 
+        "remarks"=$12, "unit_id"=$13, "tenant_not_home"=$14, "priority"=$15 
+        WHERE "id"=$16`;
     pool
         .query(queryText, [permissionToEnter, doorHanger, emergency,
-            workToBeDone, detailsOfWorkDone, timeIn, timeOut, status, assignedTo,
+            workToBeDone, detailsOfWorkDone, status, assignedTo,
             reacInspection, smokeDetectors, housekeepingInspection, exterminating,
-            remarks, unitId, tenantNotHome, dateCompleted, priority,workOrderId])
+            remarks, unitId, tenantNotHome, priority, workOrderId])
         .then(() => res.sendStatus(201))
         .catch((err) => {
             console.log("Error in workOrderRouter POST", err)
@@ -125,6 +125,47 @@ router.put('/', rejectUnauthenticated, (req, res) => {
         });
 });
 
+// This will update the time in on the workOrder
+router.put('/timeIn', (req, res) => {
+    console.log ('Clocked In', req.body);
+    let queryText = 
+    `UPDATE "work_orders" SET 
+    "time_in" = NOW()
+     WHERE "id" = $1`;
+    pool.query(queryText, [req.body.workOrderId])
+    .then(result => res.sendStatus(200)).catch(err => {
+        console.log('ERROR in put timeIn', err);
+        res.sendStatus(500);
+    });
+});
+
+// This will update the time out on the workOrder
+router.put('/timeOut', (req, res) => {
+    console.log ('Clocked Out', req.params);
+    let queryText = 
+    `UPDATE "work_orders" SET 
+    "time_out" = NOW()
+     WHERE id = $1`;
+    pool.query(queryText, [req.body.workOrderId])
+    .then(result => res.sendStatus(200)).catch(err => {
+        console.log('ERROR in put timeOut', err);
+        res.sendStatus(500);
+    });
+});
+
+// This will update the date work order was complete
+router.put('/dateCompleted', (req, res) => {
+    console.log ('Work Order Complete', req.params);
+    let queryText = 
+    `UPDATE "work_orders" SET 
+    "date_completed" = NOW()
+     WHERE id = $1`;
+    pool.query(queryText, [req.body.workOrderId])
+    .then(result => res.sendStatus(200)).catch(err => {
+        console.log('ERROR in put dateCompleted', err);
+        res.sendStatus(500);
+    });
+});
 
 // (delete)    api/work_orders/:id
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
