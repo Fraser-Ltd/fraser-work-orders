@@ -1,8 +1,9 @@
 const allUsers = (state = {}, action) => {
     switch (action.type) {
-
-      default:
-        return state
+      case 'SET_USERS':
+            return action.payload;
+        default:
+            return state;
 
     }
   };
