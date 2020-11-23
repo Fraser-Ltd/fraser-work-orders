@@ -49,17 +49,18 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 
 router.put('/:id', rejectUnauthenticated, (req, res) => {
 
+  const id = req.body.id
   const propertyName = req.body.property_ID
   const unitNumber = req.body.property_Unit
 
   let queryText = `UPDATE "units" SET "unit" = $1)
                  WHERE "id" =$2`
-  pool.query(queryText, [propName, propAdd, propRes, propId])
+  pool.query(queryText, [unitNumber, id])
     .then(result => {
       res.sendStatus(204);
     })
     .catch(err => {
-      console.log('Error in property PUT route', err);
+      console.log('Error in unit PUT route', err);
       res.sendStatus(500);
     })
 })
@@ -67,12 +68,12 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
 //  (DELETE)    /api/properties/:id
 
 router.delete('/:id', (req, res) => {
-  let queryText = `DELETE FROM "properties" WHERE id=$1`;
+  let queryText = `DELETE FROM "units" WHERE id=$1`;
   pool.query(queryText, [req.params.id])
     .then(result => {
-      res.send('Succesfully Deleted Property');
+      res.send('Succesfully Deleted Unit');
     }).catch((err) => {
-      console.log('Error in property DELETE route', err);
+      console.log('Error in unit DELETE route', err);
       res.sendStatus(500);
     })
 })
