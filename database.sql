@@ -4,9 +4,9 @@ CREATE TABLE "user"
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
     "role" INT,
-    "email" VARCHAR (80) UNIQUE NOT NULL,
-    "first_name" VARCHAR (80) UNIQUE NOT NULL,
-    "last_name" VARCHAR (80) UNIQUE NOT NULL,
+    "email" VARCHAR (80)  NOT NULL,
+    "first_name" VARCHAR (80)  NOT NULL,
+    "last_name" VARCHAR (80)  NOT NULL,
     "archive_employee" BOOLEAN DEFAULT FALSE
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE "properties"
 (
     "id" SERIAL PRIMARY KEY,
     "property_name" VARCHAR (255) UNIQUE NOT NULL,
-    "property_address" VARCHAR (255) UNIQUE NOT NULL,
+    "property_address" VARCHAR (255) NOT NULL,
     "resident_coordinator" INT REFERENCES "user"
 );
 
