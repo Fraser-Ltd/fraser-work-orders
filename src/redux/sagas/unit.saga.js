@@ -19,7 +19,7 @@ function* addUnitSaga(action) {
 
 function* editUnitsSaga(action) {
     try {
-        const response = yield Axios.put(`/api/units/${action.payload}`);
+        const response = yield Axios.put(`/api/units/, action.payload`);
         yield put({ type: "FETCH_ITEMS" });
     } catch(err) {
         console.log('error editing unit', err)

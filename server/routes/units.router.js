@@ -30,10 +30,10 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 
   const propertyName = req.body.property_ID
   const unitNumber = req.body.property_Unit
-  const queryText = `INSERT INTO "units" ("unit")
-                      VALUES ($1)`;
+  const queryText = `INSERT INTO "units" ("unit", "property_id") 
+                      VALUES ($1, $2)`;
   pool
-    .query(queryText, [unitNumber])
+    .query(queryText, [unitNumber, propertyName])
     .then((result) => res.sendStatus(200))
     .catch((err) => {
       console.log('Error in unit POST route', err);
@@ -47,15 +47,15 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 //        property_ID: value,
 //        property_Unit: value,}
 
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
 
   const id = req.body.id
   const propertyName = req.body.property_ID
   const unitNumber = req.body.property_Unit
 
-  let queryText = `UPDATE "units" SET "unit" = $1)
-                 WHERE "id" =$2`
-  pool.query(queryText, [unitNumber, id])
+  let queryText = `UPDATE "units" SET "unit" = $1 "property_id" = $2
+                 WHERE "id" =$3`
+  pool.query(queryText, [unitNumber, propertyName, id])
     .then(result => {
       res.sendStatus(204);
     })
