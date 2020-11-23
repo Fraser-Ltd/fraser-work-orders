@@ -37,7 +37,7 @@ function* updateWorkOrders(action) {
     try {
         console.log('in updateWorkOrders saga');
         yield axios.put('/api/work_orders', action.payload);
-        yield put({ type: 'FETCH_USER' });//updating the db
+        yield put({ type: 'FETCH_WORKORDERS' });//updating the db
     }
     catch (error) {
         console.log('updateWorkOrders PUT request in failed', error);
@@ -45,7 +45,7 @@ function* updateWorkOrders(action) {
 }
 //delete
 function* removeWorkOrders(action) {
-    try {//removes workOrders from the database
+    try {//removes workOrders from the database, SEND IN ONLY ID
         yield axios.delete(`/api/work_orders/${action.payload}`);
         //refreshes the page
         yield put({ type: 'FETCH_WORKORDERS' });
@@ -82,11 +82,11 @@ function* dateCompleted(action) {
 
 function* workOrdersSaga() {
     yield takeLatest('FETCH_WORKORDERS', getWorkOrders);
-    yield takeLatest('FETCH_TIMEIN', timeIn);
-    yield takeLatest('FETCH_TIMEOUT', timeOut); 
-    yield takeLatest('FETCH_DATECOMPLETED', dateCompleted);
+    yield takeLatest('SET_TIMEIN', timeIn);
+    yield takeLatest('SET_TIMEOUT', timeOut); 
+    yield takeLatest('SET_DATECOMPLETED', dateCompleted);
     yield takeLatest('FETCH_COMPLETEDWORKORDERS', getCompletedWorkOrders);
-    yield takeLatest('FETCH_TIMEOUT', addWorkOrders); 
+    yield takeLatest('ADD_WORKORDER', addWorkOrders); 
     yield takeLatest('REMOVE_WORKORDERS', removeWorkOrders);
     yield takeLatest('UPDATE_WORKORDERS', updateWorkOrders);
 }
