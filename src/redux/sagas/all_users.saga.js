@@ -12,28 +12,28 @@ function* allUsersSaga() {
 // calls all users
 function* getUserSaga(action){
     try{
-        const response = yield Axios.get('api/');
+        const response = yield Axios.get('api/edit_user');
         yield put({type:'SET_USERS', payload: response.data})
     }catch(err){console.log('ERROR loading users', err);}
 }
 
 function* userUpdateSaga(action){
     try{
-        yield Axios.put(`/api/user`, action.payload);
+        yield Axios.put(`/api/edit_user/user`, action.payload);
         yield put({type:'GET_USERS'})
     }catch(err){console.log('ERROR updating user (user)', err);}
 }
 
 function* adminUpdateSaga(action){
     try{
-        yield Axios.put(`/api/admin`, action.payload);
+        yield Axios.put(`/api/edit_user/admin`, action.payload);
         yield put({type:'GET_USERS'})
     }catch(err){console.log('ERROR updating user (admin)', err);}
 }
 
 function* updatePasswordSaga(action){
     try{
-        yield Axios.put(`/api/password`, action.payload);
+        yield Axios.put(`/api/edit_user/password`, action.payload);
         yield put({type:'GET_USERS'})
     }catch(err){console.log('ERROR updating password', err);}
 }

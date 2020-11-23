@@ -4,7 +4,6 @@ const allUsers = (state = {}, action) => {
             return action.payload;
         default:
             return state;
-
     }
   };
 
