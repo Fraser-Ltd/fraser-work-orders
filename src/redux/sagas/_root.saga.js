@@ -8,6 +8,7 @@ import userSaga from './user.saga';
 import allUsersSaga from './all_users.saga';
 import workOrdersSaga from './work_orders.saga';
 import propertiesSaga from './properties.saga';
+import unitSaga from './unit.saga';
 
 
 // rootSaga is the primary saga.
