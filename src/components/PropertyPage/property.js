@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import WorkOrderTableItem from './WorkOrderTableItem';
+
 
 //material-ui imports
 import Grid from '@material-ui/core/Grid';
@@ -65,8 +65,8 @@ class property extends Component {
                                     </TableHead>
                                     <TableBody>
                                         {this.props.properties.map((property) => {
-                                                <PropertyTableItem property={property} key={property.id} />
-                                            })}
+                                            <PropertyTableItem property={property} key={property.id} />
+                                        })}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
