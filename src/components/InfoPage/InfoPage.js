@@ -27,8 +27,9 @@ class UserProfile extends Component {
         <h3>Username: {this.props.user.username}</h3>
         <h3>Name: {this.props.user.first_name} {this.props.user.last_name}</h3>
         <h3>Email: {this.props.user.email}</h3>
-          <InfoItem key={this.props.user.id} username={this.props.user.username} />
-          <PasswordItem key={this.props.user.id} username={this.props.user.username} />
+        <button onClick={this.editUser}>Edit Profile</button>
+        <InfoItem key={this.props.user.id} username={this.props.user.username} />
+        <PasswordItem key={this.props.user.id} username={this.props.user.username} />
       </div>
     );
   }

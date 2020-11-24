@@ -74,7 +74,7 @@ class App extends Component {
                <ProtectedRoute
               // logged in shows edit user details on InfoPage
               exact
-              path="/info"
+              path="/editInfo"
               component={InfoItem}
             />
                <ProtectedRoute
