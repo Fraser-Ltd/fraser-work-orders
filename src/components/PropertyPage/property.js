@@ -14,9 +14,14 @@ class property extends Component {
         <h1> Properties</h1>
         <h2>Current Properties</h2>
         <table>
+            <tr>
             <th>Name</th>
             <th>Address</th>
             <th>Details</th>
+            </tr>
+            <tr>
+                
+            </tr>
         </table>
 
       </div>
