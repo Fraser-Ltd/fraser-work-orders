@@ -18,8 +18,8 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
     root: {
         marginTop: 10,
-        Maxheight: 400,
         marginBottom: 40,
+        maxHeight: 400
     },
     heading: {
         padding: 15,
@@ -49,9 +49,9 @@ class WorkOrdersTable extends Component {
                 <Grid container justify='center'>
 
                     <Grid item xs={11}>
-
+                        <Paper>
+                        <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
                         <TableContainer className={classes.root} component={Paper}>
-                            <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
                             <Table stickyHeader size='medium'>
                                 <TableHead>
                                     <TableRow>
@@ -65,11 +65,15 @@ class WorkOrdersTable extends Component {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {this.props.workOrders[0] && this.props.workOrders.map((workOrder) => <WorkOrderTableItem workOrder={workOrder} key={workOrder.id} /> )}
+                                    {this.props.workOrders[0] && this.props.workOrders
+                                    .map((workOrder) => 
+                                    <WorkOrderTableItem workOrder={workOrder} key={workOrder.id} /> 
+                                    )}
                                     
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        </Paper>
                     </Grid>
                 </Grid>
             </>
@@ -77,6 +81,5 @@ class WorkOrdersTable extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({ workOrders: state.workOrders})
 
-export default connect(mapStateToProps)(withStyles(styles, {withTheme: true})(WorkOrdersTable));
+export default connect()(withStyles(styles, {withTheme: true})(WorkOrdersTable));
