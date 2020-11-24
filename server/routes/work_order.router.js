@@ -92,8 +92,6 @@ router.post('/', rejectUnauthenticated, (req, res) =>{
 //     emergency: value,
 //     workToBeDone: value,
 //     detailsOfWorkDone: value,
-//     timeIn: value,
-//     timeOut: value,
 //     status: value,
 //     assignedTo: value,
 //     reacInspection: value,
@@ -103,8 +101,7 @@ router.post('/', rejectUnauthenticated, (req, res) =>{
 //     remarks: value,
 //     unitId: value,
 //     tenantNotHome: value,
-//     dateCompleted: value,
-//     priorty: value
+//     priority: value
 // }
 router.put('/', rejectUnauthenticated, (req, res) => {
     console.log('in workOrderRouter')

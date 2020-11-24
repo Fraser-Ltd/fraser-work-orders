@@ -55,6 +55,7 @@ class WorkOrderDetails extends Component {
                 unit={unit}
                 assignedTo={assignedTo}
                 addedBy={addedBy}
+                allUsers={this.props.allUsers}
              />}
             </>
         );

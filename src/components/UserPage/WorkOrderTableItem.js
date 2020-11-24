@@ -1,6 +1,7 @@
 import React , { Component} from 'react';
 import moment from 'moment';
 import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 
 //material ui imports
@@ -57,7 +58,10 @@ class WorkOrderTableItem extends Component {
             <>
                 <TableRow className={classes.row} hover={true} onClick={this.details}>
                     <TableCell className={classes.cells}>{workOrder.id}</TableCell>
-                    <TableCell className={classes.cells}>Fraser 1</TableCell>
+                    <TableCell  className={classes.cells}>{this.props.properties[0] &&
+                                this.props.properties.
+                                filter(prop => prop.id === workOrder.property_id)[0].property_name}
+                    </TableCell>
                     <TableCell className={classes.cells}>{workOrder.work_to_be_done}</TableCell>
                     <TableCell className={classes.cells}>{priority()}</TableCell>
                     <TableCell className={classes.cells}>{workOrder.status}</TableCell>
@@ -67,6 +71,8 @@ class WorkOrderTableItem extends Component {
         );
     }
 }
+const mapStoreToProps = (store) => ({
+    properties: store.properties
+})
 
-
-export default withStyles(styles, {withTheme:true})(withRouter(WorkOrderTableItem));
+export default connect(mapStoreToProps)(withStyles(styles, {withTheme:true})(withRouter(WorkOrderTableItem)));

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 
 //material ui imports
@@ -39,10 +40,22 @@ const styles = theme => ({
 
 class WorkOrderDetailForm extends Component {
     state = {
-        enter: false,
-        home: false,
-        hanger: false,
-        status: '',
+        id: this.props.workOrder.id,
+        permissionToEnter: this.props.workOrder.permission_to_enter,
+        doorHanger: this.props.workOrder.door_hanger,
+        emergency: this.props.workOrder.emergency,
+        workToBeDone: this.props.workOrder.work_to_be_done,
+        detailsOfWorkDone: this.props.workOrder.details_of_work_done || '',
+        status: this.props.workOrder.status,
+        assignedTo: this.props.workOrder.assigned_to || '',
+        reacInspection: this.props.workOrder.reac_inspection,
+        smokeDetectors: this.props.workOrder.smoke_detectors,
+        housekeepingInspection: this.props.workOrder.housekeeping_inspection,
+        exterminating: this.props.workOrder.exterminating,
+        remarks: this.props.workOrder.remarks,
+        unitId: this.props.workOrder.unitId,
+        tenantNotHome: this.props.workOrder.tenant_not_home,
+        priority: this.props.workOrder.priority || ''
     }
 
 
@@ -95,23 +108,23 @@ class WorkOrderDetailForm extends Component {
 
                                     <form onSubmit={this.submit}>
                                         <Grid item xs={12} style={{ marginBottom: 50, marginTop: 15 }}>
-                                            <Typography>Work Order # 23</Typography>
+                                            <Typography>Work Order #{this.props.workOrder.id}</Typography>
                                         </Grid>
                                         <Grid container  >
 
                                             <Grid item xs={12} md={6}>
                                                 <Grid container className={classes.left} >
                                                     <Grid item xs={12}>
-                                                        <Typography>Name: Fraser 1</Typography>
+                                                        <Typography>Name: {this.props.property.property_name}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} >
-                                                        <Typography>Address: 123 1st st</Typography>
+                                                        <Typography>Address: {this.props.property.property_address}</Typography>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12} md={6}>
-                                                <Typography>Date Submitted:  11/18/20</Typography>
-                                                <Typography>Submitted By: </Typography>
+                                                <Typography>Date Submitted:  {moment(this.props.workOrder.date_added).calendar()}</Typography>
+                                                <Typography>Submitted By: {this.props.addedBy.first_name} {this.props.addedBy.last_name}</Typography>
                                             </Grid>
                                         </Grid>
                                         <Grid container direction='row-reverse'>
@@ -119,34 +132,35 @@ class WorkOrderDetailForm extends Component {
                                                 <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                     <InputLabel >Status</InputLabel>
                                                     <Select fullWidth name="status" value={this.state.status} onChange={this.handleSelect}>
-                                                        <MenuItem value={1}>Submitted</MenuItem>
-                                                        <MenuItem value={2}>Assigned To Maintenance</MenuItem>
-                                                        <MenuItem value={3}>In Progress</MenuItem>
-                                                        <MenuItem value={4}>Further Action Needed</MenuItem>
-                                                        <MenuItem value={5}>Work Complete</MenuItem>
+                                                        <MenuItem value={'submitted'}>Submitted</MenuItem>
+                                                        <MenuItem value={'assigned'}>Assigned To Maintenance</MenuItem>
+                                                        <MenuItem value={'reviewed'}>Reviewed by Maintenance</MenuItem>
+                                                        <MenuItem value={'waiting'}>Waiting on Parts</MenuItem>
+                                                        <MenuItem value={'complete'}>Work Complete</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                                 <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                     <InputLabel >Assigned To:</InputLabel>
-                                                    <Select fullWidth name="status" value={this.state.status} onChange={this.handleSelect}>
-                                                        <MenuItem value={1}>Will</MenuItem>
-                                                        <MenuItem value={2}>Mike</MenuItem>
+                                                    <Select fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.handleSelect}>
+                                                        {this.props.allUsers.filter(user => user.role === 2)
+                                                        .map(user => <MenuItem 
+                                                                        key={user.id} 
+                                                                        value={user.id}>{user.first_name} {user.last_name}
+                                                                        </MenuItem>)}
                                                     </Select>
                                                 </FormControl>
                                                 <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                     <InputLabel >Priority:</InputLabel>
-                                                    <Select fullWidth name="status" value={this.state.status} onChange={this.handleSelect}>
-                                                        <MenuItem value={1}>Priority 1</MenuItem>
-                                                        <MenuItem value={2}>Priority 2</MenuItem>
-                                                        <MenuItem value={2}>Priority 3</MenuItem>
-                                                        <MenuItem value={2}>Priority 4</MenuItem>
+                                                    <Select fullWidth name="priority" value={this.state.priority} onChange={this.handleSelect}>
+                                                        <MenuItem value={1}>Low</MenuItem>
+                                                        <MenuItem value={2}>High</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                                 <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                     <InputLabel >Order Type:</InputLabel>
-                                                    <Select fullWidth name="status" value={this.state.status} onChange={this.handleSelect}>
-                                                        <MenuItem value={1}>Non-Emergency</MenuItem>
-                                                        <MenuItem value={2}>Emergency</MenuItem>
+                                                    <Select fullWidth name="emergency" value={this.state.emergency} onChange={this.handleSelect}>
+                                                        <MenuItem value={false}>Non-Emergency</MenuItem>
+                                                        <MenuItem value={true}>Emergency</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </Grid>
@@ -161,8 +175,8 @@ class WorkOrderDetailForm extends Component {
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
                                                                 onClick={this.handleChange}
-                                                                checked={this.state.enter}
-                                                                name='enter' />}
+                                                                checked={this.state.permissionToEnter}
+                                                                name='permissionToEnter' />}
                                                         /><br />
                                                     </Grid>
                                                     <Grid item xs={12}>
@@ -172,8 +186,8 @@ class WorkOrderDetailForm extends Component {
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
                                                                 onClick={this.handleChange}
-                                                                checked={this.state.hanger}
-                                                                name='hanger' />}
+                                                                checked={this.state.doorHanger}
+                                                                name='doorHanger' />}
                                                         /><br />
                                                     </Grid>
                                                     <Grid item xs={12}>
@@ -183,8 +197,8 @@ class WorkOrderDetailForm extends Component {
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
                                                                 onClick={this.handleChange}
-                                                                checked={this.state.home}
-                                                                name='home' />}
+                                                                checked={this.state.tenantNotHome}
+                                                                name='tenantNotHome' />}
                                                         /><br />
                                                     </Grid>
                                                 </Grid>
@@ -199,6 +213,8 @@ class WorkOrderDetailForm extends Component {
                                             label="Work To Be Done"
                                             multiline
                                             rows={4}
+                                            value={this.state.workToBeDone}
+                                            name='workToBeDone'
                                             variant="outlined"
 
                                         /><br /><br />
@@ -208,6 +224,8 @@ class WorkOrderDetailForm extends Component {
                                             id="outlined-multiline-static"
                                             label="Details of Work Done"
                                             multiline
+                                            value={this.state.detailsOfWorkDone}
+                                            name='detailsOfWorkDone'
                                             rows={4}
                                             variant="outlined"
 
