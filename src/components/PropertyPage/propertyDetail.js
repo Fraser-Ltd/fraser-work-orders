@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 
 class propertyDetail extends Component {
 
+    state = {
+        property_name: '',
+        property_address: '',
+    }
+
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -33,9 +38,8 @@ class propertyDetail extends Component {
                     <button type="submit">Submit Item</button>
                 </form>
                 </div>
-                <div>
-                </div>
-            </>)
+            </>
+        )
     };
 }
 

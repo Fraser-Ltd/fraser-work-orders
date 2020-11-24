@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropertyTableItem from './PropertyTableItem';
+import PropertyDetail from './propertyDetail';
 
 
 //material-ui imports
@@ -74,6 +75,7 @@ class property extends Component {
                         </Paper>
                     </Grid>
                 </Grid>
+                <PropertyDetail />
             </>
         );
     }
