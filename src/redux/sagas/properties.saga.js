@@ -38,10 +38,10 @@ function* deletePropertySaga(action) {
     }
 
 function* propertiesSaga() {
-    yield takeLatest('FETCH_UNITS', getPropertySaga);
-    yield takeLatest('LOOSE_UNITS', deletePropertySaga);
-    yield takeLatest('ADD_UNITS', addPropertySaga);
-    yield takeLatest('EDIT_UNITS', editPropertySaga);
+    yield takeLatest('FETCH_PROPERTY', getPropertySaga);
+    yield takeLatest('LOOSE_PROPERTY', deletePropertySaga);
+    yield takeLatest('ADD_PROPERTY', addPropertySaga);
+    yield takeLatest('EDIT_PROPERTY', editPropertySaga);
 }
 
 export default propertiesSaga;
