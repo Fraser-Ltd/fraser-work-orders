@@ -48,7 +48,7 @@ class PropertyTableItem extends Component {
                 <TableRow className={classes.row} hover={true} onClick={this.clicked}>
                     <TableCell className={classes.cells}>{property.property_name}</TableCell>
                     <TableCell className={classes.cells}>{property.property_address}</TableCell>
-                    <TableCell className={classes.cells}><Button>Edit Property</Button></TableCell>
+                    <TableCell className={classes.cells}><button type='submit'>Edit Property</button></TableCell>
                 </TableRow>
             </>
         );
