@@ -1,5 +1,9 @@
 import { put, takeEvery } from 'redux-saga/effects';
+<<<<<<< HEAD
 import axios from 'Axios';
+=======
+import Axios from 'axios';
+>>>>>>> b649f99f31be71fd1ff4d5be6e7bc7bfed9974fd
 
 // worker Saga: will be fired on "REGISTER" actions
 function* allUsersSaga() {

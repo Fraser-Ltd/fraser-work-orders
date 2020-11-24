@@ -25,5 +25,7 @@ export default function* rootSaga() {
     userSaga(),
     workOrdersSaga(),
     propertiesSaga(),
+    unitSaga(),
+    allUsersSaga(),
   ]);
 }

@@ -19,7 +19,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
     } else if (role === 2) {//user with level 2 should get all work orders assinend to that maintenance person
-        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 && "status" != 'complete'`;
+        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'complete'`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {
@@ -27,9 +27,12 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
     } else if (role === 3) {//user with level 3 should get all work orders in which they are assigned to the property as RC
-        queryText = `SELECT * FROM "work_orders" 
-                        JOIN "properties" ON "properties"."id" = "work_orders"."property_id"
-                        WHERE "status" != 'complete' AND "resident_coordinator" = $1`;
+        queryText = `SELECT "work_orders"."id", "property_id", "date_added", "permission_to_enter",
+            "door_hanger", "emergency", "work_to_be_done", "details_of_work_done", "time_in", "time_out",
+            "status", "assigned_to", "added_by_id", "reac_inspection", "smoke_detectors", 
+            "housekeeping_inspection", "exterminating", "remarks" FROM "work_orders" 
+            JOIN "properties" ON "properties"."id" = "work_orders"."property_id" 
+            WHERE "status" != 'complete' AND "resident_coordinator" = $1`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {
