@@ -86,11 +86,11 @@ class AdminUserPage extends Component {
 
                                     </TableBody>
                                 </Table>
-                            </TableContainer>
+                            </TableContainer><NewUserForm />
                         </Paper>
                     </Grid>
                 </Grid>
-                <NewUserForm/>
+                
             </>
         );
     }
