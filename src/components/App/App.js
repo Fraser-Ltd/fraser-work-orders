@@ -20,6 +20,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import AdminUserPage from '../AdminUserPage/AdminUserPage';
 
 import './App.css';
 
@@ -100,6 +101,13 @@ class App extends Component {
               component={LandingPage}
               authRedirect="/user"
             />
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/admin/users"
+              // - else shows LandingPage at "/user"
+              exact
+              path="/admin/users"
+              component={AdminUserPage}/>
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

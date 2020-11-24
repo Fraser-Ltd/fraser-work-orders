@@ -1,12 +1,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import mapStoreToProps from '../../redux/mapStoreToProps';
+import AdminUserPageTableItem from './AdminUserPageTableItem';
+import NewUserForm from './NewUserForm';
+
+//material-ui imports
+import Grid from '@material-ui/core/Grid';
+import Table from '@material-ui/core/Table';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import { withStyles } from '@material-ui/core';
+
+const styles = theme => ({
+    root: {
+        marginTop: 10,
+        marginBottom: 40,
+        maxHeight: 400
+    },
+    heading: {
+        padding: 15,
+        textAlign: 'center'
+    },
+    tableHeading: {
+        textAlign: 'center',
+    },
+    row: {
+        '&:hover': { cursor: 'pointer' }
+    },
+    newOrder: {
+        margin: 20,
+        backgroundColor: 'yellow',
+        '&:hover': { backgroundColor: 'green', color: 'white' }
+    },
+});
+
 
 class AdminUserPage extends Component {
 
     componentDidMount() {
         this.props.dispatch({
-            type: 'FETCH_ALLUSERS'
+            type: 'GET_USERS'
         })
     }
     onSubmit = (event) => {
@@ -19,28 +56,47 @@ class AdminUserPage extends Component {
         });
     }
 
-    render() {//need to set up the tables the user admin would see
+    
+    render(){// tables the user admin would see
+        const { classes } = this.props;
         return (
-            <div>
-                <h1 id="welcome">Welcome to the Admin User Page!</h1>
-                <p>Your ID is: {this.props.store.user.id}</p>
-                <AdminUserPageTable/>
-                <form> "Add a New User:" 
-                    <tr heading="Add a New User:">
-                        <td input="First Name">First Name</td>
-                        <td input="Last Name">Last Name</td>
-                        <td input="E-mail">E-mail</td>
-                        <td input="Role">Role</td>
-                        <td input="User Name">User Name</td>
-                        <td input="Password">Password</td>
-                        <button>Add</button>
-                    </tr>
-                </form>
-            </div>
-           
+            <>
+                <Grid container justify='center'>
+
+                    <Grid item xs={11}>
+                        <Paper>
+                            <Typography variant='h3' className={classes.heading}>Current Users</Typography>
+                            <TableContainer className={classes.root} component={Paper}>
+                                <Table stickyHeader size='medium'>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell className={classes.tableHeading}>First Name</TableCell>
+                                            <TableCell className={classes.tableHeading}>Last Name</TableCell>
+                                            <TableCell className={classes.tableHeading}>E-mail</TableCell>
+                                            <TableCell className={classes.tableHeading}>Role</TableCell>
+                                            <TableCell className={classes.tableHeading}>Username</TableCell>
+                                            
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.props.allUsers[0] && this.props.allUsers
+                                            .map((userList) =>
+                                                <AdminUserPageTableItem userList={userList} key={userList.id} />
+                                            )}
+
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <NewUserForm/>
+            </>
         );
     }
 }
+const mapStoreToProps = (store) => ({
+    allUsers: store.allUsers
+})
 
-// this allows us to use <App /> in index.js
-export default connect(mapStoreToProps)(AdminUserPage);
+export default connect(mapStoreToProps)(withStyles(styles, {withTheme: true})(AdminUserPage));
