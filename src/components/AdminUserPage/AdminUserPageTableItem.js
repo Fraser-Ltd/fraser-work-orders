@@ -39,10 +39,15 @@ const styles = theme => ({
 
 class AdminUserPageTableItem extends Component {
 
+    clicked = ()=>{
+        let user = this.props.userList
+        console.log('in rowclicked', user.id)
+        this.props.editUser(user.first_name, user.last_name, user.email, user.role, user.username, user.id)
+}
 render() {
         const { classes } = this.props;
         const allUsers = this.props.userList;
-
+        console.log(this.props.userList);
         return (
             <>
                 <TableRow className={classes.row} hover={true} onClick={this.clicked}>

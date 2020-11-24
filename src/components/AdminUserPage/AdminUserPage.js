@@ -40,7 +40,46 @@ const styles = theme => ({
 
 
 class AdminUserPage extends Component {
-
+    state = {
+        edit: false,
+        user: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            role: '',
+            username: '',
+            password: '',
+            id: ''
+        }
+    }
+    clearEditUser = ()=>{
+        this.setState({
+            edit: false,
+            user: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                role: '',
+                username: '',
+                password: '',
+                id: ''
+            }
+        })
+    }
+    editUser = (firstName, lastName, email, role, username, id) =>{
+        console.log('in editUser id is', id)
+        this.setState ({
+            edit: true,
+            user: {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                role: role,
+                username: username,
+                id: id
+            }
+        })
+    }
     componentDidMount() {
         this.props.dispatch({
             type: 'GET_USERS'
@@ -81,12 +120,14 @@ class AdminUserPage extends Component {
                                     <TableBody>
                                         {this.props.allUsers[0] && this.props.allUsers
                                             .map((userList) =>
-                                                <AdminUserPageTableItem userList={userList} key={userList.id} />
+                                                <AdminUserPageTableItem editUser={this.editUser} userList={userList} key={userList.id} />
                                             )}
 
                                     </TableBody>
                                 </Table>
-                            </TableContainer><NewUserForm />
+                            </TableContainer>
+                            {!this.state.edit && <NewUserForm edit={this.state.edit} user={this.state.user}/>}
+                            {this.state.edit && <NewUserForm clearEditUser={this.clearEditUser} edit={this.state.edit} user={this.state.user}/>}
                         </Paper>
                     </Grid>
                 </Grid>

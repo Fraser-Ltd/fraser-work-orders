@@ -5,14 +5,30 @@ import { connect } from 'react-redux';
 class NewUserForm extends Component {
 
     state = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        role: '',
-        username: '',
-        password: ''
+        firstName: this.props.user.firstName,
+        lastName: this.props.user.lastName,
+        email: this.props.user.email,
+        role: this.props.user.role,
+        username: this.props.user.username,
+        password: this.props.user.password
+        
     }
-
+    saveChanges = (event) => {
+        event.preventDefault();
+        this.props.dispatch({
+            type: 'UPDATE_USER_ADMIN',
+            payload: {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                role: this.state.role,
+                username: this.state.username,
+                archiveEmployee: false,
+                id: this.props.user.id
+            }
+        })
+        this.props.clearEditUser();
+    }
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -37,24 +53,39 @@ class NewUserForm extends Component {
         });
         console.log('set state')
     }
-
+    updatePassword = (event)=>{
+        event.preventDefault();
+        this.props.dispatch({
+            type: "UPDATE_PASSWORD",
+            payload: this.state
+        })
+        this.setState({
+            password: this.state.password
+        })
+    }
     render() {
+        console.log('newuserform props', this.props)
         return (
             <>
                 <div>
                     <h2>Add New User:</h2>
                 </div>
                 <div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form >
                     <input name='firstName' type='text' value={this.state.firstName} onChange={this.handleChange} placeholder='First Name' />
                     <input name='lastName' type='text' value={this.state.lastName} onChange={this.handleChange} placeholder='Last Name' />
                     <input name='email' type='text' value={this.state.email} onChange={this.handleChange} placeholder='E-mail' />
                     <input name='role' type='text' value={this.state.role} onChange={this.handleChange} placeholder='Role' />
                     <input name='username' type='text' value={this.state.username} onChange={this.handleChange} placeholder='Username' />
-                    <input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
-                    <button type="submit">Add New User</button>
+                    {!this.props.edit && <><input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
+                    <button onClick={this.handleSubmit} type="submit">Add New User</button></>}
+                    {this.props.edit && <button onClick={this.saveChanges}>Save Changes</button>}
                 </form>
                 </div>
+                {this.props.edit && 
+                <form>
+                    <input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password'></input>
+                    <button onClick={this.updatePassword}> Update Password</button></form>}
             </>)
     };
 }

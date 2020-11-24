@@ -7,7 +7,7 @@ const router = express.Router();
 
   // Allows are users to be viewed but not their passwords, Handles Ajax request for user information if user is authenticated
   router.get('/', rejectUnauthenticated, (req, res) => {
-    let queryText = `SELECT "user"."username", "user"."role", "user"."email", "user"."first_name", "user"."last_name", "user"."archive_employee" FROM "user";`
+    let queryText = `SELECT "user"."id", "user"."username", "user"."role", "user"."email", "user"."first_name", "user"."last_name", "user"."archive_employee" FROM "user";`
     
     pool.query(queryText).then(result => res.send(result.rows)).catch(err => {
         console.log('ERROR in GET to /', err);
@@ -31,7 +31,7 @@ router.put('/user', (req, res) => {
   router.put('/admin', (req, res) => {
     console.log('admin updated user', req.body);
     let queryText = `UPDATE "user" SET "username"=$1, "first_name"=$2, "last_name"=$3, "email"=$4, "role"=$5, "archive_employee"=$6 WHERE "id"=$7;`;
-    pool.query(queryText, [req.body.userName, req.body.firstName, req.body.lastName, req.body.email, req.body.role, req.body.archiveEmployee, req.body.id])
+    pool.query(queryText, [req.body.username, req.body.firstName, req.body.lastName, req.body.email, req.body.role, req.body.archiveEmployee, req.body.id])
     .then(result => res.sendStatus(200)).catch(err => {
         console.log('ERROR in PUT admin edit_user', err);
         res.sendStatus(500);
