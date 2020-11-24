@@ -1,4 +1,4 @@
-import React , { Component} from 'react';
+import React, { Component } from 'react';
 import moment from 'moment';
 
 
@@ -33,27 +33,27 @@ const styles = theme => ({
         backgroundColor: 'yellow',
         '&:hover': { backgroundColor: 'green', color: 'white' }
     },
-    cells:{
-        textAlign:'center',
+    cells: {
+        textAlign: 'center',
     },
 });
 
 class PropertyTableItem extends Component {
 
-    render () {
-        const {classes} = this.props;
-        const property = this.props.property; 
-        return(
+    render() {
+        const { classes } = this.props;
+        const property = this.props.property;
+        return (
             <>
                 <TableRow className={classes.row} hover={true} onClick={this.clicked}>
                     <TableCell className={classes.cells}>{property.property_name}</TableCell>
                     <TableCell className={classes.cells}>{property.property_address}</TableCell>
-                    <TableCell className={classes.cells}><Button onClick= >Details</Button></TableCell>
-                </TableRow>  
+                    <TableCell className={classes.cells}><Button>Edit Property</Button></TableCell>
+                </TableRow>
             </>
         );
     }
-    
+
 }
 
 export default withStyles(styles, {withTheme:true})(PropertyTableItem);
