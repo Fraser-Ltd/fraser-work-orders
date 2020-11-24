@@ -13,7 +13,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
@@ -58,7 +57,6 @@ class WorkOrdersTable extends Component {
                                         <TableCell className={classes.tableHeading}>W.O #</TableCell>
                                         <TableCell className={classes.tableHeading}>Property</TableCell>
                                         <TableCell className={classes.tableHeading}>Description</TableCell>
-                                        <TableCell className={classes.tableHeading}>Details</TableCell>
                                         <TableCell className={classes.tableHeading}>Priority</TableCell>
                                         <TableCell className={classes.tableHeading}>Status</TableCell>
                                         <TableCell className={classes.tableHeading}>Date Submitted</TableCell>

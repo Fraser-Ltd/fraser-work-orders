@@ -1,5 +1,6 @@
 import React , { Component} from 'react';
 import moment from 'moment';
+import {withRouter} from 'react-router-dom';
 
 
 //material ui imports
@@ -40,6 +41,9 @@ const styles = theme => ({
 
 class WorkOrderTableItem extends Component {
     
+    details = () => {
+        this.props.history.push(`/workOrderDetails/${this.props.workOrder.id}`);
+    }
 
     render(){
         const {classes} = this.props;
@@ -51,11 +55,10 @@ class WorkOrderTableItem extends Component {
         }
         return(
             <>
-                <TableRow className={classes.row} hover={true} onClick={this.clicked}>
+                <TableRow className={classes.row} hover={true} onClick={this.details}>
                     <TableCell className={classes.cells}>{workOrder.id}</TableCell>
                     <TableCell className={classes.cells}>Fraser 1</TableCell>
                     <TableCell className={classes.cells}>{workOrder.work_to_be_done}</TableCell>
-                    <TableCell className={classes.cells}><Button>Details</Button></TableCell>
                     <TableCell className={classes.cells}>{priority()}</TableCell>
                     <TableCell className={classes.cells}>{workOrder.status}</TableCell>
                     <TableCell className={classes.cells}>{moment(workOrder.date_added).calendar()}</TableCell>
@@ -66,4 +69,4 @@ class WorkOrderTableItem extends Component {
 }
 
 
-export default withStyles(styles, {withTheme:true})(WorkOrderTableItem);
+export default withStyles(styles, {withTheme:true})(withRouter(WorkOrderTableItem));
