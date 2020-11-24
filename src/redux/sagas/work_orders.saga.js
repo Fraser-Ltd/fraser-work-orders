@@ -26,7 +26,7 @@ function* getCompletedWorkOrders() {
 function* addWorkOrders(action) {
     try {
         console.log('in addWorkOrders saga');
-        yield axios.post('api/work_orders/list', action.payload)
+        yield axios.post('api/work_orders/', action.payload)
         yield put({ type: 'FETCH_WORKORDERS' })//Refreshes list after new work order is submitted
     } catch (error) {
         console.log('Error in addWorkOrders saga', error);

@@ -13,6 +13,7 @@ const userRouter = require('./routes/user.router');
 const editUserRouter = require('./routes/edit_user.router');
 const propertiesRouter = require('./routes/properties.router');
 const workOrdersRouter = require('./routes/work_order.router');
+const unitsRouter = require('./routes/units.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use('/api/user', userRouter);
 app.use('/api/edit_user', editUserRouter);
 app.use('/api/properties', propertiesRouter);
 app.use('/api/work_orders', workOrdersRouter);
+app.use('/api/units', unitsRouter)
 
 // Serve static files
 app.use(express.static('build'));

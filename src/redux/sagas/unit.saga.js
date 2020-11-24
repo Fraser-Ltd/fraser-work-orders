@@ -2,26 +2,30 @@ import { put, takeLatest } from "redux-saga/effects";
 import Axios from "axios";
 
 function* getUnitListSaga(action) {
-    const response = yield Axios.get("/api/units/");
-    const actionToDispatch = {
-        type: "SET_UNITS",
-        payload: response.data,
-    };
-    yield put(actionToDispatch);
+    try {
+        const response = yield Axios.get("/api/units/");
+        const actionToDispatch = {
+            type: "SET_UNITS",
+            payload: response.data,
+        };
+        yield put(actionToDispatch);
+    }catch(err){
+        console.log('error fetching units', err);
+    }
 }
 
 function* addUnitSaga(action) {
     try {
         const response = yield Axios.post("/api/units", action.payload)
-        yield put({ type: 'FETCH_UNITS'})
-    } catch (err) {console.log('error fetching units', err)}    
+        yield put({ type: 'FETCH_UNITS' })
+    } catch (err) { console.log('error fetching units', err) }
 }
 
 function* editUnitsSaga(action) {
     try {
         const response = yield Axios.put(`/api/units/`, action.payload);
         yield put({ type: "FETCH_ITEMS" });
-    } catch(err) {
+    } catch (err) {
         console.log('error editing unit', err)
     }
 }
@@ -35,7 +39,7 @@ function* deleteSaga(action) {
         type: "FETCH_UNITS",
     };
     yield put(actionToDispatch);
-    }
+}
 
 function* unitSaga() {
     yield takeLatest('FETCH_UNITS', getUnitListSaga);

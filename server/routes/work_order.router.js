@@ -19,7 +19,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
     } else if (role === 2) {//user with level 2 should get all work orders assinend to that maintenance person
-        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 && "status" != 'complete'`;
+        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'complete'`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {

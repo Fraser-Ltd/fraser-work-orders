@@ -44,7 +44,6 @@ class WorkOrdersTable extends Component {
 
     render(){
         const {classes} = this.props;
-        console.log(this.props)
         return(
             <>
                 <Grid container justify='center'>

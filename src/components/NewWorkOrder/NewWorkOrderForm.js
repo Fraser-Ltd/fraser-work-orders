@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import {withRouter} from 'react-router-dom';
 
 
 //material ui imports
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import FormLabel from '@material-ui/core/FormLabel';
 import { FormControl, FormControlLabel, withStyles } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Input from '@material-ui/core/Input';
 
 const styles = theme => ({
     right: {
@@ -43,29 +39,38 @@ const styles = theme => ({
 
 class NewWorkOrderForm extends Component {
     state = {
-        enter: false,
-        home: false,
-        hanger: false,
-        status: '',
+        propertyId: '',
+        dateAdded: moment().format(),
+        permissionToEnter: false,
+        emergency: false,
+        workToBeDone: '',
+        status: 'submitted',
+        addedById: this.props.user.id,
+        reacInspection: false,
+        remarks: '',
+        unitId: '',
+        tennantNotHome: false,
     }
     componentDidMount(){
         this.props.dispatch({ type: 'FETCH_UNITS'});
         this.props.dispatch({ type: 'FETCH_PROPERTY'});
     }
 
-    submit = () => {
-
+    submit = (e) => {
+        e.preventDefault()
+        this.props.dispatch({ type: 'ADD_WORKORDER', payload: this.state})
     }
 
-    handleChange = (event) => {
+    handleCheck = (event) => {
         console.log(event.target.name)
         console.log(event.target.checked)
         this.setState({
+            ...this.state,
             [event.target.name]: event.target.checked
         })
     }
 
-    handleSelect = (event) => {
+    handleChange = (event) => {
         console.log(event.target.name);
         console.log(event.target.value);
         this.setState({
@@ -75,7 +80,7 @@ class NewWorkOrderForm extends Component {
     }
 
     back = () => {
-
+        this.props.history.goBack();
     }
 
 
@@ -96,19 +101,33 @@ class NewWorkOrderForm extends Component {
                                     <form onSubmit={this.submit}>
                                         <Grid item xs={12}>
                                             <Grid container direction='column' alignItems='center'   >
-                                                <Grid item xs={12}>
-                                                    <Typography>Name: Fraser 1</Typography>
+                                                <Grid container justify='center'>
+                                                    <Grid item xs={12} sm={10} md={8} lg={6}>
+                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
+                                                            <InputLabel >Property:</InputLabel>
+                                                            <Select required fullWidth name="propertyId" value={this.state.propertyId} onChange={this.handleChange}>
+                                                                {this.props.properties[0] && this.props.properties.map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item xs={12} >
-                                                    <Typography>Address: 123 1st st</Typography>
-                                                </Grid>
+                                                {this.state.propertyId !== '' && <Grid container justify='center'>
+                                                    <Grid item xs={12} sm={10} md={8} lg={6}>
+                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
+                                                            <InputLabel >Unit:</InputLabel>
+                                                            <Select required fullWidth name="unitId" value={this.state.unitId} onChange={this.handleChange}>
+                                                                {this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId).map(unit => <MenuItem key={unit.id} value={unit.id}>{unit.unit}</MenuItem>)}
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
+                                                </Grid>}
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
                                                     <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                         <InputLabel >Order Type:</InputLabel>
-                                                        <Select fullWidth name="status" value={this.state.status} onChange={this.handleSelect}>
-                                                            <MenuItem value={1}>Non-Emergency</MenuItem>
-                                                            <MenuItem value={2}>Emergency</MenuItem>
+                                                        <Select fullWidth name="emergency" value={this.state.emergency} onChange={this.handleChange}>
+                                                            <MenuItem value={false}>Non-Emergency</MenuItem>
+                                                            <MenuItem value={true}>Emergency</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     </Grid>
@@ -126,9 +145,9 @@ class NewWorkOrderForm extends Component {
                                                             labelPlacement='end'
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
-                                                                onClick={this.handleChange}
-                                                                checked={this.state.enter}
-                                                                name='enter' />}
+                                                                onClick={this.handleCheck}
+                                                                checked={this.state.permissionToEnter}
+                                                                name='permissionToEnter' />}
                                                         /><br />
                                                     </Grid>
                                                     <Grid item xs={12}>
@@ -137,9 +156,9 @@ class NewWorkOrderForm extends Component {
                                                             labelPlacement='end'
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
-                                                                onClick={this.handleChange}
-                                                                checked={this.state.home}
-                                                                name='home' />}
+                                                                onClick={this.handleCheck}
+                                                                checked={this.state.tennantNotHome}
+                                                                name='tennantNotHome' />}
                                                         /><br />
                                                     </Grid>
                                                     <Grid item xs={12}>
@@ -148,9 +167,9 @@ class NewWorkOrderForm extends Component {
                                                             labelPlacement='end'
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
-                                                                onClick={this.handleChange}
-                                                                checked={this.state.enter}
-                                                                name='enter' />}
+                                                                onClick={this.handleCheck}
+                                                                checked={this.state.reacInspection}
+                                                                name='reacInspection' />}
                                                         /><br />
                                                     </Grid>
                                                 </Grid>
@@ -161,12 +180,14 @@ class NewWorkOrderForm extends Component {
                                         <TextField
                                             onChange={this.handleChange}
                                             fullWidth
+                                            value={this.state.workToBeDone}
+                                            name='workToBeDone'
                                             id="outlined-multiline-static"
                                             label="Work To Be Done"
                                             multiline
                                             rows={4}
                                             variant="outlined"
-
+                                            required
                                         /><br /><br />
 
                                         <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
@@ -187,4 +208,6 @@ class NewWorkOrderForm extends Component {
 
 }
 
-export default connect()(withStyles(styles, { withTheme: true })(NewWorkOrderForm));
+const mapStateToProps = (store) => ({ properties: store.properties, units: store.units, user:store.user})
+
+export default connect(mapStateToProps)(withRouter(withStyles(styles, { withTheme: true })(NewWorkOrderForm)));

@@ -4,6 +4,7 @@ import user from './user.reducer';
 import allUsers from './all_users.reducer';
 import properties from './properties.reducer';
 import workOrders from './work_orders.reducer';
+import units from './units.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,8 @@ const rootReducer = combineReducers({
   allUsers, //
   properties, // will link resident coordinators to their assigned property
   workOrders, // will house work order details
+  units,//will house all units
+
 });
 
 export default rootReducer;
