@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropertyTableItem from './PropertyTableItem';
 
 
 //material-ui imports
@@ -46,14 +47,14 @@ class property extends Component {
     };
 
     render() {
-
+        const {classes} = this.props;
         return (
             <>
                 <Grid container justify='center'>
 
                     <Grid item xs={11}>
                         <Paper>
-                            <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
+                            <Typography variant='h3' className={classes.heading}>Current Properties</Typography>
                             <TableContainer className={classes.root} component={Paper}>
                                 <Table stickyHeader size='medium'>
                                     <TableHead>
@@ -64,9 +65,9 @@ class property extends Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.props.properties.map((property) => {
+                                        {this.props.properties[0] && this.props.properties.map((property) => 
                                             <PropertyTableItem property={property} key={property.id} />
-                                        })}
+                                        )}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -78,6 +79,8 @@ class property extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({ user: state.user, properties: state.properties })
 
-export default connect()(withStyles(styles, { withTheme: true })(property));
+
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(property));
 

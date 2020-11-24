@@ -41,12 +41,14 @@ const styles = theme => ({
 class PropertyTableItem extends Component {
 
     render () {
+        const {classes} = this.props;
+        const property = this.props.property; 
         return(
             <>
                 <TableRow className={classes.row} hover={true} onClick={this.clicked}>
-                    <TableCell className={classes.cells}>{properties.id}</TableCell>
-                    <TableCell className={classes.cells}>{properties.address}</TableCell>
-                    <TableCell className={classes.cells}><Button>Details</Button></TableCell>
+                    <TableCell className={classes.cells}>{property.property_name}</TableCell>
+                    <TableCell className={classes.cells}>{property.property_address}</TableCell>
+                    <TableCell className={classes.cells}><Button onClick= >Details</Button></TableCell>
                 </TableRow>  
             </>
         );
