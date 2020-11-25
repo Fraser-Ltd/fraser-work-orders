@@ -11,7 +11,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     if(role === null){res.sendStatus(403);
     }
     else if (role <= 1 && role != null) {// get request for user with level 1 or below should recieve all work orders
-        queryText = `SELECT * FROM "work_orders" WHERE "status" != 'complete'`;
+        queryText = `SELECT * FROM "work_orders" WHERE "status" != 'Complete'`;
         pool.query(queryText)
         .then(result => res.send(result.rows))
         .catch(error => {
@@ -19,7 +19,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
     } else if (role === 2) {//user with level 2 should get all work orders assinend to that maintenance person
-        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'complete'`;
+        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'Complete'`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {
@@ -32,7 +32,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             "status", "assigned_to", "added_by_id", "reac_inspection", "smoke_detectors", 
             "housekeeping_inspection", "exterminating", "remarks" FROM "work_orders" 
             JOIN "properties" ON "properties"."id" = "work_orders"."property_id" 
-            WHERE "status" != 'complete' AND "resident_coordinator" = $1`;
+            WHERE "status" != 'Complete' AND "resident_coordinator" = $1`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {
@@ -92,8 +92,6 @@ router.post('/', rejectUnauthenticated, (req, res) =>{
 //     emergency: value,
 //     workToBeDone: value,
 //     detailsOfWorkDone: value,
-//     timeIn: value,
-//     timeOut: value,
 //     status: value,
 //     assignedTo: value,
 //     reacInspection: value,
@@ -103,11 +101,11 @@ router.post('/', rejectUnauthenticated, (req, res) =>{
 //     remarks: value,
 //     unitId: value,
 //     tenantNotHome: value,
-//     dateCompleted: value,
-//     priorty: value
+//     priority: value
 // }
 router.put('/', rejectUnauthenticated, (req, res) => {
-    console.log('in workOrderRouter')
+    console.log('in workOrderRouter put req.body is', req.body)
+
     const { permissionToEnter, doorHanger, emergency,
         workToBeDone, detailsOfWorkDone, status, assignedTo, reacInspection, smokeDetectors, 
         housekeepingInspection, exterminating, remarks, unitId, tenantNotHome, priority, workOrderId } = req.body
