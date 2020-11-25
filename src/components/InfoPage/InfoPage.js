@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-// This is one of our simplest components
-// It doesn't have local state, so it can be a function component.
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is, so it doesn't need 'connect()'
+//pages to bring in
+import InfoItem from './InfoItem';
+import PasswordItem from './PasswordItem';
 
-const InfoPage = () => (
-  <div>
-    <p>Info Page</p>
-  </div>
-);
+//material ui imports
+import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
-// If you needed to add local state or other things,
-// you can make it a class component like:
+class UserProfile extends Component {
+  state = {
+   edit: false
+  };
 
-/*
-class InfoPage extends React.Component {
+  editUser = () => {
+    this.setState({edit: true})
+  }
+
+  clearEdit = () => {
+    this.setState({edit: false})
+  }
+
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'FETCH_USER'
+    })
+  }
 
   render() {
+    console.log(this.props)
+    const user1=this.props.user
     return (
       <div>
-        <p>Info Page</p>
+        {!this.state.edit && <><h1>{this.props.user.first_name}'s Profile</h1>
+        <h3>Username: {this.props.user.username}</h3>
+        <h3>Name: {this.props.user.first_name} {this.props.user.last_name}</h3>
+        <h3>Email: {this.props.user.email}</h3>
+        <button onClick={this.editUser}>Edit Profile</button></>}
+        {this.state.edit && this.props.user.id && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
+        <PasswordItem username={this.props.user.username} />
       </div>
-    )
+    );
   }
 }
-*/
-export default InfoPage;
+
+const mapStateToProps = (state) => ({ user: state.user })
+
+export default connect(mapStateToProps)(withRouter(UserProfile));

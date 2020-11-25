@@ -17,11 +17,15 @@ import NewWorkOrderForm from '../NewWorkOrder/NewWorkOrderForm';
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
+import InfoItem from '../InfoPage/InfoItem';
+import PasswordItem from '../InfoPage/PasswordItem';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import AdminUserPage from '../AdminUserPage/AdminUserPage';
 import Property from '../PropertyPage/property';
 import WorkOrderDetails from '../WorkOrderDetails/WorkOrderDetails';
+
 
 
 import './App.css';
@@ -72,6 +76,11 @@ class App extends Component {
               path="/info"
               component={InfoPage}
             />
+<<<<<<< HEAD
+               <ProtectedRoute
+              // logged in shows edit password on InfoPage
+=======
+
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
@@ -81,9 +90,11 @@ class App extends Component {
 
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
+>>>>>>> 0ee0950cc0d00bce3ff113f7422857bcc4502f21
               exact
               path="/admin/property"
               component={Property}
+
             />
 
             {/* When a value is supplied for the authRedirect prop the user will
@@ -116,6 +127,13 @@ class App extends Component {
               component={LandingPage}
               authRedirect="/user"
             />
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/admin/users"
+              // - else shows LandingPage at "/user"
+              exact
+              path="/admin/users"
+              component={AdminUserPage}/>
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
