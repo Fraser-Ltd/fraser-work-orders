@@ -44,7 +44,7 @@ class NewWorkOrderForm extends Component {
         permissionToEnter: false,
         emergency: false,
         workToBeDone: '',
-        status: 'submitted',
+        status: 'Submitted',
         addedById: this.props.user.id,
         reacInspection: false,
         remarks: '',

@@ -6,14 +6,6 @@ import {withRouter} from 'react-router-dom';
 //custom components
 import WorkOrderDetailForm from './WorkOrderDetailForm';
 
-
-
-
-
-
-
-
-
 class WorkOrderDetails extends Component {
     state = {
         enter: false,
@@ -29,10 +21,6 @@ class WorkOrderDetails extends Component {
 
     }
 
-
-
-
-
     render() {
         const id = this.props.match.params.id
         const workOrder = this.props.workOrders[0] != undefined ? this.props.workOrders.filter(order => order.id === Number(id))[0] : null;
@@ -40,12 +28,12 @@ class WorkOrderDetails extends Component {
         const unit = workOrder != null && this.props.units[0] && this.props.units.filter(unit => unit.id === workOrder.unit_id)[0] || null;
         const assignedTo = workOrder != null && this.props.allUsers[0] && this.props.allUsers.filter(user => user.id === workOrder.assigned_to)[0] || {first_name: '',last_name:''};
         const addedBy = workOrder != null && this.props.allUsers[0] && this.props.allUsers.filter(user => user.id === workOrder.added_by_id)[0];
-        console.log('property is:', property);
-        console.log('workOrder is:', workOrder);
-        console.log('unit is:', unit);
-        console.log('added by is:', addedBy);
-        console.log('assigned to is:', assignedTo);
-        console.log('this props is', this.props)
+        // console.log('property is:', property);
+        // console.log('workOrder is:', workOrder);
+        // console.log('unit is:', unit);
+        // console.log('added by is:', addedBy);
+        // console.log('assigned to is:', assignedTo);
+        // console.log('this props is', this.props)
         return (
             <>
             {workOrder && property && unit && assignedTo && addedBy && 

@@ -46,7 +46,6 @@ class WorkOrdersTable extends Component {
         return(
             <>
                 <Grid container justify='center'>
-
                     <Grid item xs={11}>
                         <Paper>
                         <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>

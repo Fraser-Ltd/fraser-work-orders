@@ -28,8 +28,10 @@ const styles = theme => ({
         textAlign: 'center',
     },
     row: {
-        '&:hover': { cursor: 'pointer' }
+        '&:hover': { cursor: 'pointer', backgroundColor:'rgb(222, 221, 221)' }
     },
+    red:{backgroundColor:'red', color:'white', '&:hover':{backgroundColor:'maroon', cursor:'pointer'}},
+    red2:{color:'white'},
     newOrder: {
         margin: 20,
         backgroundColor: 'yellow',
@@ -37,6 +39,7 @@ const styles = theme => ({
     },
     cells:{
         textAlign:'center',
+        '&:hover':{color:'white'}
     },
 });
 
@@ -56,16 +59,16 @@ class WorkOrderTableItem extends Component {
         }
         return(
             <>
-                <TableRow className={classes.row} hover={true} onClick={this.details}>
-                    <TableCell className={classes.cells}>{workOrder.id}</TableCell>
-                    <TableCell  className={classes.cells}>{this.props.properties[0] &&
+                <TableRow className={workOrder.emergency ? classes.red:classes.row}  onClick={this.details}>
+                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{workOrder.id}</TableCell>
+                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{this.props.properties[0] &&
                                 this.props.properties.
                                 filter(prop => prop.id === workOrder.property_id)[0].property_name}
                     </TableCell>
-                    <TableCell className={classes.cells}>{workOrder.work_to_be_done}</TableCell>
-                    <TableCell className={classes.cells}>{priority()}</TableCell>
-                    <TableCell className={classes.cells}>{workOrder.status}</TableCell>
-                    <TableCell className={classes.cells}>{moment(workOrder.date_added).calendar()}</TableCell>
+                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{workOrder.work_to_be_done}</TableCell>
+                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{priority()}</TableCell>
+                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{workOrder.status}</TableCell>
+                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{moment(workOrder.date_added).calendar()}</TableCell>
                 </TableRow>  
             </>
         );

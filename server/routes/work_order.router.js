@@ -104,7 +104,8 @@ router.post('/', rejectUnauthenticated, (req, res) =>{
 //     priority: value
 // }
 router.put('/', rejectUnauthenticated, (req, res) => {
-    console.log('in workOrderRouter')
+    console.log('in workOrderRouter put req.body is', req.body)
+
     const { permissionToEnter, doorHanger, emergency,
         workToBeDone, detailsOfWorkDone, status, assignedTo, reacInspection, smokeDetectors, 
         housekeepingInspection, exterminating, remarks, unitId, tenantNotHome, priority, workOrderId } = req.body
