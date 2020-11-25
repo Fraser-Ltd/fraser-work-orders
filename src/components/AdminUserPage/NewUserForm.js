@@ -10,7 +10,7 @@ class NewUserForm extends Component {
         email: this.props.user.email,
         role: this.props.user.role,
         username: this.props.user.username,
-        password: this.props.user.password
+        password: ''
         
     }
     saveChanges = (event) => {
@@ -57,10 +57,15 @@ class NewUserForm extends Component {
         event.preventDefault();
         this.props.dispatch({
             type: "UPDATE_PASSWORD",
-            payload: this.state
+            payload: {...this.state, id: this.props.user.id}
         })
         this.setState({
-            password: this.state.password
+            firstName: '',
+            lastName: '',
+            email: '',
+            role: '',
+            username: '',
+            password: ''
         })
     }
     render() {
@@ -82,10 +87,11 @@ class NewUserForm extends Component {
                     {this.props.edit && <button onClick={this.saveChanges}>Save Changes</button>}
                 </form>
                 </div>
+                
                 {this.props.edit && 
                 <form>
-                    <input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password'></input>
-                    <button onClick={this.updatePassword}> Update Password</button></form>}
+                    <input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password'/>
+                    <button onClick={this.updatePassword} type="submit"> Update Password</button></form>}
             </>)
     };
 }

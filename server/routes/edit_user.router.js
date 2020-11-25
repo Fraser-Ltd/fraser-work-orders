@@ -41,11 +41,12 @@ router.put('/user', (req, res) => {
   // this route will be used to update a users password the password should be run through 
   // passport to hash and salt it before it is stored in the DB
   router.put('/password', (req, res) => {
+    console.log('attempting to update password', req.body)
     const password = encryptLib.encryptPassword(req.body.password);
   
     const queryText = `UPDATE "user"  SET "password"=$1 WHERE "id"=$2`;
     pool
-      .query(queryText, [password, req.params.id])
+      .query(queryText, [password, req.body.id])
       .then(() => res.sendStatus(201))
       .catch((err) => {
           console.log('ERROR in PUT change password', err);
