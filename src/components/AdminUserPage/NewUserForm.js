@@ -11,6 +11,7 @@ class NewUserForm extends Component {
         role: this.props.user.role,
         username: this.props.user.username,
         password: '',
+        archiveEmployee: this.props.user.archiveEmployee,
         id: this.props.user.id
         
     }
@@ -18,16 +19,8 @@ class NewUserForm extends Component {
         event.preventDefault();
         this.props.dispatch({
             type: 'UPDATE_USER_ADMIN',
-            payload: {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                role: this.state.role,
-                username: this.state.username,
-                archiveEmployee: false,
-                id: this.props.user.id
-            }
-        })
+            payload: this.state
+        });
         this.props.clearEditUser();
     }
     handleChange = (event) => {
@@ -46,6 +39,7 @@ class NewUserForm extends Component {
                 role: this.props.user.role,
                 username: this.props.user.username,
                 password: '',
+                archiveEmployee: this.props.user.archiveEmployee,
                 id: this.props.user.id
             });
         }
@@ -89,7 +83,7 @@ class NewUserForm extends Component {
         return (
             <>
                 <div>
-                    <h2>Add New User:</h2>
+                    <h2>{this.props.edit ? 'Edit User:' : 'Add New User:'}</h2>
                 </div>
                 <div>
                     <form onSubmit={this.props.edit? this.saveChanges : this.handleSubmit}>
@@ -101,7 +95,12 @@ class NewUserForm extends Component {
                             <option value={1}>Admin</option>
                             <option value={2} >Maintenance</option>
                             <option value={3}>Resident Coordinator</option>
-                        </select>            
+                        </select>
+                        {this.props.edit && <select onChange={this.handleChange} name="archiveEmployee" value={this.state.archiveEmployee}>
+                            <option value={false}>Active</option>
+                            <option value={true}>Removed</option>
+                        </select>}
+
                             <input required name='username' type='text' value={this.state.username} onChange={this.handleChange} placeholder='Username' />
                             {!this.props.edit && <><input required name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
                             <button type="submit">Add New User</button></>}

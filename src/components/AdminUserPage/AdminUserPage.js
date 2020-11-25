@@ -49,6 +49,7 @@ class AdminUserPage extends Component {
             role: '',
             username: '',
             password: '',
+            archiveEmployee: '',
             id: ''
         }
     }
@@ -62,11 +63,12 @@ class AdminUserPage extends Component {
                 role: '',
                 username: '',
                 password: '',
+                archivedEmployee: '',
                 id: ''
             }
         })
     }
-    editUser = (firstName, lastName, email, role, username, id) =>{
+    editUser = (firstName, lastName, email, role, username, id, archiveEmployee) =>{
         console.log('in editUser id is', id)
         this.setState ({
             edit: true,
@@ -76,6 +78,7 @@ class AdminUserPage extends Component {
                 email: email,
                 role: role,
                 username: username,
+                archiveEmployee: archiveEmployee,
                 id: id
             }
         })

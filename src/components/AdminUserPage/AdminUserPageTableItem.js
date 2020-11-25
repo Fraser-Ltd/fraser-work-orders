@@ -43,7 +43,7 @@ class AdminUserPageTableItem extends Component {
         this.props.clearEditUser();
         let user = this.props.userList
         console.log('in rowclicked', user.id)
-        this.props.editUser(user.first_name, user.last_name, user.email, user.role, user.username, user.id)
+        this.props.editUser(user.first_name, user.last_name, user.email, user.role, user.username, user.id, user.archive_employee)
 }
 render() {
     const allUsers = this.props.userList;
