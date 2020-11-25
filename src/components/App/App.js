@@ -76,10 +76,6 @@ class App extends Component {
               path="/info"
               component={InfoPage}
             />
-<<<<<<< HEAD
-               <ProtectedRoute
-              // logged in shows edit password on InfoPage
-=======
 
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
@@ -90,7 +86,6 @@ class App extends Component {
 
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
->>>>>>> 0ee0950cc0d00bce3ff113f7422857bcc4502f21
               exact
               path="/admin/property"
               component={Property}
