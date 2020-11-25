@@ -33,7 +33,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   const propertyAddress = req.body.propertyAddress
   const residentCoordinator = req.body.residentCoordinator
   const queryText = `INSERT INTO "properties" ("property_name", "property_address", "resident_coordinator")
-                      VALUES ($1, $2, #3)`;
+                      VALUES ($1, $2, $3)`;
   pool
     .query(queryText, [propertyName, propertyAddress, residentCoordinator])
     .then((result) => res.sendStatus(200))
