@@ -38,9 +38,13 @@ const styles = theme => ({
 });
 
 
+
 class WorkOrdersTable extends Component {
 
-
+    componentDidMount = () => {
+        this.props.dispatch({ type: "FETCH_PROPERTY" });
+    };
+    
     render(){
         const {classes} = this.props;
         return(
