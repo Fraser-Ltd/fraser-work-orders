@@ -40,6 +40,9 @@ const styles = theme => ({
 
 class PropertyTableItem extends Component {
 
+    onClick = (event) => {
+        console.log()
+    }
     render() {
         const { classes } = this.props;
         const property = this.props.property;
