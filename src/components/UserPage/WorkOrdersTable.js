@@ -15,6 +15,8 @@ import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
 
 
+
+
 const styles = theme => ({
     root: {
         marginTop: 10,
@@ -39,15 +41,18 @@ const styles = theme => ({
 });
 
 
+
 class WorkOrdersTable extends Component {
 
-
+    componentDidMount = () => {
+        this.props.dispatch({ type: "FETCH_PROPERTY" });
+    };
+    
     render(){
         const {classes} = this.props;
         return(
             <>
                 <Grid container justify='center'>
-
                     <Grid item xs={11}>
                         <Paper>
                         <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
@@ -58,7 +63,6 @@ class WorkOrdersTable extends Component {
                                         <TableCell className={classes.tableHeading}>W.O #</TableCell>
                                         <TableCell className={classes.tableHeading}>Property</TableCell>
                                         <TableCell className={classes.tableHeading}>Description</TableCell>
-                                        <TableCell className={classes.tableHeading}>Details</TableCell>
                                         <TableCell className={classes.tableHeading}>Priority</TableCell>
                                         <TableCell className={classes.tableHeading}>Status</TableCell>
                                         <TableCell className={classes.tableHeading}>Date Submitted</TableCell>
