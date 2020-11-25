@@ -7,7 +7,9 @@ const router = express.Router();
 
   // Allows are users to be viewed but not their passwords, Handles Ajax request for user information if user is authenticated
   router.get('/', rejectUnauthenticated, (req, res) => {
+
     let queryText = `SELECT "user"."id", "user"."username", "user"."role", "user"."email", "user"."first_name", "user"."last_name", "user"."archive_employee" FROM "user";`
+
     
     pool.query(queryText).then(result => res.send(result.rows)).catch(err => {
         console.log('ERROR in GET to /', err);

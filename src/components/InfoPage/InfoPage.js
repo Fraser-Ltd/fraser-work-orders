@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-// This is one of our simplest components
-// It doesn't have local state, so it can be a function component.
-// It doesn't dispatch any redux actions or display any part of redux state
-// or even care what the redux state is, so it doesn't need 'connect()'
+import InfoItem from './InfoItem';
+import PasswordItem from './PasswordItem';
 
-const InfoPage = () => (
-  <div>
-    <p>Info Page</p>
-  </div>
-);
+class UserProfile extends Component {
+  state = {
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+  };
 
-// If you needed to add local state or other things,
-// you can make it a class component like:
-
-/*
-class InfoPage extends React.Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'GET_USERS'
+    })
+  }
 
   render() {
     return (
       <div>
-        <p>Info Page</p>
+        <h1>{this.props.user.first_name}'s Profile</h1>
+        <h3>Username: {this.props.user.username}</h3>
+        <h3>Name: {this.props.user.first_name} {this.props.user.last_name}</h3>
+        <h3>Email: {this.props.user.email}</h3>
+        <button onClick={this.editUser}>Edit Profile</button>
+        <InfoItem key={this.props.user.id} username={this.props.user.username} />
+        <PasswordItem key={this.props.user.id} username={this.props.user.username} />
       </div>
-    )
+    );
   }
 }
-*/
-export default InfoPage;
+
+const mapStateToProps = (state) => ({ user: state.user })
+
+export default connect(mapStateToProps)(withRouter(UserProfile));

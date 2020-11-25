@@ -1,6 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import Axios from 'axios';
 
+
 // worker Saga: will be fired on "REGISTER" actions
 function* allUsersSaga() {
     yield takeEvery('GET_USERS', getUserSaga);
