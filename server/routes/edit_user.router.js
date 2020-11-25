@@ -31,7 +31,7 @@ router.put('/user', (req, res) => {
   router.put('/admin', (req, res) => {
     console.log('admin updated user', req.body);
     let queryText = `UPDATE "user" SET "username"=$1, "first_name"=$2, "last_name"=$3, "email"=$4, "role"=$5, "archive_employee"=$6 WHERE "id"=$7;`;
-    pool.query(queryText, [req.body.userName, req.body.firstName, req.body.lastName, req.body.email, req.body.role, req.body.archiveEmployee, req.body.id])
+    pool.query(queryText, [req.body.username, req.body.firstName, req.body.lastName, req.body.email, req.body.role, req.body.archiveEmployee, req.body.id])
     .then(result => res.sendStatus(200)).catch(err => {
         console.log('ERROR in PUT admin edit_user', err);
         res.sendStatus(500);
@@ -41,11 +41,12 @@ router.put('/user', (req, res) => {
   // this route will be used to update a users password the password should be run through 
   // passport to hash and salt it before it is stored in the DB
   router.put('/password', (req, res) => {
+    console.log('attempting to update password', req.body)
     const password = encryptLib.encryptPassword(req.body.password);
   
     const queryText = `UPDATE "user"  SET "password"=$1 WHERE "id"=$2`;
     pool
-      .query(queryText, [password, req.params.id])
+      .query(queryText, [password, req.body.id])
       .then(() => res.sendStatus(201))
       .catch((err) => {
           console.log('ERROR in PUT change password', err);
