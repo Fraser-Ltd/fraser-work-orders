@@ -21,6 +21,8 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Property from '../PropertyPage/property';
+import WorkOrderDetails from '../WorkOrderDetails/WorkOrderDetails';
+
 
 import './App.css';
 
@@ -69,6 +71,12 @@ class App extends Component {
               exact
               path="/info"
               component={InfoPage}
+            />
+            <ProtectedRoute
+              // logged in shows InfoPage else shows LoginPage
+              exact
+              path="/workOrderDetails/:id"
+              component={WorkOrderDetails}
             />
 
             <ProtectedRoute

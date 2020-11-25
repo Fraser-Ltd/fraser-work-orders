@@ -24,12 +24,12 @@ class UserPage extends Component {
     if (this.props.workOrders[0]) {
       switch (user.role) {
         case 1:
-          filteredOrders = this.props.workOrders.filter(workOrder => workOrder.status === 'submitted');
-          filteredOrders2 = this.props.workOrders.filter(workOrder => workOrder.status !== 'submitted');
+          filteredOrders = this.props.workOrders.filter(workOrder => workOrder.status === 'Submitted');
+          filteredOrders2 = this.props.workOrders.filter(workOrder => workOrder.status !== 'Submitted');
           break;
         case 2:
-          filteredOrders = this.props.workOrders.filter(workOrder => workOrder.status === 'assigned to maint');
-          filteredOrders2 = this.props.workOrders.filter(workOrder => workOrder.status !== 'assigned to maint');
+          filteredOrders = this.props.workOrders.filter(workOrder => workOrder.status === 'Assigned To Maintenance');
+          filteredOrders2 = this.props.workOrders.filter(workOrder => workOrder.status !== 'Assigned To Maintenance');
           break;
         case 3:
           filteredOrders2 = this.props.workOrders
