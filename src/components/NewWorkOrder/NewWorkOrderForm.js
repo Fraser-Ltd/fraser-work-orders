@@ -10,29 +10,12 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import { FormControl, FormControlLabel, withStyles } from '@material-ui/core';
+import { FormControl, FormControlLabel } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
-const styles = theme => ({
-    right: {
-        [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
-        },
-        [theme.breakpoints.up('md')]: {
-            textAlign: 'right'
-        }
-    },
-    left: {
-        [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
-        },
-        [theme.breakpoints.up('md')]: {
-            textAlign: 'left'
-        }
-    },
-})
+
 
 
 
@@ -85,7 +68,6 @@ class NewWorkOrderForm extends Component {
 
 
     render() {
-        const { classes } = this.props;
         return (
             <>
                 <Grid
@@ -210,4 +192,4 @@ class NewWorkOrderForm extends Component {
 
 const mapStateToProps = (store) => ({ properties: store.properties, units: store.units, user:store.user})
 
-export default connect(mapStateToProps)(withRouter(withStyles(styles, { withTheme: true })(NewWorkOrderForm)));
+export default connect(mapStateToProps)(withRouter(NewWorkOrderForm));

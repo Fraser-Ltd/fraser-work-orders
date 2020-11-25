@@ -5,13 +5,9 @@ import {connect} from 'react-redux';
 
 
 //material ui imports
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -30,7 +26,7 @@ const styles = theme => ({
     row: {
         '&:hover': { cursor: 'pointer', backgroundColor:'rgb(222, 221, 221)' }
     },
-    red:{backgroundColor:'red', color:'white', '&:hover':{backgroundColor:'maroon', cursor:'pointer'}},
+    red: { backgroundColor: 'rgba(229, 0, 0, 0.6)', color: 'white', '&:hover': { backgroundColor:'rgba(229, 0, 0, 0.75)', cursor:'pointer'}},
     red2:{color:'white'},
     newOrder: {
         margin: 20,
@@ -60,15 +56,14 @@ class WorkOrderTableItem extends Component {
         return(
             <>
                 <TableRow className={workOrder.emergency ? classes.red:classes.row}  onClick={this.details}>
-                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{workOrder.id}</TableCell>
-                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{this.props.properties[0] &&
-                                this.props.properties.
-                                filter(prop => prop.id === workOrder.property_id)[0].property_name}
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.id}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{this.props.properties[0] &&
+                                this.props.properties.filter(prop => prop.id === workOrder.property_id)[0].property_name}
                     </TableCell>
-                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{workOrder.work_to_be_done}</TableCell>
-                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{priority()}</TableCell>
-                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{workOrder.status}</TableCell>
-                    <TableCell className={classes.cells, workOrder.emergency && classes.red2}>{moment(workOrder.date_added).calendar()}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.work_to_be_done}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{priority()}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.status}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{moment(workOrder.date_added).calendar()}</TableCell>
                 </TableRow>  
             </>
         );

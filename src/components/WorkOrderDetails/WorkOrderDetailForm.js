@@ -68,7 +68,6 @@ class WorkOrderDetailForm extends Component {
 
     submit = (event) => {
         event.preventDefault();
-        if (this.state.status === 'Complete') { this.props.dispatch({ type: 'SET_DATECOMPLETED', payload:{workOrderId: this.state.workOrderId}})}
         this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority } });
         this.props.history.push('/user');
     }
@@ -96,8 +95,16 @@ class WorkOrderDetailForm extends Component {
         this.props.dispatch({ type: 'SET_TIMEOUT', payload:{workOrderId:this.state.workOrderId}})
     }
     handleSelect = (event) => {
-        console.log(event.target.name);
-        console.log(event.target.value);
+        // console.log(event.target.name);
+        // console.log(event.target.value);
+        this.setState({
+            ...this.state,
+            [event.target.name]: event.target.value
+        })
+    }
+
+    handleStatus = (event) => {
+        if (event.target.value === 'Complete') { this.props.dispatch({ type: 'SET_DATECOMPLETED', payload: { workOrderId: this.state.workOrderId } }) }
         this.setState({
             ...this.state,
             [event.target.name]: event.target.value
@@ -153,7 +160,7 @@ class WorkOrderDetailForm extends Component {
                                                     <Grid item xs={12} md={8}>
                                                         <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                             <InputLabel >Status</InputLabel>
-                                                            <Select fullWidth name="status" value={this.state.status} onChange={this.handleSelect}>
+                                                            <Select fullWidth name="status" value={this.state.status} onChange={this.handleStatus}>
                                                                 <MenuItem value={'Submitted'}>Submitted</MenuItem>
                                                                 <MenuItem value={'Assigned To Maintenance'}>Assigned To Maintenance</MenuItem>
                                                                 <MenuItem value={'Reviewed by Maintenance'}>Reviewed by Maintenance</MenuItem>
@@ -254,14 +261,14 @@ class WorkOrderDetailForm extends Component {
                                         /><br /><br />
                                         <Grid container style={{marginBottom:15}} justify='center'>
                                             <Grid style={{textAlign:'center', marginTop: 15, marginBottom:15}} item xs={12} md={4}>
-                                                <TextField name='dateCompleted' value={this.state.dateCompleted} onChange={this.dateComplete} InputLabelProps={{ shrink: true }} type='date' variant='outlined' label='Date Work Complete' />
+                                                <Typography><strong>Date Completed: </strong> <br />{this.props.workOrder.date_completed === null ? '' : moment(this.props.workOrder.date_completed).format('MMMM Do YYYY')}</Typography>
                                             </Grid>
                                             <Grid style={{ textAlign: 'center', marginTop: 15, marginBottom:15 }} item xs={12} md={4}>
-                                                {this.props.workOrder.time_in && <Typography><strong>Time In: </strong>{moment(this.props.timeIn).format('LLL')}</Typography>}
+                                                {this.props.workOrder.time_in && <Typography><strong>Time In: </strong><br />{moment(this.props.workOrder.time_in).format('MMMM Do YYYY, h:mm a')}</Typography>}
                                                 {this.props.workOrder.time_in == null && <Button onClick={this.timeIn}>Time In</Button>}
                                             </Grid>
                                             <Grid style={{ textAlign: 'center', marginTop:15, marginBottom:15 }} item xs={12} md={4}>
-                                                {this.props.workOrder.time_out && <Typography><strong>Time Out: </strong>{moment(this.props.timeIn).format('LLL')}</Typography>}
+                                                {this.props.workOrder.time_out && <Typography><strong>Time Out: </strong><br />{moment(this.props.workOrder.time_out).format('MMMM Do YYYY, h:mm a')}</Typography>}
                                                 {this.props.workOrder.time_out == null && <Button onClick={this.timeOut}>Time Out</Button>}
                                             </Grid>
                                         </Grid>
