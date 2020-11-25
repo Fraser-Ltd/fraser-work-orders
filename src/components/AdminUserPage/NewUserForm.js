@@ -10,7 +10,8 @@ class NewUserForm extends Component {
         email: this.props.user.email,
         role: this.props.user.role,
         username: this.props.user.username,
-        password: ''
+        password: '',
+        id: this.props.user.id
         
     }
     saveChanges = (event) => {
@@ -34,6 +35,20 @@ class NewUserForm extends Component {
             [event.target.name]: event.target.value
         });
         console.log('in handleChange');
+    }
+
+    propsChange = () => {
+        if(this.props.user.id !== this.state.id){
+            this.setState({
+                firstName: this.props.user.firstName,
+                lastName: this.props.user.lastName,
+                email: this.props.user.email,
+                role: this.props.user.role,
+                username: this.props.user.username,
+                password: '',
+                id: this.props.user.id
+            });
+        }
     }
 
     handleSubmit = (event) => {
@@ -69,6 +84,7 @@ class NewUserForm extends Component {
         })
     }
     render() {
+        this.propsChange();
         console.log('newuserform props', this.props)
         return (
             <>
@@ -80,10 +96,16 @@ class NewUserForm extends Component {
                     <input name='firstName' type='text' value={this.state.firstName} onChange={this.handleChange} placeholder='First Name' />
                     <input name='lastName' type='text' value={this.state.lastName} onChange={this.handleChange} placeholder='Last Name' />
                     <input name='email' type='text' value={this.state.email} onChange={this.handleChange} placeholder='E-mail' />
-                    <input name='role' type='text' value={this.state.role} onChange={this.handleChange} placeholder='Role' />
-                    <input name='username' type='text' value={this.state.username} onChange={this.handleChange} placeholder='Username' />
-                    {!this.props.edit && <><input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
-                    <button onClick={this.handleSubmit} type="submit">Add New User</button></>}
+                        <select value={this.state.role} onChange={this.handleChange} id="cars" name="role">
+                            <option value="" >Role</option>
+                            <option value={1}>Admin</option>
+                            <option value={2} >Maintenance</option>
+                            <option value={3}>Resident Coordinator</option>
+                        </select>            
+                            <input name='username' type='text' value={this.state.username} onChange={this.handleChange} placeholder='Username' />
+                            {!this.props.edit && <><input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
+                            <button onClick={this.handleSubmit} type="submit">Add New User</button></>}
+                        
                     {this.props.edit && <button onClick={this.saveChanges}>Save Changes</button>}
                 </form>
                 </div>

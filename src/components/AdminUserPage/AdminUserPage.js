@@ -120,13 +120,13 @@ class AdminUserPage extends Component {
                                     <TableBody>
                                         {this.props.allUsers[0] && this.props.allUsers
                                             .map((userList) =>
-                                                <AdminUserPageTableItem editUser={this.editUser} userList={userList} key={userList.id} />
+                                                <AdminUserPageTableItem clearEditUser={this.clearEditUser} editUser={this.editUser} userList={userList} key={userList.id} />
                                             )}
 
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                            {!this.state.edit && <NewUserForm edit={this.state.edit} user={this.state.user}/>}
+                            {!this.state.edit && <NewUserForm clearEditUser={this.clearEditUser} edit={this.state.edit} user={this.state.user}/>}
                             {this.state.edit && <NewUserForm clearEditUser={this.clearEditUser} edit={this.state.edit} user={this.state.user}/>}
                         </Paper>
                     </Grid>
