@@ -1,15 +1,13 @@
 import React , { Component} from 'react';
 import moment from 'moment';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 
 //material ui imports
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -26,8 +24,10 @@ const styles = theme => ({
         textAlign: 'center',
     },
     row: {
-        '&:hover': { cursor: 'pointer' }
+        '&:hover': { cursor: 'pointer', backgroundColor:'rgb(222, 221, 221)' }
     },
+    red: { backgroundColor: 'rgba(229, 0, 0, 0.6)', color: 'white', '&:hover': { backgroundColor:'rgba(229, 0, 0, 0.75)', cursor:'pointer'}},
+    red2:{color:'white'},
     newOrder: {
         margin: 20,
         backgroundColor: 'yellow',
@@ -35,11 +35,15 @@ const styles = theme => ({
     },
     cells:{
         textAlign:'center',
+        '&:hover':{color:'white'}
     },
 });
 
 class WorkOrderTableItem extends Component {
     
+    details = () => {
+        this.props.history.push(`/workOrderDetails/${this.props.workOrder.id}`);
+    }
 
     render(){
         const {classes} = this.props;
@@ -51,19 +55,22 @@ class WorkOrderTableItem extends Component {
         }
         return(
             <>
-                <TableRow className={classes.row} hover={true} onClick={this.clicked}>
-                    <TableCell className={classes.cells}>{workOrder.id}</TableCell>
-                    <TableCell className={classes.cells}>Fraser 1</TableCell>
-                    <TableCell className={classes.cells}>{workOrder.work_to_be_done}</TableCell>
-                    <TableCell className={classes.cells}><Button>Details</Button></TableCell>
-                    <TableCell className={classes.cells}>{priority()}</TableCell>
-                    <TableCell className={classes.cells}>{workOrder.status}</TableCell>
-                    <TableCell className={classes.cells}>{moment(workOrder.date_added).calendar()}</TableCell>
+                <TableRow className={workOrder.emergency ? classes.red:classes.row}  onClick={this.details}>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.id}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{this.props.properties[0] &&
+                                this.props.properties.filter(prop => prop.id === workOrder.property_id)[0].property_name}
+                    </TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.work_to_be_done}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{priority()}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.status}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{moment(workOrder.date_added).calendar()}</TableCell>
                 </TableRow>  
             </>
         );
     }
 }
+const mapStoreToProps = (store) => ({
+    properties: store.properties
+})
 
-
-export default withStyles(styles, {withTheme:true})(WorkOrderTableItem);
+export default connect(mapStoreToProps)(withStyles(styles, {withTheme:true})(withRouter(WorkOrderTableItem)));
