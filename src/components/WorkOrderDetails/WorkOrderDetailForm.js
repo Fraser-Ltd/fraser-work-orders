@@ -79,6 +79,14 @@ class WorkOrderDetailForm extends Component {
         })
     }
 
+    assignWorkOrder = (event) => {
+        this.setState({
+            ...this.state,
+            [event.target.name]: event.target.value,
+            status: 'Assigned To Maintenance'
+        });
+    }
+
     handleChange = (event) => {
         console.log(event.target.name)
         console.log(event.target.checked)
@@ -100,7 +108,7 @@ class WorkOrderDetailForm extends Component {
         this.setState({
             ...this.state,
             [event.target.name]: event.target.value
-        })
+        });
     }
 
     handleStatus = (event) => {
@@ -144,9 +152,9 @@ class WorkOrderDetailForm extends Component {
                                                     <Grid item xs={12}>
                                                         <Typography><strong>Name:</strong> {this.props.property.property_name}</Typography>
                                                     </Grid>
-                                                    <Grid item xs={12}>
+                                                    {this.props.unit !== null && <Grid item xs={12}>
                                                         <Typography><strong>Unit:</strong> {this.props.unit.unit}</Typography>
-                                                    </Grid>
+                                                    </Grid>}
                                                     <Grid item xs={12} >
                                                         <Typography><strong>Address:</strong> {this.props.property.property_address}</Typography>
                                                     </Grid>
@@ -173,7 +181,7 @@ class WorkOrderDetailForm extends Component {
                                                         </FormControl>
                                                         <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                             <InputLabel >Assigned To:</InputLabel>
-                                                            <Select required fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.handleSelect}>
+                                                            <Select required fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
                                                                 {this.props.allUsers.filter(user => user.role === 2)
                                                                     .map(user => <MenuItem
                                                                         key={user.id}

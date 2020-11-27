@@ -36,7 +36,7 @@ class WorkOrderDetails extends Component {
         // console.log('this props is', this.props)
         return (
             <>
-            {workOrder && property && unit && assignedTo && addedBy && 
+            {workOrder && property && assignedTo && addedBy && 
             <WorkOrderDetailForm
                 workOrder={workOrder}
                 property={property}
