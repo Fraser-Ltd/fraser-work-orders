@@ -40,14 +40,20 @@ const styles = theme => ({
 
 class PropertyTableItem extends Component {
 
+    clicked = ()=>{
+        let property = this.props.property
+        this.props.editProperty(property.property_name, property.property_address, property.resident_coordinator, property.id)
+    }
+    
     render() {
         const { classes } = this.props;
         const property = this.props.property;
         return (
             <>
-                <TableRow className={classes.row} hover={true} onClick={this.clicked}>
+               <TableRow className={classes.row} hover={true} onClick={this.clicked}>
                     <TableCell className={classes.cells}>{property.property_name}</TableCell>
                     <TableCell className={classes.cells}>{property.property_address}</TableCell>
+                    <TableCell className={classes.cells}>{property.rc_name}</TableCell>
                     <TableCell className={classes.cells}><button type='submit'>Edit Property</button></TableCell>
                 </TableRow>
             </>

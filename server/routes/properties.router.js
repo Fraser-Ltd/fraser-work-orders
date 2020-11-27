@@ -8,7 +8,8 @@ const { rejectUnauthenticated, } = require('../modules/authentication-middleware
 
 router.get("/", rejectUnauthenticated, (req, res) => {
 
-  const queryText = `SELECT * FROM "properties"`;
+  const queryText = `SELECT "properties"."id", "property_name", "property_address", "resident_coordinator", CONCAT("first_name", ' ',  "last_name") as "rc_name" FROM "properties"
+  JOIN "user" ON "user"."id" = "properties"."resident_coordinator"`;
   pool
     .query(queryText)
     .then((result) => res.send(result.rows))
@@ -51,14 +52,14 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 //        residentCoordinator: value,
 //       }
 
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
 
   const propId = req.body.id
   const propName = req.body.propertyName
   const propAdd = req.body.propertyAddress
   const propRes = req.body.residentCoordinator
 
-  let queryText = `UPDATE "properties" SET "property_name" = $1, "property_address" = $2, "resident_coordinator" = $3)
+  let queryText = `UPDATE "properties" SET "property_name" = $1, "property_address" = $2, "resident_coordinator" = $3
                  WHERE "id" =$4`
   pool.query(queryText, [propName, propAdd, propRes, propId])
     .then(result => {
