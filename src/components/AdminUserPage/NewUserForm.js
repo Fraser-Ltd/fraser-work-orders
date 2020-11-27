@@ -10,23 +10,17 @@ class NewUserForm extends Component {
         email: this.props.user.email,
         role: this.props.user.role,
         username: this.props.user.username,
-        password: ''
+        password: '',
+        archiveEmployee: this.props.user.archiveEmployee,
+        id: this.props.user.id
         
     }
     saveChanges = (event) => {
         event.preventDefault();
         this.props.dispatch({
             type: 'UPDATE_USER_ADMIN',
-            payload: {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                role: this.state.role,
-                username: this.state.username,
-                archiveEmployee: false,
-                id: this.props.user.id
-            }
-        })
+            payload: this.state
+        });
         this.props.clearEditUser();
     }
     handleChange = (event) => {
@@ -34,6 +28,21 @@ class NewUserForm extends Component {
             [event.target.name]: event.target.value
         });
         console.log('in handleChange');
+    }
+
+    propsChange = () => {
+        if(this.props.user.id !== this.state.id){
+            this.setState({
+                firstName: this.props.user.firstName,
+                lastName: this.props.user.lastName,
+                email: this.props.user.email,
+                role: this.props.user.role,
+                username: this.props.user.username,
+                password: '',
+                archiveEmployee: this.props.user.archiveEmployee,
+                id: this.props.user.id
+            });
+        }
     }
 
     handleSubmit = (event) => {
@@ -69,22 +78,34 @@ class NewUserForm extends Component {
         })
     }
     render() {
+        this.propsChange();
         console.log('newuserform props', this.props)
         return (
             <>
                 <div>
-                    <h2>Add New User:</h2>
+                    <h2>{this.props.edit ? 'Edit User:' : 'Add New User:'}</h2>
                 </div>
                 <div>
-                    <form >
-                    <input name='firstName' type='text' value={this.state.firstName} onChange={this.handleChange} placeholder='First Name' />
-                    <input name='lastName' type='text' value={this.state.lastName} onChange={this.handleChange} placeholder='Last Name' />
-                    <input name='email' type='text' value={this.state.email} onChange={this.handleChange} placeholder='E-mail' />
-                    <input name='role' type='text' value={this.state.role} onChange={this.handleChange} placeholder='Role' />
-                    <input name='username' type='text' value={this.state.username} onChange={this.handleChange} placeholder='Username' />
-                    {!this.props.edit && <><input name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
-                    <button onClick={this.handleSubmit} type="submit">Add New User</button></>}
-                    {this.props.edit && <button onClick={this.saveChanges}>Save Changes</button>}
+                    <form onSubmit={this.props.edit? this.saveChanges : this.handleSubmit}>
+                    <input required name='firstName' type='text' value={this.state.firstName} onChange={this.handleChange} placeholder='First Name' />
+                    <input required name='lastName' type='text' value={this.state.lastName} onChange={this.handleChange} placeholder='Last Name' />
+                    <input required name='email' type='text' value={this.state.email} onChange={this.handleChange} placeholder='E-mail' />
+                        <select required value={this.state.role} onChange={this.handleChange} id="cars" name="role">
+                            <option value="" >Role</option>
+                            <option value={1}>Admin</option>
+                            <option value={2} >Maintenance</option>
+                            <option value={3}>Resident Coordinator</option>
+                        </select>
+                        {this.props.edit && <select onChange={this.handleChange} name="archiveEmployee" value={this.state.archiveEmployee}>
+                            <option value={false}>Active</option>
+                            <option value={true}>Removed</option>
+                        </select>}
+
+                            <input required name='username' type='text' value={this.state.username} onChange={this.handleChange} placeholder='Username' />
+                            {!this.props.edit && <><input required name='password' type='text' value={this.state.password} onChange={this.handleChange} placeholder='Password' />
+                            <button type="submit">Add New User</button></>}
+                        
+                    {this.props.edit && <button type="submit">Save Changes</button>}
                 </form>
                 </div>
                 

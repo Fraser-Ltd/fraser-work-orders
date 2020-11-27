@@ -5,9 +5,19 @@ import { connect } from 'react-redux';
 class propertyDetail extends Component {
 
     state = {
-        propertyName: '',
-        propertyAddress: '',
-        residentCoordinator: '',
+        propertyName: this.props.properties.propertyName,
+        propertyAddress: this.props.properties.propertyAddress,
+        residentCoordinator: this.props.properties.residentCoordinator,
+        id: this.props.properties.id
+    }
+
+    saveChanges = (event) => {
+        event.preventDefault();
+        this.props.dispatch({
+            type: 'EDIT_PROPERTY',
+            payload: this.state
+        })
+        this.props.clearEditProperty();
     }
 
     handleChange = (event) => {
@@ -41,7 +51,8 @@ class propertyDetail extends Component {
                     <input name='propertyName' type='text' value={this.state.propertyName} onChange={this.handleChange} placeholder='Property Name' />
                     <input name='propertyAddress' type='text' value={this.state.propertyAddress} onChange={this.handleChange} placeholder='Property Address' />
                     <input name='residentCoordinator' type='text' value={this.state.residentCoordinator} onChange={this.handleChange} placeholder='1' />
-                    <button type="submit">Submit Item</button>
+                    {!this.props.edit && <button onClick={this.handleSubmit} type="submit">Add New Property</button>}
+                    {this.props.edit && <button onClick={this.saveChanges}>Save Changes</button>}
                 </form></div>
             </>
         )
