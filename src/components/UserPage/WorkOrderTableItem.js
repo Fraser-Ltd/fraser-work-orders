@@ -49,7 +49,7 @@ class WorkOrderTableItem extends Component {
         const {classes} = this.props;
         const workOrder = this.props.workOrder;
         const priority = () => {
-            if(workOrder.priority === null) return 'No Priority'
+            if(workOrder.priority === (null || 0)) return 'No Priority'
             else if (workOrder.priority === 1) return 'Low'
             else if (workOrder.priority === 2) return 'High'
         }

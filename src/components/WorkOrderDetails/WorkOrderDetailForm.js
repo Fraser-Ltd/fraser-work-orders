@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper';
 const styles = theme => ({
     right: {
         [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
+            textAlign: 'left'
         },
         [theme.breakpoints.up('md')]: {
             textAlign: 'right'
@@ -27,7 +27,7 @@ const styles = theme => ({
     },
     left: {
         [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
+            textAlign: 'left'
         },
         [theme.breakpoints.up('md')]: {
             textAlign: 'left'
@@ -45,9 +45,9 @@ class WorkOrderDetailForm extends Component {
         doorHanger: this.props.workOrder.door_hanger,
         emergency: this.props.workOrder.emergency,
         workToBeDone: this.props.workOrder.work_to_be_done,
-        detailsOfWorkDone: this.props.workOrder.details_of_work_done || '',
+        detailsOfWorkDone: this.props.workOrder.details_of_work_done || '',//if details is null value will be empty string
         status: this.props.workOrder.status,
-        assignedTo: this.props.workOrder.assigned_to || '',
+        assignedTo: this.props.workOrder.assigned_to || '',//if assigned_to is null set it to an empty string
         reacInspection: this.props.workOrder.reac_inspection,
         smokeDetectors: this.props.workOrder.smoke_detectors,
         housekeepingInspection: this.props.workOrder.housekeeping_inspection,
@@ -55,10 +55,10 @@ class WorkOrderDetailForm extends Component {
         remarks: this.props.workOrder.remarks,
         unitId: this.props.workOrder.unit_id,
         tenantNotHome: this.props.workOrder.tenant_not_home,
-        priority: this.props.workOrder.priority || '',
+        priority: this.props.workOrder.priority || '',// priority will always come in as null the first time so we set it to an empty string
         timeIn: this.props.workOrder.time_in,
         timeOut: this.props.workOrder.time_out,
-        dateCompleted: this.props.workOrder.date_completed || ''
+        dateCompleted: this.props.workOrder.date_completed 
     }
 
 
@@ -143,6 +143,9 @@ class WorkOrderDetailForm extends Component {
                                                 <Grid container className={classes.left} >
                                                     <Grid item xs={12}>
                                                         <Typography><strong>Name:</strong> {this.props.property.property_name}</Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <Typography><strong>Unit:</strong> {this.props.unit.unit}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} >
                                                         <Typography><strong>Address:</strong> {this.props.property.property_address}</Typography>
