@@ -52,14 +52,14 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 //        residentCoordinator: value,
 //       }
 
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
 
   const propId = req.body.id
   const propName = req.body.propertyName
   const propAdd = req.body.propertyAddress
   const propRes = req.body.residentCoordinator
 
-  let queryText = `UPDATE "properties" SET "property_name" = $1, "property_address" = $2, "resident_coordinator" = $3)
+  let queryText = `UPDATE "properties" SET "property_name" = $1, "property_address" = $2, "resident_coordinator" = $3
                  WHERE "id" =$4`
   pool.query(queryText, [propName, propAdd, propRes, propId])
     .then(result => {

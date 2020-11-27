@@ -16,7 +16,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import propertyDetail from './propertyDetail';
 
 const styles = theme => ({
     root: {
@@ -47,10 +46,10 @@ class property extends Component {
     state = {
         edit: false,
         properties: {
-            property_name: '',
-            property_address: '',
-            resident_coordinator: '',
-            id: id
+            propertyName: '',
+            propertyAddress: '',
+            residentCoordinator: '',
+            id: ''
         }
     }   
 
@@ -58,21 +57,22 @@ class property extends Component {
         this.setState({
             edit: false,
             properties: {
-                property_name: '',
-                property_address: '',
-                resident_coordinator: '',
-                id: id
+                propertyName: '',
+                propertyAddress: '',
+                residentCoordinator: '',
+                id: ''
             }
         })
     }
 
     editProperty = (propertyName, propertyAddress, resCoordinator, id) =>{
+        console.log('in editProperty')
         this.setState ({
             edit: true,
             properties: {
-                property_name: propertyName,
-                property_address: propertyAddress,
-                resident_coordinator: resCoordinator,
+                propertyName: propertyName,
+                propertyAddress: propertyAddress,
+                residentCoordinator: resCoordinator,
                 id: id
             }
         })
@@ -113,17 +113,17 @@ class property extends Component {
                                     </TableHead>
                                     <TableBody>
                                         {this.props.properties[0] && this.props.properties.map((property) => 
-                                            <PropertyTableItem key={property.id} editProperty={this.editProperty} userList={userList} />
+                                            <PropertyTableItem key={property.id} editProperty={this.editProperty} property={property} />
                                         )}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                            {!this.state.edit && <propertyDetail edit={this.state.edit} properties={this.state.properties}/>}
-                            {this.state.edit && <propertyDetail clearEditUser={this.clearEditProperty} edit={this.state.edit} user={this.state.user}/>}                            
+                            {!this.state.edit && <PropertyDetail edit={this.state.edit} properties={this.state.properties}/>}
+                            {this.state.edit && <PropertyDetail clearEditProperty={this.clearEditProperty} edit={this.state.edit} properties={this.state.properties}/>}                            
                         </Paper>
                     </Grid>
                 </Grid>
-                <PropertyDetail />
+
             </>
         );
     }

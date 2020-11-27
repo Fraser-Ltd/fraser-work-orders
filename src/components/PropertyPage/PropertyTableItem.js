@@ -41,8 +41,8 @@ const styles = theme => ({
 class PropertyTableItem extends Component {
 
     clicked = ()=>{
-        let property = this.props.properties
-        this.props.editProperty(properties.property_name, properties.property_address, properties.resident_coordinator, properties.id)
+        let property = this.props.property
+        this.props.editProperty(property.property_name, property.property_address, property.resident_coordinator, property.id)
     }
     
     render() {
