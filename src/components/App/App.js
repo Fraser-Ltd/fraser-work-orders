@@ -77,6 +77,8 @@ class App extends Component {
               component={InfoPage}
             />
 
+
+
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
@@ -104,6 +106,7 @@ class App extends Component {
               component={LoginPage}
               authRedirect="/user"
             />
+            
             <ProtectedRoute
               // with authRedirect:
               // - if logged in, redirects to "/user"
