@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import { object, ref, string } from 'yup'
 
 class UserProfile extends Component {
   state = {
@@ -44,7 +45,10 @@ class UserProfile extends Component {
         <h3>Email: {this.props.user.email}</h3>
         <button onClick={this.editUser}>Edit Profile</button></>}
         {this.state.edit && this.props.user.id && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
-        <PasswordItem username={this.props.user.username} />
+        
+        <button onClick={this.editUser}>Change Password</button>
+        {this.state.edit && this.props.user.id && <PasswordItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
+
       </div>
     );
   }

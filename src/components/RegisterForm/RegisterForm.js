@@ -4,8 +4,9 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 class RegisterForm extends Component {
   state = {
-    username: '',
-    password: '',
+    password: "",
+    oldPassword: "",
+    confirmPassword: "",
   };
 
   registerUser = (event) => {
