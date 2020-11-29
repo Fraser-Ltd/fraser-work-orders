@@ -13,6 +13,14 @@ function* getWorkOrders(){
         console.log('Error in getWorkOrders saga', error);
     }
 }
+function* getWorkOrdersOrder(action){
+    try{
+        const response = yield axios.get(`api/work_orders/${action.payload.column}/${action.payload.order}`);
+        yield put({ type: 'SET_WORKORDERS', payload: response.data})
+    }catch (error){
+        console.log('Error in getWorkOrders saga', error);
+    }
+}
 //another get for completed w/o's
 function* getCompletedWorkOrders() {
     try {
@@ -95,6 +103,7 @@ function* workOrdersSaga() {
     yield takeLatest('ADD_WORKORDER', addWorkOrders); 
     yield takeLatest('REMOVE_WORKORDERS', removeWorkOrders);
     yield takeLatest('UPDATE_WORKORDERS', updateWorkOrders);
+    yield takeLatest('FETCH_WORKORDERS_ORDER', getWorkOrdersOrder);
 }
 
 export default workOrdersSaga;

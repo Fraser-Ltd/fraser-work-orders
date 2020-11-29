@@ -28,7 +28,8 @@ const styles = theme => ({
         textAlign:'center'
     },
     tableHeading: {
-        textAlign: 'center',
+        textAlign: 'center', cursor:'pointer',
+        '&:hover': { backgroundColor: 'rgb(222, 221, 221)'}
     },
     row: {
         '&:hover': { cursor: 'pointer' }
@@ -43,7 +44,13 @@ const styles = theme => ({
 
 
 class WorkOrdersTable extends Component {
-
+    state={
+        order: 'asc'
+    }
+    getWorkOrders = (heading) => {
+        this.setState({order: this.state.order === 'asc'? 'desc': 'asc'});
+        this.props.dispatch({ type: 'FETCH_WORKORDERS_ORDER', payload: { column: heading, order: this.state.order}})
+    }
     componentDidMount = () => {
         this.props.dispatch({ type: "FETCH_PROPERTY" });
     };
@@ -60,12 +67,12 @@ class WorkOrdersTable extends Component {
                             <Table stickyHeader size='medium'>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell className={classes.tableHeading}>W.O #</TableCell>
-                                        <TableCell className={classes.tableHeading}>Property</TableCell>
-                                        <TableCell className={classes.tableHeading}>Description</TableCell>
-                                        <TableCell className={classes.tableHeading}>Priority</TableCell>
-                                        <TableCell className={classes.tableHeading}>Status</TableCell>
-                                        <TableCell className={classes.tableHeading}>Date Submitted</TableCell>
+                                        <TableCell className={classes.tableHeading} onClick={()=> this.getWorkOrders('id')}>W.O #</TableCell>
+                                            <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('property_id')} >Property</TableCell>
+                                            <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('work_to_be_done')}>Description</TableCell>
+                                            <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('priority')}>Priority</TableCell>
+                                            <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('status')}>Status</TableCell>
+                                            <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('date_added')}>Date Submitted</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
