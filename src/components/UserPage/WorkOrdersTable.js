@@ -63,6 +63,7 @@ class WorkOrdersTable extends Component {
                     <Grid item xs={11}>
                         <Paper>
                         <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
+                        <Typography variant='subtitle1' className={classes.heading}>Click on column heading to sort</Typography>
                         <TableContainer className={classes.root} component={Paper}>
                             <Table stickyHeader size='medium'>
                                 <TableHead>

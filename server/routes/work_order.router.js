@@ -27,10 +27,10 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             res.sendStatus(500);
         })
     } else if (role === 3) {//user with level 3 should get all work orders in which they are assigned to the property as RC
-        queryText = `SELECT "work_orders"."id", "property_id", "date_added", "permission_to_enter",
+        queryText = `SELECT "work_orders"."id","priority", "property_id", "date_added", "permission_to_enter",
             "door_hanger", "emergency", "work_to_be_done", "details_of_work_done", "time_in", "time_out",
             "status", "assigned_to", "added_by_id", "reac_inspection", "smoke_detectors", 
-            "housekeeping_inspection", "exterminating", "remarks" FROM "work_orders" 
+            "housekeeping_inspection", "exterminating", "remarks","date_completed" FROM "work_orders" 
             JOIN "properties" ON "properties"."id" = "work_orders"."property_id" 
             WHERE "status" != 'Complete' AND "resident_coordinator" = $1`;
         pool.query(queryText,[req.user.id])
@@ -81,7 +81,7 @@ setColumn()
             res.sendStatus(500);
         })
     } else if (role === 2) {//user with level 2 should get all work orders assinend to that maintenance person
-        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'Complete'`;
+        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'Complete' ORDER BY ${column} ${direction}`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {
@@ -89,12 +89,12 @@ setColumn()
             res.sendStatus(500);
         })
     } else if (role === 3) {//user with level 3 should get all work orders in which they are assigned to the property as RC
-        queryText = `SELECT "work_orders"."id", "property_id", "date_added", "permission_to_enter",
+        queryText = `SELECT "work_orders"."id","priority", "property_id", "date_added", "permission_to_enter",
             "door_hanger", "emergency", "work_to_be_done", "details_of_work_done", "time_in", "time_out",
             "status", "assigned_to", "added_by_id", "reac_inspection", "smoke_detectors", 
-            "housekeeping_inspection", "exterminating", "remarks" FROM "work_orders" 
+            "housekeeping_inspection", "exterminating", "remarks", "date_completed" FROM "work_orders" 
             JOIN "properties" ON "properties"."id" = "work_orders"."property_id" 
-            WHERE "status" != 'Complete' AND "resident_coordinator" = $1`;
+            WHERE "status" != 'Complete' AND "resident_coordinator" = $1 ORDER BY ${column} ${direction}`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
         .catch(error => {
