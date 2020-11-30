@@ -77,8 +77,6 @@ class App extends Component {
               component={InfoPage}
             />
 
-
-
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
