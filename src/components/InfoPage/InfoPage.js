@@ -36,6 +36,14 @@ class UserProfile extends Component {
     this.setState({edit: false})
   }
 
+  editPassword = () => {
+    this.setState({edit: true})
+  }
+
+  clearPassword = () => {
+    this.setState({edit: false})
+  }
+
   componentDidMount() {
     this.props.dispatch({
       type: 'FETCH_USER'
@@ -45,6 +53,7 @@ class UserProfile extends Component {
   render() {
     console.log(this.props)
     const user1=this.props.user
+    const user2=this.props.user
     return (
       <div className="userProfile">
         
@@ -57,7 +66,7 @@ class UserProfile extends Component {
         {this.state.edit && this.props.user.id && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
         <>  </>
         <Button color="primary" variant="contained" onClick={this.editUser}>Change Password</Button>
-        {this.state.edit && this.props.user.id && <PasswordItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
+        {this.state.edit && this.props.user.id && <PasswordItem clearEdit = {this.clearEdit} user={user2} username={this.props.user.username} />}
 
       </div>
     );

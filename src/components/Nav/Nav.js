@@ -25,7 +25,7 @@ const Nav = (props) => {
       </div>
 
       <div className="column middle">
-      <h2 className="title">Fraser MMS</h2>
+      <h1 className="title">Fraser MMS</h1>
       </div>
 
       <div className="column right">
