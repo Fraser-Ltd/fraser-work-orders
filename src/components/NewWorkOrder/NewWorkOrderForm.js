@@ -41,7 +41,21 @@ class NewWorkOrderForm extends Component {
 
     submit = (e) => {
         e.preventDefault()
-        this.props.dispatch({ type: 'ADD_WORKORDER', payload: this.state})
+        this.props.dispatch({ type: 'ADD_WORKORDER', payload: {...this.state, unitId: this.state.unitId === ''? null: this.state.unitId}});
+        this.setState({
+            propertyId: '',
+            dateAdded: moment().format(),
+            permissionToEnter: false,
+            emergency: false,
+            workToBeDone: '',
+            status: 'Submitted',
+            addedById: this.props.user.id,
+            reacInspection: false,
+            remarks: '',
+            unitId: '',
+            tennantNotHome: false,
+        });
+        this.props.history.push('/user');
     }
 
     handleCheck = (event) => {
@@ -93,7 +107,9 @@ class NewWorkOrderForm extends Component {
                                                         </FormControl>
                                                     </Grid>
                                                 </Grid>
-                                                {this.state.propertyId !== '' && <Grid container justify='center'>
+                                                {this.state.propertyId !== '' && 
+                                                this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId)[0] &&
+                                                <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
                                                         <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                             <InputLabel >Unit:</InputLabel>
@@ -119,7 +135,7 @@ class NewWorkOrderForm extends Component {
 
 
                                         <Grid item xs={12} >
-                                            <Grid container direction='column' alignItems='center' justify='center' style={{ textAlign: 'left' }}>
+                                            <Grid container direction='column' alignItems='center' justify='center' style={{ textAlign: 'left', marginBottom: 15 }}>
                                                 <Grid item xs={12}>
                                                     <Grid item xs={12}>
                                                         <FormControlLabel
