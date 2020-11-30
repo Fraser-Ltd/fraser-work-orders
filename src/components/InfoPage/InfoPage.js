@@ -65,7 +65,7 @@ class UserProfile extends Component {
         <Button color="primary" variant="contained" onClick={this.editUser}>Edit Profile</Button></>}
         {this.state.edit && this.props.user.id && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
         <>  </>
-        <Button color="primary" variant="contained" onClick={this.editUser}>Change Password</Button>
+        <Button color="primary" variant="contained" onClick={this.editPassword}>Change Password</Button>
         {this.state.edit && this.props.user.id && <PasswordItem clearEdit = {this.clearEdit} user={user2} username={this.props.user.username} />}
 
       </div>
