@@ -25,23 +25,25 @@ const styles = theme => ({
 
 class UserProfile extends Component {
   state = {
-   edit: false
+   edit: false,
+   editPassword: false,
+   showUserInfo: true
   };
 
   editUser = () => {
-    this.setState({edit: true})
+    this.setState({edit: true, showUserInfo: false})
   }
 
   clearEdit = () => {
-    this.setState({edit: false})
+    this.setState({edit: false, showUserInfo: true})
   }
 
   editPassword = () => {
-    this.setState({edit: true})
+    this.setState({editPassword: true, showUserInfo: false})
   }
 
   clearPassword = () => {
-    this.setState({edit: false})
+    this.setState({editPassword: false, showUserInfo: true})
   }
 
   componentDidMount() {
@@ -53,20 +55,18 @@ class UserProfile extends Component {
   render() {
     console.log(this.props)
     const user1=this.props.user
-    const user2=this.props.user
     return (
       <div className="userProfile">
         
-        {!this.state.edit && <><h1>{this.props.user.first_name}'s Profile</h1>
+        {this.state.showUserInfo && <><h1>{this.props.user.first_name}'s Profile</h1>
         <h3>Username: {this.props.user.username}</h3>
         <h3>Name: {this.props.user.first_name} {this.props.user.last_name}</h3>
         <h3>Email: {this.props.user.email}</h3>
         <br></br>
-        <Button color="primary" variant="contained" onClick={this.editUser}>Edit Profile</Button></>}
-        {this.state.edit && this.props.user.id && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
-        <>  </>
-        <Button color="primary" variant="contained" onClick={this.editPassword}>Change Password</Button>
-        {this.state.edit && this.props.user.id && <PasswordItem clearEdit = {this.clearEdit} user={user2} username={this.props.user.username} />}
+        <Button style={{margin: 10}}color="primary" variant="contained" onClick={this.editUser}>Edit Profile</Button>
+        <Button style={{margin: 10}}color="primary" variant="contained" onClick={this.editPassword}>Change Password</Button></>}
+        {this.state.edit && this.props.user.id && !this.state.editPassword && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
+        {this.state.editPassword && this.props.user.id && !this.state.edit && <PasswordItem clearEdit = {this.clearPassword} user={user1} username={this.props.user.username} />}
 
       </div>
     );
