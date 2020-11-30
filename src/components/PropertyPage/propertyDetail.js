@@ -15,7 +15,7 @@ class propertyDetail extends Component {
         propertyAddress: this.props.properties.propertyAddress,
         residentCoordinator: this.props.properties.residentCoordinator,
         id: this.props.properties.id,
-        unit: ''
+        unit: this.props.units.unit
     }
 
     componentDidMount() {
@@ -70,7 +70,7 @@ class propertyDetail extends Component {
                     <input name='propertyName' type='text' value={this.state.propertyName} onChange={this.handleChange} placeholder='Property Name' />
                     <input name='propertyAddress' type='text' value={this.state.propertyAddress} onChange={this.handleChange} placeholder='Property Address' />
                     <select name='unit' id='unit' onChange={this.handleChange} placeholder="unit">
-                        {this.props.units[0] && this.props.unit.filter(unit => unit.property_id === 1).map(unit => <option value={unit.unit}>{unit.unit}</option>)}
+                        {this.props.units[0] && this.props.units.filter(unit => unit.property_id === 1).map(unit => <option value={unit.unit}>{unit.unit}</option>)}
 
                     </select>
                     <select name='residentCoordinator' id='Resident Coordinator' onChange={this.handleChange} placeholder="Resident Coordinator">
