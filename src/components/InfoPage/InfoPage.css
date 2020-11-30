@@ -1,0 +1,23 @@
+.userProfile {
+text-align: center;
+}
+
+.passWORD {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    flex: 1 1 auto;
+  }
+  
+  .passWORD--wrapper {
+    margin: 32px 0;
+  }
+  
+  .passWORD--error {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
