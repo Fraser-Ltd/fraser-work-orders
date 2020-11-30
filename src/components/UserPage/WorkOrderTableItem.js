@@ -35,7 +35,6 @@ const styles = theme => ({
     },
     cells:{
         textAlign:'center',
-        '&:hover':{color:'white'}
     },
 });
 
@@ -49,7 +48,7 @@ class WorkOrderTableItem extends Component {
         const {classes} = this.props;
         const workOrder = this.props.workOrder;
         const priority = () => {
-            if(workOrder.priority === null) return 'No Priority'
+            if(workOrder.priority === null || workOrder.priority === 0) return 'No Priority'
             else if (workOrder.priority === 1) return 'Low'
             else if (workOrder.priority === 2) return 'High'
         }

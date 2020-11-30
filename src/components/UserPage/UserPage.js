@@ -41,9 +41,6 @@ class UserPage extends Component {
     }
 
     return (
-      <div>
-        <h1 id="welcome">Welcome, {this.props.user.username}!</h1>
-        <p>Your ID is: {this.props.user.id}</p>
         <Grid container justify='center'>
           <Grid item style={{ textAlign: 'center' }} xs={12}>
             <Button color='primary'
@@ -67,8 +64,6 @@ class UserPage extends Component {
           </Grid>
 
         </Grid>
-        <LogOutButton className="log-in" />
-      </div>
     );
   }
 }
