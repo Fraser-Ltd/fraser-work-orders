@@ -45,7 +45,7 @@ class EditUserPassword extends Component {
         this.props.dispatch({ type: 'FETCH_USER' });
     }
 
-    submit = (e) => {
+    handleSubmit = (e) => {
         this.setState({ mode: 'view' });
         this.props.dispatch({
             type: 'UPDATE_PASSWORD',
@@ -90,7 +90,7 @@ class EditUserPassword extends Component {
     render() {
         return (
             <Formik
-                initialValues={{
+                initialValues={{  //this object contains the initial values in the form field, the properties correspond to the 'name' attribute in the individual fields within the form.
                     currentPass: '',
                     newPass: '',
                     confirmPass: '',
@@ -102,7 +102,7 @@ class EditUserPassword extends Component {
                         .oneOf([ref('newPass')], 'Passwords do not match')
                         .required('Password is required'),
                 })}
-                onSubmit={(
+                onSubmit={( // uses formik to automatically recieve form state as it's argument.
                     { currentPass, newPass, confirmPass },
                     { setSubmitting, resetForm }
                 ) =>
@@ -137,7 +137,7 @@ class EditUserPassword extends Component {
                                     <Paper className="form form--wrapper" elevation={10}>
                                         <Grid container justify="center">
                                             <Grid item xs={10}  >
-                                                <form className="form" onSubmit={this.submit}>
+                                                <form className="form" onSubmit={handleSubmit}> 
                                                     <br /><br />
                                                     <InputLabel>Change Password</InputLabel>
                                                     <br /><br />
@@ -152,10 +152,10 @@ class EditUserPassword extends Component {
                                                         <Input
                                                             id="password-current"
                                                             name="currentPass"
-                                                            type="password"
-                                                            value={values.currentPass}
-                                                            onChange={this.handleChange}
-                                                            onBlur={handleBlur}
+                                                            type="password" //will password-a-tize this input
+                                                            value={values.currentPass} //formik value matches name attribute
+                                                            onChange={handleChange} //formik value to update the changed object
+                                                            onBlur={handleBlur} //formik value
                                                             error={Boolean(touched.currentPass && errors.currentPass)}
                                                         />
                                                         <FormHelperText
@@ -181,9 +181,9 @@ class EditUserPassword extends Component {
                                                         <Input
                                                             id="password-new"
                                                             name="newPass"
-                                                            type="password"
+                                                            type="password" //will password-a-tize this input
                                                             value={values.newPass}
-                                                            onChange={this.handleChange}
+                                                            onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             error={Boolean(touched.newPass && errors.newPass)}
                                                         />
@@ -208,9 +208,9 @@ class EditUserPassword extends Component {
                                                         <Input
                                                             id="password-confirm"
                                                             name="confirmPass"
-                                                            type="password"
+                                                            type="password" //will password-a-tize this input
                                                             value={values.confirmPass}
-                                                            onChange={this.handleChange}
+                                                            onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             error={Boolean(touched.confirmPass && errors.confirmPass)}
                                                         />
