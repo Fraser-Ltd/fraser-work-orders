@@ -2,11 +2,20 @@
 
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 // workOrdersSaga: will be fired on "FETCH_WORKORDERS" actions
 function* getWorkOrders(){
     try{
         const response = yield axios.get('api/work_orders')
+        yield put({ type: 'SET_WORKORDERS', payload: response.data})
+    }catch (error){
+        console.log('Error in getWorkOrders saga', error);
+    }
+}
+function* getWorkOrdersOrder(action){
+    try{
+        const response = yield axios.get(`api/work_orders/${action.payload.column}/${action.payload.order}`);
         yield put({ type: 'SET_WORKORDERS', payload: response.data})
     }catch (error){
         console.log('Error in getWorkOrders saga', error);
@@ -27,8 +36,11 @@ function* addWorkOrders(action) {
     try {
         console.log('in addWorkOrders saga');
         yield axios.post('api/work_orders/', action.payload)
+        yield swal('Successfully Added New Work Order', { timer: 1500, buttons: false, icon: 'success' });
         yield put({ type: 'FETCH_WORKORDERS' })//Refreshes list after new work order is submitted
+
     } catch (error) {
+        yield swal('Error adding work order', { timer: 4000, buttons: false, icon: 'error' });
         console.log('Error in addWorkOrders saga', error);
     }
 }
@@ -37,9 +49,11 @@ function* updateWorkOrders(action) {
     try {
         console.log('in updateWorkOrders saga');
         yield axios.put('/api/work_orders', action.payload);
+        yield swal('Successfully Updated Work Order', { timer: 1500, buttons: false, icon: 'success' });
         yield put({ type: 'FETCH_WORKORDERS' });//updating the db
     }
     catch (error) {
+        yield swal('Error updating work order', { timer: 4000, buttons: false, icon: 'error' });
         console.log('updateWorkOrders PUT request in failed', error);
     }
 }
@@ -89,6 +103,7 @@ function* workOrdersSaga() {
     yield takeLatest('ADD_WORKORDER', addWorkOrders); 
     yield takeLatest('REMOVE_WORKORDERS', removeWorkOrders);
     yield takeLatest('UPDATE_WORKORDERS', updateWorkOrders);
+    yield takeLatest('FETCH_WORKORDERS_ORDER', getWorkOrdersOrder);
 }
 
 export default workOrdersSaga;
