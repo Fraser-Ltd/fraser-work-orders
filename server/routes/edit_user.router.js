@@ -30,7 +30,7 @@ router.put('/user', (req, res) => {
     });
   });
 
-  // This put is just for the admin (they can change staff's role)
+  // This put is just for the admin (they CAN change staff's role)
   router.put('/admin', (req, res) => {
     console.log('admin updated user', req.body);
     let queryText = `UPDATE "user" SET "username"=$1, "first_name"=$2, "last_name"=$3, "email"=$4, "role"=$5, "archive_employee"=$6 WHERE "id"=$7;`;
