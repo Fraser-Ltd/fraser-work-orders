@@ -51,9 +51,7 @@ class WorkOrdersTable extends Component {
         this.setState({order: this.state.order === 'asc'? 'desc': 'asc'});
         this.props.dispatch({ type: 'FETCH_WORKORDERS_ORDER', payload: { column: heading, order: this.state.order}})
     }
-    componentDidMount = () => {
-        this.props.dispatch({ type: "FETCH_PROPERTY" });
-    };
+
     
     render(){
         const {classes} = this.props;

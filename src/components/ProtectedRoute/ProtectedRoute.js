@@ -22,6 +22,7 @@ const ProtectedRoute = (props) => {
     component: ComponentToProtect,
     // redirect path to be used if the user is authorized
     authRedirect,
+    adminRedirect,
     store,
     ...otherProps
   } = props;
@@ -42,6 +43,11 @@ const ProtectedRoute = (props) => {
   if (store.user.id && authRedirect != null) {
     return <Redirect exact from={otherProps.path} to={authRedirect} />;
   } else if (!store.user.id && authRedirect != null) {
+    ComponentToShow = ComponentToProtect;
+  }
+  if (store.user.role > 1 && adminRedirect != null) {
+    return <Redirect exact from={otherProps.path} to={adminRedirect} />;
+  } else if (store.user.role < 2 && adminRedirect != null) {
     ComponentToShow = ComponentToProtect;
   }
 
