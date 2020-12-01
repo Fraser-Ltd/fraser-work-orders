@@ -40,6 +40,10 @@ const styles = theme => ({
     cells: {
         textAlign: 'right',
     },
+    input: {
+        marginTop: 2,
+        marginBottom: 2
+    }
 });
 
 
@@ -120,6 +124,7 @@ class NewUserForm extends Component {
         })
     }
     render() {
+        const { classes } = this.props;
         this.propsChange();
         console.log('newuserform props', this.props)
         return (
@@ -127,52 +132,111 @@ class NewUserForm extends Component {
                 <Grid container justify='center'>
                     <Grid item xs={11} style={{ textAlign: 'center' }}>
                         <Typography variant='h3' >{this.props.edit ? 'Edit User:' : 'Add New User:'}</Typography>
-                        <FormControl onSubmit={this.props.edit ? this.saveChanges : this.handleSubmit}>
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="FirstName"
-                                value={this.state.firstName}
-                                variant="outlined"
-                                name='firstName'
-                            />
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="LastName"
-                                value={this.state.lastName}
-                                variant="outlined"
-                                name='lastName'
-                            />
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="Email"
-                                value={this.state.email}
-                                variant="outlined"
-                                name='email'
-                            />
-                            {/* <InputLabel >Role</InputLabel> */}
-                            <Select fullwidth name='role' value={this.state.role} onChange={this.handleChange}>
-                                <MenuItem value="">Role</MenuItem>
-                                <MenuItem value={1}>Admin</MenuItem>
-                                <MenuItem value={2} >Maintenance</MenuItem>
-                                <MenuItem value={3}>Resident Coordinator</MenuItem>
-                            </Select>
-                            {this.props.edit && <Select onChange={this.handleChange} name="archiveEmployee" value={this.state.archiveEmployee}>
-                                <MenuItem value={false}>Active</MenuItem>
-                                <MenuItem value={true}>Removed</MenuItem>
-                            </Select>}
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="Username"
-                                value={this.state.username}
-                                variant="outlined"
-                                name='username'
-                            />
-                            {!this.props.edit &&
-                                <>
+                        <form onSubmit={this.props.edit ? this.saveChanges : this.handleSubmit}>
+                            <Grid container justify='center'>
+                                <Grid item xs={12}>
+                                    <TextField className={classes.input}
+                                        onChange={this.handleChange}
+                                        id="outlined"
+                                        label="FirstName"
+                                        value={this.state.firstName}
+                                        variant="outlined"
+                                        name='firstName'
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField className={classes.input}
+                                        onChange={this.handleChange}
+                                        id="outlined"
+                                        label="LastName"
+                                        value={this.state.lastName}
+                                        variant="outlined"
+                                        name='lastName'
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField className={classes.input}
+                                        onChange={this.handleChange}
+                                        id="outlined"
+                                        label="Email"
+                                        value={this.state.email}
+                                        variant="outlined"
+                                        name='email'
+                                    />
+                                </Grid>
+                                <Grid item xs={12}  >
+                                    <Grid container justify='center'>
+                                        <Grid item xs={2}>
+                                            <FormControl fullWidth className={classes.input}>
+                                                <InputLabel >Role</InputLabel>
+                                                <Select fullWidth name='role' variant="outlined" value={this.state.role} onChange={this.handleChange}>
+                                                    <MenuItem value={1}>Admin</MenuItem>
+                                                    <MenuItem value={2} >Maintenance</MenuItem>
+                                                    <MenuItem value={3}>Resident Coordinator</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}  >
+                                    <Grid container justify='center'>
+                                        <Grid item xs={2}>
+                                            <FormControl fullWidth className={classes.input}>
+                                                <InputLabel >Employee Status</InputLabel>
+                                                {this.props.edit && <Select fullWidth variant="outlined" onChange={this.handleChange} name="employeeStatus" value={this.state.archiveEmployee}>
+                                                    <MenuItem value={false}>Active</MenuItem>
+                                                    <MenuItem value={true}>Removed</MenuItem>
+                                                </Select>}
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}  >
+                                    <Grid container justify='center'>
+                                        <Grid item xs={2}>
+                                            <TextField className={classes.input}
+                                                onChange={this.handleChange}
+                                                id="outlined"
+                                                label="Username"
+                                                value={this.state.username}
+                                                variant="outlined"
+                                                name='username'
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}  >
+                                    <Grid container justify='center'>
+                                        <Grid item xs={2}>
+                                            {!this.props.edit &&
+                                                <>
+                                                    <TextField className={classes.input} onChange={this.handleChange}
+                                                        id="outlined"
+                                                        label="Password"
+                                                        value={this.state.password}
+                                                        variant="outlined"
+                                                        name='password'
+                                                    />
+                                                    <Button type="submit" color="primary" variant="contained">Add New User</Button></>}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <form>
+                                    <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
+                                        {this.props.edit &&
+                                            <Button type="submit" color="primary" variant="contained">Save Changes</Button>}
+                                    </Grid>
+                                </form>
+                            </Grid>
+                        </form>
+                    </Grid>
+                </Grid>
+
+                {this.props.edit &&
+                    <form>
+                        <Grid item xs={12}  >
+                            <Grid container justify='center'>
+                                <Grid item xs={2}>
                                     <TextField onChange={this.handleChange}
                                         id="outlined"
                                         label="Password"
@@ -180,24 +244,11 @@ class NewUserForm extends Component {
                                         variant="outlined"
                                         name='password'
                                     />
-                                    <Button type="submit" color="primary" variant="contained">Add New User</Button></>}
-                            {this.props.edit &&
-                                <Button type="submit" color="primary" variant="contained">Save Changes</Button>}
-                        </FormControl>
-                    </Grid>
-                </Grid>
-
-                {this.props.edit &&
-                    <FormControl>
-                        <TextField onChange={this.handleChange}
-                            id="outlined"
-                            label="Password"
-                            value={this.state.password}
-                            variant="outlined"
-                            name='password'
-                        />
-                        <Button type="submit" color="primary" variant="contained" onClick={this.updatePassword}> Update Password</Button>
-                    </FormControl>}
+                                    <Button type="submit" color="primary" variant="contained" onClick={this.updatePassword}> Update Password</Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </form>}
             </>)
     };
 }
