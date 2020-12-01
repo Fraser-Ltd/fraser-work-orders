@@ -9,7 +9,7 @@ const { rejectUnauthenticated, } = require('../modules/authentication-middleware
 router.get("/", rejectUnauthenticated, (req, res) => {
 
   const queryText = `SELECT "properties"."id", "property_name", "property_address", "resident_coordinator", CONCAT("first_name", ' ',  "last_name") as "rc_name" FROM "properties"
-  JOIN "user" ON "user"."id" = "properties"."resident_coordinator"`;
+  JOIN "user" ON "user"."id" = "properties"."resident_coordinator" ORDER BY "properties"."id" ASC`;
   pool
     .query(queryText)
     .then((result) => res.send(result.rows))

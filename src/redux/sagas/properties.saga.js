@@ -27,8 +27,10 @@ function* editPropertySaga(action) {
 }
 
 function* deletePropertySaga(action) {
+    console.log('in deleteProperties', action.payload);
     try {
-        const response = yield Axios.delete(`/api/properties/${action.payload}`);
+        yield Axios.delete(`/api/properties/${action.payload}`);
+        yield put({type: 'SET_PROPERTY'})
     } catch (err) { console.log('error deleting unit', err) }
 
     const actionToDispatch = {
