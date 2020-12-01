@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import UnitElement from './PropertyCoordinator';
 
 
 
@@ -14,6 +13,7 @@ class propertyDetail extends Component {
         propertyName: this.props.properties.propertyName,
         propertyAddress: this.props.properties.propertyAddress,
         residentCoordinator: this.props.properties.residentCoordinator,
+        rcName: this.props.properties.rc_name,
         id: this.props.properties.id,
         unit: this.props.units.unit
     }
@@ -52,6 +52,7 @@ class propertyDetail extends Component {
                 propertyName: this.props.properties.propertyName,
                 propertyAddress: this.props.properties.propertyAddress,
                 residentCoordinator: this.props.properties.residentCoordinator,
+                rcName: this.props.properties.rc_name,
                 id: this.props.properties.id,
                 unit: this.props.units.unit
             });
@@ -78,13 +79,15 @@ class propertyDetail extends Component {
             propertyName: '',
             propertyAddress: '',
             residentCoordinator: '',
+            rcName: '',
             unit: ''
         });
     }
 
     render() {
-        console.log('property detail props', this.props)
-        console.log('this.state', this.state)
+        console.log('property detail props', this.props);
+        console.log('this.state', this.state);
+
         return (
             <>
                 <div>
@@ -95,15 +98,11 @@ class propertyDetail extends Component {
 
                     <input name='propertyName' type='text' value={this.state.propertyName} onChange={this.handleChange} placeholder='Property Name' />
                     <input name='propertyAddress' type='text' value={this.state.propertyAddress} onChange={this.handleChange} placeholder='Property Address' />
-
+                    <select>
+                    {this.props.users[0] && this.props.users.filter(user => user.role !== 2).map(user => <option key={user.id} value={user.id}>{user.first_name} {user.last_name}</option>)}
+                     </select>   
                     
-                    {this.props.units[0] && <select name='unit' id='unit' onChange={this.handleChange} placeholder="unit">
-                        {this.props.units.filter(unit => unit.property_id === 1).map(unit => <option value={unit.unit}>{unit.unit}</option>)}
-                    </select>}
-
-                    {this.props.users[0] && <select name='residentCoordinator' id='Resident Coordinator' value={this.state.residentCoordinator} onChange={this.handleChange} placeholder="Resident Coordinator">
-                        {this.props.users.filter(user => user.role !== 2).map(user => <option key={user.id} value={user.id}>{user.first_name} {user.last_name}</option>)}
-                    </select>}
+                
 
                     {!this.props.edit && <button onClick={this.handleSubmit} type="submit">Add New Property</button>}
                     {this.props.edit && <div><button onClick={this.saveChanges}>Save Changes</button><button onClick={this.deleteProperty}>Delete property</button></div>}

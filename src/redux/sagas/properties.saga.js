@@ -18,8 +18,9 @@ function* addPropertySaga(action) {
 }
 
 function* editPropertySaga(action) {
+    console.log('in editPropertySaga', action.payload);
     try {
-        const response = yield Axios.put(`/api/properties/`, action.payload);
+        yield Axios.put(`/api/properties/`, action.payload);
         yield put({ type: "FETCH_PROPERTY" });
     } catch(err) {
         console.log('error editing unit', err)
