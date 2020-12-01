@@ -56,7 +56,7 @@ CREATE TABLE "work_orders"
     "unit_id" INT REFERENCES "units",
     "tenant_not_home" BOOLEAN DEFAULT FALSE,
     "date_completed" DATE DEFAULT NULL,
-    "priority" INT 
+    "priority" INT DEFAULT 0
 );
 
 

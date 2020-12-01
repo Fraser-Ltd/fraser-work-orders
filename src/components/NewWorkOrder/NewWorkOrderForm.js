@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import { FormControl, FormControlLabel } from '@material-ui/core';
+import { FormControl, FormControlLabel, Typography } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -32,7 +32,7 @@ class NewWorkOrderForm extends Component {
         reacInspection: false,
         remarks: '',
         unitId: '',
-        tennantNotHome: false,
+        tenantNotHome: false,
     }
     componentDidMount(){
         this.props.dispatch({ type: 'FETCH_UNITS'});
@@ -53,7 +53,7 @@ class NewWorkOrderForm extends Component {
             reacInspection: false,
             remarks: '',
             unitId: '',
-            tennantNotHome: false,
+            tenantNotHome: false,
         });
         this.props.history.push('/user');
     }
@@ -90,6 +90,10 @@ class NewWorkOrderForm extends Component {
                     spacing={0}
 
                 >
+                    <Grid item xs={12} style={{textAlign:'center'}}>
+                        <Typography variant='h2'>Add New Work Order</Typography>
+                        <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
+                    </Grid>
                     <Grid item xs={11} sm={6} md={5} lg={4} style={{ marginTop: 25 }} >
                         <Paper>
                             <Grid container justify="center">
@@ -155,8 +159,8 @@ class NewWorkOrderForm extends Component {
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
                                                                 onClick={this.handleCheck}
-                                                                checked={this.state.tennantNotHome}
-                                                                name='tennantNotHome' />}
+                                                                checked={this.state.tenantNotHome}
+                                                                name='tenantNotHome' />}
                                                         /><br />
                                                     </Grid>
                                                     <Grid item xs={12}>

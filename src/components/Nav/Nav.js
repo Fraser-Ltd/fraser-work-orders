@@ -12,7 +12,7 @@ const Nav = (props) => {
   };
 
   if (props.store.user.id != null) {
-    loginLinkData.path = '/user';
+    loginLinkData.path = '/workorders';
     loginLinkData.text = 'Home';
   }
 
@@ -24,9 +24,7 @@ const Nav = (props) => {
         </Link>
       </div>
 
-      <div className="column middle">
-      <h1 className="title">Fraser MMS</h1>
-      </div>
+
 
       <div className="column right">
         <Link className="nav-link" to={loginLinkData.path}>
@@ -38,10 +36,19 @@ const Nav = (props) => {
         {/* Show the link to the info page and the logout button if the user is logged in */}
         {props.store.user.id && (
           <>
-            <Link className="nav-link" to="/info">
+            {props.store.user.role > 1 && <Link className="nav-link" to="/info">
               Profile
+            </Link>}
+            {props.store.user.role < 2 && <>
+              <Link className="nav-link" to="/admin/users">
+                Users
             </Link>
-            <LogOutButton className="nav-link" />
+              <Link className="nav-link" to="/admin/property">
+                Properties
+            </Link>
+            </>
+            }
+            <Link className="nav-link" to='/' onClick={() => props.dispatch({ type: 'LOGOUT' })}>Log Out</Link>
           </>
         )}
         {/* Always show this link since the about page is not protected */}
