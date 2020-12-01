@@ -53,12 +53,15 @@ class UserPage extends Component {
             <WorkOrdersTable
               heading={user.role === 1 ? 'Work Orders to Assign' : 'Work Orders To Review'}
               workOrders={filteredOrders}
+              description={user.role === 1 ? 'New Work Orders that need to be assigned to maintenance': 'New Work Orders that need to be reviewed by maintenance'}
             />
           </Grid>}
 
           <Grid item xs={11} md={6}>
             <WorkOrdersTable
               heading='Current Work Orders'
+              description={user.role === 3? 'This shows work orders for properties that are assigned to you as a resident coordinator and the status is not Complete':
+            user.role === 2 ? 'This shows all work orders that are assigned to you but status is not Complete':'This shows all work orders assigned to maintenance in which the status is not Complete'}
               workOrders={filteredOrders2}
             />
           </Grid>
