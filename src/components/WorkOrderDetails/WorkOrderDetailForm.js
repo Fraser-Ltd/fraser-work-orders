@@ -44,7 +44,7 @@ class WorkOrderDetailForm extends Component {
         permissionToEnter: this.props.workOrder.permission_to_enter,
         doorHanger: this.props.workOrder.door_hanger,
         emergency: this.props.workOrder.emergency,
-        workToBeDone: this.props.workOrder.work_to_be_done,
+        workToBeDone: this.props.workOrder.work_to_be_done || '',
         detailsOfWorkDone: this.props.workOrder.details_of_work_done || '',//if details is null value will be empty string
         status: this.props.workOrder.status,
         assignedTo: this.props.workOrder.assigned_to || '',//if assigned_to is null set it to an empty string
@@ -75,7 +75,7 @@ class WorkOrderDetailForm extends Component {
         this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority } });
         }
         
-        this.props.history.push('/user');
+        this.props.history.push('/workorders');
     }
 
     dateComplete = (event) => {
@@ -93,7 +93,7 @@ class WorkOrderDetailForm extends Component {
         });
     }
 
-    handleChange = (event) => {
+    handleCheck = (event) => {
         console.log(event.target.name)
         console.log(event.target.checked)
         this.setState({
@@ -126,7 +126,7 @@ class WorkOrderDetailForm extends Component {
     }
 
     back = () => {
-        this.props.history.push('/user');
+        this.props.history.push('/workorders');
     }
 
 
@@ -200,6 +200,7 @@ class WorkOrderDetailForm extends Component {
                                                         <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                             <InputLabel >Priority:</InputLabel>
                                                             <Select disabled={this.props.user.role > 2} fullWidth name="priority" value={this.state.priority} onChange={this.handleSelect}>
+                                                                <MenuItem value={0}>No Priority</MenuItem>
                                                                 <MenuItem value={1}>Low</MenuItem>
                                                                 <MenuItem value={2}>High</MenuItem>
                                                             </Select>
@@ -224,7 +225,7 @@ class WorkOrderDetailForm extends Component {
                                                             labelPlacement='end'
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
-                                                                onClick={this.handleChange}
+                                                                onClick={this.handleCheck}
                                                                 checked={this.state.permissionToEnter}
                                                                 name='permissionToEnter' />}
                                                         /><br />
@@ -235,7 +236,7 @@ class WorkOrderDetailForm extends Component {
                                                             labelPlacement='end'
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
-                                                                onClick={this.handleChange}
+                                                                onClick={this.handleCheck}
                                                                 checked={this.state.doorHanger}
                                                                 name='doorHanger' />}
                                                         /><br />
@@ -246,7 +247,7 @@ class WorkOrderDetailForm extends Component {
                                                             labelPlacement='end'
                                                             style={{ marginLeft: 0 }}
                                                             control={<Checkbox color="primary"
-                                                                onClick={this.handleChange}
+                                                                onClick={this.handleCheck}
                                                                 checked={this.state.tenantNotHome}
                                                                 name='tenantNotHome' />}
                                                         /><br />
@@ -255,7 +256,7 @@ class WorkOrderDetailForm extends Component {
                                             </Grid>
                                         </Grid>
                                         <TextField
-                                            onChange={this.handleChange}
+                                            onChange={this.handleSelect}
                                             fullWidth
                                             id="outlined-multiline-static"
                                             label="Work To Be Done"
@@ -267,7 +268,7 @@ class WorkOrderDetailForm extends Component {
 
                                         /><br /><br />
                                         <TextField
-                                            onChange={this.handleChange}
+                                            onChange={this.handleSelect}
                                             fullWidth
                                             disabled={this.props.user.role>2}
                                             id="outlined-multiline-static"
@@ -300,7 +301,7 @@ class WorkOrderDetailForm extends Component {
                                                         labelPlacement='end'
                                                         style={{ marginLeft: 0 }}
                                                         control={<Checkbox color="primary"
-                                                            onClick={this.handleChange}
+                                                            onClick={this.handleCheck}
                                                             checked={this.state.reacInspection}
                                                             name='reacInspection' />}
                                                     />
@@ -312,7 +313,7 @@ class WorkOrderDetailForm extends Component {
                                                         labelPlacement='end'
                                                         style={{ marginLeft: 0 }}
                                                         control={<Checkbox color="primary"
-                                                            onClick={this.handleChange}
+                                                            onClick={this.handleCheck}
                                                             checked={this.state.smokeDetectors}
                                                             name='smokeDetectors' />}
                                                     /><br />
@@ -323,7 +324,7 @@ class WorkOrderDetailForm extends Component {
                                                         labelPlacement='end'
                                                         style={{ marginLeft: 0 }}
                                                         control={<Checkbox color="primary"
-                                                            onClick={this.handleChange}
+                                                            onClick={this.handleCheck}
                                                             checked={this.state.housekeepingInspection}
                                                             name='housekeepingInspection' />}
                                                     /><br />
@@ -334,7 +335,7 @@ class WorkOrderDetailForm extends Component {
                                                         labelPlacement='end'
                                                         style={{ marginLeft: 0 }}
                                                         control={<Checkbox color="primary"
-                                                            onClick={this.handleChange}
+                                                            onClick={this.handleCheck}
                                                             checked={this.state.exterminating}
                                                             name='exterminating' />}
                                                     /><br />
