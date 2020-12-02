@@ -12,10 +12,40 @@ class propertyDetail extends Component {
         id: this.props.properties.id,
         unit: '',
         unitId: '',
+        editUnit: false,
 
     }
-    // const propertyName = req.body.property_ID
-  //const unitNumber = req.body.property_Unit
+
+
+  editUnit = (unitId, unit) => {
+      this.setState({
+          editUnit: true,
+          unitId: unitId,
+          unit: unit,
+      })
+  }
+
+  //  const id = req.body.id
+  // const propertyName = req.body.property_ID
+ // const unitNumber = req.body.property_Unit
+ 
+ 
+  saveUnit = () => {
+      this.props.dispatch({
+          type:'EDIT_UNITS',
+          payload:{
+                property_ID: this.state.id,
+                id: this.state.unitId,
+                property_Unit: this.state.unit
+          }
+      });
+      this.setState({
+          ...this.state, 
+          unit: '',
+          unitId: '',
+          editUnit: false,
+      });
+  }
 
     addUnit = (event) => {
         this.props.dispatch({
@@ -101,6 +131,8 @@ class propertyDetail extends Component {
         });
     }
 
+    
+
     render() {
         console.log('property detail props', this.props);
         console.log('this.state', this.state);
@@ -127,16 +159,16 @@ class propertyDetail extends Component {
 
 
                     {!this.props.edit && <button onClick={this.handleSubmit} type="submit">Add New Property</button>}
-                    {this.props.edit && <div><button onClick={this.saveChanges}>Save Changes</button></div>}
+                    {this.props.edit && <div><button onClick={this.saveChanges}>Save Changes</button><button onClick={this.props.clearEditProperty}>Cancle</button></div>}
                 </form>
                 {this.props.units[0] &&
                     <>
                         <ul>
                             {this.props.units.filter(units => units.property_id === this.state.id)
-                                .map(unit => <li key={unit.id} value={unit.unit}>{unit.unit}<button>Edit Unit</button></li>)}
+                                .map(unit => <li key={unit.id} value={unit.unit}>{unit.unit}<button onClick={()=>this.editUnit(unit.id, unit.unit)}>Edit Unit</button></li>)}
                         </ul>
                         <input name='unit' value={this.state.unit} onChange={this.handleChange} />
-                        <button onClick={this.addUnit}>Add Unit</button>
+                        {this.state.editUnit?<button onClick={this.saveUnit}>Save Changes</button>:<button onClick={this.addUnit}>Add Unit</button>}
                         </>
                     }</div>
             </>
