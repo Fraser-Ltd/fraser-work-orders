@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
-
-
-
 class propertyDetail extends Component {
 
     // Sets local state for the propertyDetail component
@@ -13,15 +9,38 @@ class propertyDetail extends Component {
         propertyName: this.props.properties.propertyName,
         propertyAddress: this.props.properties.propertyAddress,
         residentCoordinator: this.props.properties.residentCoordinator,
-        rcName: this.props.properties.rc_name,
         id: this.props.properties.id,
-        unit: this.props.units.unit
+        unit: '',
+        unitId: '',
+
+    }
+    // const propertyName = req.body.property_ID
+  //const unitNumber = req.body.property_Unit
+
+    addUnit = (event) => {
+        this.props.dispatch({
+            type: 'ADD_UNITS',
+            payload:{
+                property_ID: this.state.id,
+                property_Unit: this.state.unit
+            }
+        });
+        this.setState ({
+            ...this.state, 
+            unit:'',
+        })
     }
 
     componentDidMount() {
         this.props.dispatch({
             type: 'FETCH_PROPERTY'
         })
+        this.props.dispatch({ 
+            type: 'GET_USERS'
+         });
+         this.props.dispatch({
+             type: 'FETCH_UNITS'
+         });
         console.log('after component did mount', this.props)
     }
     componentDidUpdate() {
@@ -52,12 +71,11 @@ class propertyDetail extends Component {
                 propertyName: this.props.properties.propertyName,
                 propertyAddress: this.props.properties.propertyAddress,
                 residentCoordinator: this.props.properties.residentCoordinator,
-                rcName: this.props.properties.rc_name,
                 id: this.props.properties.id,
-                unit: this.props.units.unit
             });
         }
     }
+
 
 
     handleChange = (event) => {
@@ -79,8 +97,7 @@ class propertyDetail extends Component {
             propertyName: '',
             propertyAddress: '',
             residentCoordinator: '',
-            rcName: '',
-            unit: ''
+            id: '',
         });
     }
 
@@ -98,15 +115,30 @@ class propertyDetail extends Component {
 
                     <input name='propertyName' type='text' value={this.state.propertyName} onChange={this.handleChange} placeholder='Property Name' />
                     <input name='propertyAddress' type='text' value={this.state.propertyAddress} onChange={this.handleChange} placeholder='Property Address' />
-                    <select>
-                    {this.props.users[0] && this.props.users.filter(user => user.role !== 2).map(user => <option key={user.id} value={user.id}>{user.first_name} {user.last_name}</option>)}
-                     </select>   
+                    {this.props.users[0] &&
+                        <select onChange={this.handleChange} name='residentCoordinator' value={this.state.residentCoordinator}>
+                            <option value=''></option>
+                            {this.props.users.filter(user => user.role !== 2)
+                                .map(user => <option key={user.id} value={user.id}>{user.first_name} {user.last_name}</option>)}
+                        </select>}
+
                     
-                
+
+
 
                     {!this.props.edit && <button onClick={this.handleSubmit} type="submit">Add New Property</button>}
-                    {this.props.edit && <div><button onClick={this.saveChanges}>Save Changes</button><button onClick={this.deleteProperty}>Delete property</button></div>}
-                </form></div>
+                    {this.props.edit && <div><button onClick={this.saveChanges}>Save Changes</button></div>}
+                </form>
+                {this.props.units[0] &&
+                    <>
+                        <ul>
+                            {this.props.units.filter(units => units.property_id === this.state.id)
+                                .map(unit => <li key={unit.id} value={unit.unit}>{unit.unit}<button>Edit Unit</button></li>)}
+                        </ul>
+                        <input name='unit' value={this.state.unit} onChange={this.handleChange} />
+                        <button onClick={this.addUnit}>Add Unit</button>
+                        </>
+                    }</div>
             </>
         )
     };
