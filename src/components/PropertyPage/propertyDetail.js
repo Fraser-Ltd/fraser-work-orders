@@ -167,10 +167,12 @@ class propertyDetail extends Component {
                             {this.props.units.filter(units => units.property_id === this.state.id)
                                 .map(unit => <li key={unit.id} value={unit.unit}>{unit.unit}<button onClick={()=>this.editUnit(unit.id, unit.unit)}>Edit Unit</button></li>)}
                         </ul>
-                        <input name='unit' value={this.state.unit} onChange={this.handleChange} />
-                        {this.state.editUnit?<button onClick={this.saveUnit}>Save Changes</button>:<button onClick={this.addUnit}>Add Unit</button>}
+
                         </>
-                    }</div>
+                    }
+                    {this.props.edit && <><input name='unit' value={this.state.unit} onChange={this.handleChange} />
+                    {this.state.editUnit ? <button onClick={this.saveUnit}>Save Changes</button> : <button onClick={this.addUnit}>Add Unit</button>}</>}
+                    </div>
             </>
         )
     };
