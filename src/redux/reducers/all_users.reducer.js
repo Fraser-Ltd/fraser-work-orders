@@ -4,12 +4,7 @@ const allUsers = (state = {}, action) => {
       return action.payload;
     default:
       return state;
-    case 'SET_PASSWORD':
-      return state;
-    case 'SET_USER_UPDATE':
-      return state;
-    case 'SET_ADMIN_UPDATE':
-      return state;
+
   }
 };
 
