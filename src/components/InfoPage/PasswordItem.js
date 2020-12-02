@@ -36,7 +36,10 @@ const styles = theme => ({
 
 export default class EditUserPassword extends Component {
     state = {
-        password: false,
+        item: {
+            id: this.props.user.id,
+            password: this.props.user.password,
+        }
     }
 
     back = () => {    //back button
@@ -55,7 +58,7 @@ export default class EditUserPassword extends Component {
         }
 
         return (
-            <Alert
+            <Alert  // pop up alert that lets user know password was successfully changed
                 isOpen={this.state.password}
                 onClose={this._handleClose}
                 handleSubmit={onClick}
@@ -67,40 +70,40 @@ export default class EditUserPassword extends Component {
     }
 
     _handleSubmit = ({
-        currentPass,
-        newPass,
-        confirmPass,
-        setSubmitting,
-        resetForm,
-    }) => {
-        // fake async login
-        setTimeout(async () => {
-            setSubmitting(false)
+    currentPass,
+    newPass,
+    confirmPass,
+    setSubmitting,
+    resetForm,
+  }) => {
+    // fake async login
+    setTimeout(async () => {
+      setSubmitting(false)
 
-            this.setState(() => ({
-                password: true,
-            }))
+      this.setState(() => ({
+        passChangeSuccess: true,
+      }))
 
-            resetForm()
-        }, 1000)
-    }
+      resetForm()
+    }, 1000)
+  }
 
     render() {
         return (
-            <Formik
-                initialValues={{       //this object contains the initial values in the form field, the properties correspond to the 'name' attribute in the individual fields within the form.
+            <Formik  //formik component
+                initialValues={{       //Passed in prop: this contains the initial values in the form field, the properties correspond to the 'name' attribute in the individual fields within the form.
                     currentPass: '',
                     newPass: '',
                     confirmPass: '',
                 }}
-                validationSchema={object().shape({       //This function automatically recieves the values object as it's argument
+                validationSchema={object().shape({       //Passed in prop: This function automatically recieves the values object as it's argument
                     currentPass: string().required('Current password is required'),
                     newPass: string().required('New password is required'),
                     confirmPass: string()
                         .oneOf([ref('newPass')], 'Passwords do not match')
                         .required('Password is required'),
                 })}
-                onSubmit={(         // uses formik to automatically recieve form state as it's argument.
+                onSubmit={(         //Passed in prop:  uses formik to automatically recieve form state as it's argument.
                     { currentPass, newPass, confirmPass },
                     { setSubmitting, resetForm }
                 ) =>
@@ -206,15 +209,10 @@ export default class EditUserPassword extends Component {
                                                 : ''}
                                         </FormHelperText>
                                     </FormControl>
-                                    <Button
-                                        type="submit"
-                                        variant="raised"
-                                        color="primary"
-                                        disabled={Boolean(!isValid || isSubmitting)}
-                                        style={{ margin: '16px' }}
-                                    >
-                                        {'Reset Password'}
-                                    </Button>
+                                    <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
+                                        <Button type="submit" variant="contained" color="primary" disabled={Boolean(!isValid || isSubmitting)} style={{ margin: '16px' }}>{'Reset Password'}</Button>
+                                        <Button color="primary" variant="contained" onClick={this.back}>Cancel</Button>
+                                    </Grid>
                                 </form>
                                 {this._renderModal()}
                             </Paper>
