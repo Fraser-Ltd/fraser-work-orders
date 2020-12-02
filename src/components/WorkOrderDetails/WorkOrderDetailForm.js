@@ -148,7 +148,6 @@ class WorkOrderDetailForm extends Component {
                         <Paper>
                             <Grid container justify="center">
                                 <Grid item xs={10} className={classes.right} >
-
                                     <form onSubmit={this.submit}>
                                         <Grid item xs={12} style={{ marginBottom: 50, marginTop: 15 }}>
                                             <Typography>Work Order #{this.props.workOrder.id}</Typography>

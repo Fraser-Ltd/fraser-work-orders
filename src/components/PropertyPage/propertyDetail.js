@@ -270,7 +270,7 @@ class propertyDetail extends Component {
                                 {this.props.edit && <>
                                     <form onSubmit={this.state.editUnit ? this.saveUnit : this.addUnit}>
                                         <Grid item xs={12}>
-                                            <TextField className={classes.input} required variant='outlined' label='Unit Name' name='unit' value={this.state.unit} onChange={this.handleChange} />
+                                            <TextField  className={classes.input} required variant='outlined' label='Unit Name' name='unit' value={this.state.unit} onChange={this.handleChange} />
                                         </Grid>
                                         {this.state.editUnit ? 
                                         <Grid item xs={12}>
