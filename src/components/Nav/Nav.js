@@ -24,8 +24,6 @@ const Nav = (props) => {
         </Link>
       </div>
 
-
-
       <div className="column right">
         <Link className="nav-link" to={loginLinkData.path}>
           {/* Show this link if they are logged in or not,
