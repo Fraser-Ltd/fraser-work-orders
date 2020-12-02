@@ -23,7 +23,8 @@ CREATE TABLE "properties"
     "id" SERIAL PRIMARY KEY,
     "property_name" VARCHAR (255) UNIQUE NOT NULL,
     "property_address" VARCHAR (255) NOT NULL,
-    "resident_coordinator" INT REFERENCES "user"
+    "resident_coordinator" INT REFERENCES "user",
+    "archived" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE "units"

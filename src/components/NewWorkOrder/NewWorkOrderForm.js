@@ -55,7 +55,7 @@ class NewWorkOrderForm extends Component {
             unitId: '',
             tenantNotHome: false,
         });
-        this.props.history.push('/user');
+        this.props.history.push('/workorders');
     }
 
     handleCheck = (event) => {
