@@ -18,8 +18,9 @@ function* addPropertySaga(action) {
 }
 
 function* editPropertySaga(action) {
+    console.log('in editPropertySaga', action.payload);
     try {
-        const response = yield Axios.put(`/api/properties/`, action.payload);
+        yield Axios.put(`/api/properties/`, action.payload);
         yield put({ type: "FETCH_PROPERTY" });
     } catch(err) {
         console.log('error editing unit', err)
@@ -27,8 +28,10 @@ function* editPropertySaga(action) {
 }
 
 function* deletePropertySaga(action) {
+    console.log('in deleteProperties', action.payload);
     try {
-        const response = yield Axios.delete(`/api/properties/${action.payload}`);
+        yield Axios.delete(`/api/properties/${action.payload}`);
+        yield put({type: 'SET_PROPERTY'})
     } catch (err) { console.log('error deleting unit', err) }
 
     const actionToDispatch = {

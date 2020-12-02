@@ -53,7 +53,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   const propertyName = req.body.property_ID
   const unitNumber = req.body.property_Unit
 
-  let queryText = `UPDATE "units" SET "unit" = $1 "property_id" = $2
+  let queryText = `UPDATE "units" SET "unit" = $1, "property_id" = $2
                  WHERE "id" =$3`
   pool.query(queryText, [unitNumber, propertyName, id])
     .then(result => {
