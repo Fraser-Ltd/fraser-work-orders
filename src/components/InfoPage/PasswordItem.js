@@ -1,20 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-//formik and yup
-import { Formik } from 'formik'
-import { object, ref, string } from 'yup'
-
 //material ui imports
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input'
+import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 
 //pages
 import Spinner from './Spinner'
@@ -32,193 +29,134 @@ const styles = theme => ({
     },
 })
 
-// export default connect()(withRouter(withStyles(styles, { withTheme: true })(EditUserPassword)));
-
-export default class EditUserPassword extends Component {
+class EditUserPassword extends Component {
     state = {
         item: {
             id: this.props.user.id,
-            password: this.props.user.password,
+            password: '',
+            confirmPassword: ''
+        },
+        error: false
+    };
+
+    componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_USER' });
+    }
+
+    submit = (event) => {
+        event.preventDefault();
+        const { password, confirmPassword } = this.state.item;
+        console.log(confirmPassword, password)
+        if (password !== confirmPassword) {
+            alert("Passwords don't match");
+        } else {
+            this.props.dispatch({
+                type: 'UPDATE_PASSWORD',
+                payload: this.state.item
+            })
         }
     }
 
-    back = () => {    //back button
+    handleChange = (event) => {
+        if (event.target.name === "confirmPassword") {
+            if (this.state.item.password !== event.target.value) {
+                this.setState({
+                    ...this.state,
+                    item: { ...this.state.item, [event.target.name]: event.target.value },
+                    error: true
+                })
+            } else {
+                this.setState({
+                    ...this.state,
+                    item: { ...this.state.item, [event.target.name]: event.target.value },
+                    error: false
+                })
+            }
+        } else {
+            this.setState({
+                ...this.state,
+                item: { ...this.state.item, [event.target.name]: event.target.value }
+            })
+        }
+    }
+
+    back = () => {
         this.props.clearEdit()
     }
 
-    _handleModalClose = () => {
-        this.setState(() => ({
-            password: false,
-        }))
-    }
-
-    _renderModal = () => {
-        const onClick = () => {
-            this.setState(() => ({ password: false }))
-        }
-
-        return (
-            <Alert  // pop up alert that lets user know password was successfully changed
-                isOpen={this.state.password}
-                onClose={this._handleClose}
-                handleSubmit={onClick}
-                title="Password Reset"
-                text="Your password was changed successfully"
-                submitButtonText="Done"
-            />
-        )
-    }
-
-    _handleSubmit = ({
-    currentPass,
-    newPass,
-    confirmPass,
-    setSubmitting,
-    resetForm,
-  }) => {
-    // fake async login
-    setTimeout(async () => {
-      setSubmitting(false)
-
-      this.setState(() => ({
-        passChangeSuccess: true,
-      }))
-
-      resetForm()
-    }, 1000)
-  }
 
     render() {
+        console.log("info item props", this.props)
+        const { classes } = this.props;
         return (
-            <Formik  //formik component
-                initialValues={{       //Passed in prop: this contains the initial values in the form field, the properties correspond to the 'name' attribute in the individual fields within the form.
-                    currentPass: '',
-                    newPass: '',
-                    confirmPass: '',
-                }}
-                validationSchema={object().shape({       //Passed in prop: This function automatically recieves the values object as it's argument
-                    currentPass: string().required('Current password is required'),
-                    newPass: string().required('New password is required'),
-                    confirmPass: string()
-                        .oneOf([ref('newPass')], 'Passwords do not match')
-                        .required('Password is required'),
-                })}
-                onSubmit={(         //Passed in prop:  uses formik to automatically recieve form state as it's argument.
-                    { currentPass, newPass, confirmPass },
-                    { setSubmitting, resetForm }
-                ) =>
-                    this._handleSubmit({
-                        currentPass,
-                        newPass,
-                        confirmPass,
-                        setSubmitting,
-                        resetForm,
-                    })
-                }
-                render={props => {
-                    const {
-                        values,
-                        touched,
-                        errors,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isValid,
-                        isSubmitting,
-                    } = props
-                    return isSubmitting ? (
-                        <Spinner />
-                    ) : (
-                            <Paper className="form form--wrapper" elevation={10}>
-                                <form className="form" onSubmit={handleSubmit}>  {/* //automatically handles on submit method */}
-                                    <FormControl fullWidth margin="dense">
-                                        <InputLabel
-                                            htmlFor="password-current"
-                                            error={Boolean(touched.currentPass && errors.currentPass)}
-                                        >
-                                            {'Current Password'}
-                                        </InputLabel>
-                                        <Input
-                                            id="password-current"
-                                            name="currentPass"
-                                            type="password" //will password-a-tize this input
-                                            value={values.currentPass} //formik value matches name attribute
-                                            onChange={handleChange} //formik value to update the changed object
-                                            onBlur={handleBlur} //formik helper validates input has been visited
-                                            error={Boolean(touched.currentPass && errors.currentPass)}  // if input has been visited and there are errors... show errors
-                                        />
-                                        <FormHelperText
-                                            error={Boolean(touched.currentPass && errors.currentPass)}
-                                        >
-                                            {touched.currentPass && errors.currentPass
-                                                ? errors.currentPass
-                                                : ''}
-                                        </FormHelperText>
-                                    </FormControl>
-                                    <FormControl
-                                        fullWidth
-                                        margin="dense"
-                                        error={Boolean(touched.newPass && errors.newPass)}
-                                    >
-                                        <InputLabel
-                                            htmlFor="password-new"
-                                            error={Boolean(touched.newPass && errors.newPass)}
-                                        >
-                                            {'New Password'}
-                                        </InputLabel>
-                                        <Input
-                                            id="password-new"
-                                            name="newPass"
-                                            type="password"
-                                            value={values.newPass}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            error={Boolean(touched.newPass && errors.newPass)}
-                                        />
-                                        <FormHelperText
-                                            error={Boolean(touched.newPass && errors.newPass)}
-                                        >
-                                            {touched.newPass && errors.newPass ? errors.newPass : ''}
-                                        </FormHelperText>
-                                    </FormControl>
-                                    <FormControl
-                                        fullWidth
-                                        margin="dense"
-                                        error={Boolean(touched.confirmPass && errors.confirmPass)}
-                                    >
-                                        <InputLabel
-                                            htmlFor="password-confirm"
-                                            error={Boolean(touched.confirmPass && errors.confirmPass)}
-                                        >
-                                            {'Confirm Password'}
-                                        </InputLabel>
-                                        <Input
-                                            id="password-confirm"
-                                            name="confirmPass"
-                                            type="password"
-                                            value={values.confirmPass}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            error={Boolean(touched.confirmPass && errors.confirmPass)}
-                                        />
-                                        <FormHelperText
-                                            error={Boolean(touched.confirmPass && errors.confirmPass)}
-                                        >
-                                            {touched.confirmPass && errors.confirmPass
-                                                ? errors.confirmPass
-                                                : ''}
-                                        </FormHelperText>
-                                    </FormControl>
-                                    <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
-                                        <Button type="submit" variant="contained" color="primary" disabled={Boolean(!isValid || isSubmitting)} style={{ margin: '16px' }}>{'Reset Password'}</Button>
-                                        <Button color="primary" variant="contained" onClick={this.back}>Cancel</Button>
-                                    </Grid>
-                                </form>
-                                {this._renderModal()}
-                            </Paper>
-                        )
-                }}
-            />
-        )
+            <>
+                <Grid
+                    container
+                    justify="center"
+                    spacing={0}
+                >
+                    <Grid item xs={11} sm={6} md={5} lg={4} style={{ marginTop: 25 }} >
+                        <Paper>
+                            <Grid container justify="center">
+                                <Grid item xs={10}  >
+                                    <form onSubmit={this.submit}>
+                                        <br /><br />
+                                        <InputLabel>Change Password</InputLabel>
+                                        <br /><br />
+                                        <FormControl fullWidth margin="dense">
+                                            <InputLabel htmlFor="password-new" error={this.state.error}>
+                                                {'New Password'}
+                                            </InputLabel>
+                                            <Input
+                                                id="password"
+                                                name='password'
+                                                type="password"
+                                                onChange={this.handleChange}
+                                                value={this.state.item.password}
+                                                required
+                                                error={this.state.error}
+                                            />
+                                            <FormHelperText
+                                            // error={Boolean(touched.newPass && errors.newPass)}
+                                            >
+                                                {/* {touched.newPass && errors.newPass ? errors.newPass : ''} */}
+                                            </FormHelperText>
+                                        </FormControl>
+
+                                        <FormControl fullWidth margin="dense">
+                                            <InputLabel htmlFor="password-confirm" error={this.state.error}>
+                                                {'Confirm Password'}
+                                            </InputLabel>
+                                            <Input
+                                                id="password"
+                                                name='confirmPassword'
+                                                type="password"
+                                                value={this.state.item.confirmPassword}
+                                                onChange={this.handleChange}
+                                                required
+                                                error={this.state.error}
+                                            />
+                                            {this.state.error && <FormHelperText
+                                                error={true}
+                                            >
+                                                Passwords must match
+                                            </FormHelperText>}
+                                        </FormControl>
+                                        <br /><br />
+                                        <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
+                                            <Button disabled={this.state.error} type="submit" color="primary" variant="contained">Submit</Button>{'  '}
+                                            <Button color="primary" variant="contained" onClick={this.back}>Cancel</Button>
+                                        </Grid>
+                                    </form>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </>
+        );
     }
+
 }
+
+export default connect()(withRouter(withStyles(styles, { withTheme: true })(EditUserPassword)));
