@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 //material-ui imports
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+//import TableBody from '@material-ui/core/TableBody';
+//import TableCell from '@material-ui/core/TableCell';
+//import TableContainer from '@material-ui/core/TableContainer';
+//import TableHead from '@material-ui/core/TableHead';
+//import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import { FormControl, MenuItem, withStyles } from '@material-ui/core';
 import swal from 'sweetalert';
@@ -40,6 +40,10 @@ const styles = theme => ({
     cells: {
         textAlign: 'right',
     },
+    input: {
+        marginTop: 10,
+        marginBottom: 10
+    }
 });
 
 
@@ -58,11 +62,30 @@ class NewUserForm extends Component {
     }
     saveChanges = (event) => {
         event.preventDefault();
-        this.props.dispatch({
-            type: 'UPDATE_USER_ADMIN',
-            payload: this.state
-        });
-        this.props.clearEditUser();
+        if (this.state.archiveEmployee === true) {
+            swal({
+                title: "Are you sure?",
+                text: "Once removed, you will not be able to recover this employee!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.props.dispatch({
+                            type: 'UPDATE_USER_ADMIN',
+                            payload: this.state
+                        });
+                        this.props.clearEditUser();
+                    }
+                });
+        } else if (this.state.archiveEmployee === false) {
+            this.props.dispatch({
+                type: 'UPDATE_USER_ADMIN',
+                payload: this.state
+            });
+            this.props.clearEditUser();
+        }
     }
     handleChange = (event) => {
         this.setState({
@@ -92,8 +115,6 @@ class NewUserForm extends Component {
             type: "REGISTER",
             payload: this.state
         });
-        swal("Oops! That didn't work. The username might already be taken. Try again!",
-            { timer: 3500, buttons: false, icon: 'error' });
         this.setState({
             firstName: '',
             lastName: '',
@@ -118,86 +139,183 @@ class NewUserForm extends Component {
             username: '',
             password: ''
         })
+        this.props.clearEditUser();
+    }
+    clearEdit = () => {
+        this.props.clearEditUser();
+    }
+    componentDidUpdate() {
+        this.propsChange();
     }
     render() {
-        this.propsChange();
+        const { classes } = this.props;
+
         console.log('newuserform props', this.props)
         return (
             <>
-                <Grid container justify='center'>
+                <Grid container direction="row" justify='space-evenly' alignItems="center"  >
                     <Grid item xs={11} style={{ textAlign: 'center' }}>
-                        <Typography variant='h3' >{this.props.edit ? 'Edit User:' : 'Add New User:'}</Typography>
-                        <FormControl onSubmit={this.props.edit ? this.saveChanges : this.handleSubmit}>
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="FirstName"
-                                value={this.state.firstName}
-                                variant="outlined"
-                                name='firstName'
-                            />
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="LastName"
-                                value={this.state.lastName}
-                                variant="outlined"
-                                name='lastName'
-                            />
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="Email"
-                                value={this.state.email}
-                                variant="outlined"
-                                name='email'
-                            />
-                            {/* <InputLabel >Role</InputLabel> */}
-                            <Select fullwidth name='role' value={this.state.role} onChange={this.handleChange}>
-                                <MenuItem value="">Role</MenuItem>
-                                <MenuItem value={1}>Admin</MenuItem>
-                                <MenuItem value={2} >Maintenance</MenuItem>
-                                <MenuItem value={3}>Resident Coordinator</MenuItem>
-                            </Select>
-                            {this.props.edit && <Select onChange={this.handleChange} name="archiveEmployee" value={this.state.archiveEmployee}>
-                                <MenuItem value={false}>Active</MenuItem>
-                                <MenuItem value={true}>Removed</MenuItem>
-                            </Select>}
-                            <TextField
-                                onChange={this.handleChange}
-                                id="outlined"
-                                label="Username"
-                                value={this.state.username}
-                                variant="outlined"
-                                name='username'
-                            />
-                            {!this.props.edit &&
-                                <>
-                                    <TextField onChange={this.handleChange}
-                                        id="outlined"
-                                        label="Password"
-                                        value={this.state.password}
-                                        variant="outlined"
-                                        name='password'
-                                    />
-                                    <Button type="submit" color="primary" variant="contained">Add New User</Button></>}
-                            {this.props.edit &&
-                                <Button type="submit" color="primary" variant="contained">Save Changes</Button>}
-                        </FormControl>
+                        <Typography variant='h4' >{this.props.edit ? 'Edit User:' : 'Add New User:'}</Typography>
+                        <form onSubmit={this.props.edit ? this.saveChanges : this.handleSubmit}>
+                            <Grid container justify='center'>
+                                <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                    <Grid container direction="row" justify='space-evenly' alignItems="center" >
+                                        {/* this is for the inner of the outer containers*/}
+                                        <Grid item xs={10} sm={8} md={6} lg={8} style={{ textAlign: 'center' }}>
+                                            <TextField required fullWidth className={classes.input}
+                                                onChange={this.handleChange}
+                                                id="outlined"
+                                                label="FirstName"//this is for the Add User info
+                                                value={this.state.firstName}
+                                                variant="outlined"
+                                                name='firstName'
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                    <Grid container direction="row" justify='space-evenly' alignItems="center">
+                                        <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+                                            <TextField required fullWidth className={classes.input}
+                                                onChange={this.handleChange}
+                                                id="outlined"
+                                                label="LastName"//this is for the Add User info
+                                                value={this.state.lastName}
+                                                variant="outlined"
+                                                name='lastName'
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                    <Grid container direction="row" justify='space-evenly' alignItems="center">
+                                        <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+                                            <TextField required fullWidth className={classes.input}
+                                                onChange={this.handleChange}
+                                                id="outlined"
+                                                label="Email"//this is for the Add User info
+                                                value={this.state.email}
+                                                variant="outlined"
+                                                name='email'
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                    <Grid container direction="row" justify='space-evenly' alignItems="center" >
+                                        <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+                                            {/* <FormControl fullWidth variant="outlined" > */}
+                                            {/* <InputLabel id="role">Role</InputLabel> */}
+                                            <TextField select required fullWidth className={classes.input}
+                                                id="role"
+                                                label="Role"
+                                                variant="outlined"
+                                                name='role' //this is for the Add User info
+                                                onChange={this.handleChange} value={this.state.role}>
+                                                <MenuItem value={1}>Admin</MenuItem>
+                                                <MenuItem value={2}>Maintenance</MenuItem>
+                                                <MenuItem value={3}>Resident Coordinator</MenuItem>
+                                            </TextField>
+                                            {/* </FormControl> */}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                {/* --this is for the Edit user info-- */}
+                                {this.props.edit && <>
+                                    <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                        <Grid container direction="row" justify='space-evenly' alignItems="center" >
+                                            <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+                                                {/* <FormControl  > */}
+                                                {/* <InputLabel > Employee Status</InputLabel> */}
+                                                <TextField select required fullWidth className={classes.input}
+                                                    id="Employee Status"
+                                                    label="Employee Status"
+                                                    variant="outlined"
+                                                    name="archiveEmployee"//this is for the Edit user info
+                                                    onChange={this.handleChange} value={this.state.archiveEmployee}>
+                                                    <MenuItem value={false}>Active</MenuItem>
+                                                    <MenuItem value={true}>Removed</MenuItem>
+                                                </TextField>
+                                                {/* </FormControl> */}
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </>}
+                                <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                    <Grid container direction="row" justify='space-evenly' alignItems="center">
+                                        <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+                                            <TextField required fullWidth className={classes.input}
+                                                onChange={this.handleChange}
+                                                id="outlined"
+                                                label="Username"//this is for the Add User info
+                                                value={this.state.username}
+                                                variant="outlined"
+                                                name='username'
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                {!this.props.edit &&
+                                    <>
+                                        <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                            <Grid container direction="row" justify='space-evenly' alignItems="center">
+                                                <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+
+                                                    <TextField required fullWidth className={classes.input} onChange={this.handleChange}
+                                                        id="outlined"
+                                                        label="Password"//this is for the Add User info
+                                                        value={this.state.password}
+                                                        variant="outlined"
+                                                        name='password'
+                                                    />
+
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </>}
+                                {/*Save Changes is for the Edit User view*/}
+                                {/*Add New User is for the Add New User view*/}
+                                <Grid item xs={12}  >
+                                    <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
+                                        {this.props.edit ?
+                                            <Button type="submit" color="primary" variant="contained">Save Changes</Button> :
+                                            <Button type="submit" color="primary" variant="contained">Add New User</Button>}
+                                    </Grid>
+                                </Grid>
+                                {this.props.edit &&
+                                    <Grid item xs={12}  >
+                                        <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
+                                            <Button onClick={this.clearEdit} color="primary" variant="contained">Cancel</Button>
+
+                                        </Grid>
+                                    </Grid>}
+                            </Grid>
+
+                        </form>
+                        {/* this is for the Edit User info */}
+                        {this.props.edit &&
+                            <form onSubmit={this.updatePassword}>
+                                <Grid container justify='center'>
+                                    <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
+                                        <Grid container direction="row" justify='space-evenly' alignItems="center">
+                                            <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
+                                                <TextField required fullWidth style={{ textAlign: 'center', marginBottom: 15 }}
+                                                    onChange={this.handleChange}
+                                                    id="outlined"
+                                                    label="Password"//this is for the Edit user info
+                                                    value={this.state.password}
+                                                    variant="outlined"
+                                                    name='password'
+                                                /> <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
+                                                    <Button type="submit" color="primary" variant="contained" > Update Password</Button>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </form>}
                     </Grid>
                 </Grid>
-
-                {this.props.edit &&
-                    <FormControl>
-                        <TextField onChange={this.handleChange}
-                            id="outlined"
-                            label="Password"
-                            value={this.state.password}
-                            variant="outlined"
-                            name='password'
-                        />
-                        <Button type="submit" color="primary" variant="contained" onClick={this.updatePassword}> Update Password</Button>
-                    </FormControl>}
             </>)
     };
 }

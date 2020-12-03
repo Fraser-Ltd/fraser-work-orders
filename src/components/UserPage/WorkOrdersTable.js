@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import WorkOrderTableItem from './WorkOrderTableItem';
 
@@ -25,11 +25,11 @@ const styles = theme => ({
     },
     heading: {
         padding: 15,
-        textAlign:'center'
+        textAlign: 'center'
     },
     tableHeading: {
-        textAlign: 'center', cursor:'pointer',
-        '&:hover': { backgroundColor: 'rgb(222, 221, 221)'}
+        textAlign: 'center', cursor: 'pointer',
+        '&:hover': { backgroundColor: 'rgb(222, 221, 221)' }
     },
     row: {
         '&:hover': { cursor: 'pointer' }
@@ -44,47 +44,45 @@ const styles = theme => ({
 
 
 class WorkOrdersTable extends Component {
-    state={
+    state = {
         order: 'asc'
     }
     getWorkOrders = (heading) => {
-        this.setState({order: this.state.order === 'asc'? 'desc': 'asc'});
-        this.props.dispatch({ type: 'FETCH_WORKORDERS_ORDER', payload: { column: heading, order: this.state.order}})
+        this.setState({ order: this.state.order === 'asc' ? 'desc' : 'asc' });
+        this.props.dispatch({ type: 'FETCH_WORKORDERS_ORDER', payload: { column: heading, order: this.state.order } })
     }
-    componentDidMount = () => {
-        this.props.dispatch({ type: "FETCH_PROPERTY" });
-    };
-    
-    render(){
-        const {classes} = this.props;
-        return(
+
+
+    render() {
+        const { classes } = this.props;
+        return (
             <>
                 <Grid container justify='center'>
                     <Grid item xs={11}>
                         <Paper>
-                        <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
-                        <Typography variant='subtitle1' className={classes.heading}>Click on column heading to sort</Typography>
-                        <TableContainer className={classes.root} component={Paper}>
-                            <Table stickyHeader size='medium'>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell className={classes.tableHeading} onClick={()=> this.getWorkOrders('id')}>W.O #</TableCell>
+                            <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
+                            <Typography variant='subtitle1' className={classes.heading}>{this.props.description}</Typography>
+                            <TableContainer className={classes.root} component={Paper}>
+                                <Table stickyHeader size='medium'>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('id')}>W.O #</TableCell>
                                             <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('property_id')} >Property</TableCell>
                                             <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('work_to_be_done')}>Description</TableCell>
                                             <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('priority')}>Priority</TableCell>
                                             <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('status')}>Status</TableCell>
                                             <TableCell className={classes.tableHeading} onClick={() => this.getWorkOrders('date_added')}>Date Submitted</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.props.workOrders[0] && this.props.workOrders
-                                    .map((workOrder) => 
-                                    <WorkOrderTableItem workOrder={workOrder} key={workOrder.id} /> 
-                                    )}
-                                    
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.props.workOrders[0] && this.props.workOrders
+                                            .map((workOrder) =>
+                                                <WorkOrderTableItem workOrder={workOrder} key={workOrder.id} />
+                                            )}
+
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -94,4 +92,4 @@ class WorkOrdersTable extends Component {
 }
 
 
-export default connect()(withStyles(styles, {withTheme: true})(WorkOrdersTable));
+export default connect()(withStyles(styles, { withTheme: true })(WorkOrdersTable));

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 class LoginForm extends Component {
   state = {
@@ -32,41 +37,49 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <form className="formPanel" onSubmit={this.login}>
-        <h2>Login</h2>
-        {this.props.store.errors.loginMessage && (
-          <h3 className="alert" role="alert">
-            {this.props.store.errors.loginMessage}
-          </h3>
-        )}
-        <div>
-          <label htmlFor="username">
-            Username:
-            <input
-              type="text"
-              name="username"
-              required
-              value={this.state.username}
-              onChange={this.handleInputChangeFor('username')}
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              name="password"
-              required
-              value={this.state.password}
-              onChange={this.handleInputChangeFor('password')}
-            />
-          </label>
-        </div>
-        <div>
-          <input className="btn" type="submit" name="submit" value="Log In" />
-        </div>
-      </form>
+      <Grid container justify='center' alignItems='center'>
+        <Grid item xs={8} sm={5} md={4} lg={3} style={{ textAlign: 'center', margin: 15 }}>
+          <Card>
+            <form onSubmit={this.login}>
+              <Typography variant='h3'>Login</Typography>
+              {this.props.store.errors.loginMessage && (
+                <h3 className="alert" role="alert">
+                  {this.props.store.errors.loginMessage}
+                </h3>
+              )}
+              <div>
+                <TextField
+                  style={{ margin: 15 }}
+                  variant='outlined'
+                  type="text"
+                  name="username"
+                  label='Username'
+                  required
+                  value={this.state.username}
+                  onChange={this.handleInputChangeFor('username')}
+                />
+              </div>
+              <div>
+                <TextField
+                  style={{ margin: 15 }}
+                  label='Password'
+                  variant='outlined'
+                  type="password"
+                  name="password"
+                  required
+                  value={this.state.password}
+                  onChange={this.handleInputChangeFor('password')}
+                />
+              </div>
+              <Button
+                style={{ margin: 15 }}
+                type="submit"
+                color='default'
+                variant='contained'>Log In</Button>
+            </form>
+          </Card>
+        </Grid>
+      </Grid>
     );
   }
 }

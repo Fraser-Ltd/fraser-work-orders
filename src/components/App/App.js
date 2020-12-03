@@ -57,7 +57,7 @@ class App extends Component {
             <ProtectedRoute
               // logged in shows UserPage else shows LoginPage
               exact
-              path="/user"
+              path="/workorders"
               component={UserPage}
             />
 
@@ -87,7 +87,7 @@ class App extends Component {
               exact
               path="/admin/property"
               component={Property}
-
+              adminRedirect="/workorders"
             />
 
             {/* When a value is supplied for the authRedirect prop the user will
@@ -100,7 +100,7 @@ class App extends Component {
               exact
               path="/login"
               component={LoginPage}
-              authRedirect="/user"
+              authRedirect="/workorders"
             />
             
             <ProtectedRoute
@@ -110,7 +110,7 @@ class App extends Component {
               exact
               path="/registration"
               component={RegisterPage}
-              authRedirect="/user"
+              authRedirect="/workorders"
             />
             <ProtectedRoute
               // with authRedirect:
@@ -119,7 +119,7 @@ class App extends Component {
               exact
               path="/home"
               component={LandingPage}
-              authRedirect="/user"
+              authRedirect="/workorders"
             />
             <ProtectedRoute
               // with authRedirect:
@@ -127,7 +127,9 @@ class App extends Component {
               // - else shows LandingPage at "/user"
               exact
               path="/admin/users"
-              component={AdminUserPage}/>
+              component={AdminUserPage}
+              adminRedirect="/workorders"
+              />
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

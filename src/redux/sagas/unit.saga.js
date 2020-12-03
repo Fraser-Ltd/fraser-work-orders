@@ -1,5 +1,6 @@
 import { put, takeLatest } from "redux-saga/effects";
 import Axios from "axios";
+import swal from 'sweetalert';
 
 function* getUnitListSaga(action) {
     try {
@@ -17,15 +18,21 @@ function* getUnitListSaga(action) {
 function* addUnitSaga(action) {
     try {
         const response = yield Axios.post("/api/units", action.payload)
+        yield swal('Successfully Added Unit', { timer: 1000, buttons: false, icon: 'success' });
+
         yield put({ type: 'FETCH_UNITS' })
-    } catch (err) { console.log('error fetching units', err) }
+    } catch (err) { 
+        yield swal('Error Adding Unit', { timer: 3500, buttons: false, icon: 'error' });
+        console.log('error fetching units', err) }
 }
 
 function* editUnitsSaga(action) {
     try {
         const response = yield Axios.put(`/api/units/`, action.payload);
-        yield put({ type: "FETCH_ITEMS" });
+        yield swal('Edit Successful', { timer: 1500, buttons: false, icon: 'success' });
+        yield put({ type: "FETCH_UNITS" });
     } catch (err) {
+        yield swal('Error Editing Unit', { timer: 3500, buttons: false, icon: 'error' });
         console.log('error editing unit', err)
     }
 }
