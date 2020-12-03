@@ -33,12 +33,6 @@ const Nav = (props) => {
         {/* Show the link to the info page and the logout button if the user is logged in */}
         {props.store.user.id && (
           <>
-<<<<<<< HEAD
-            <Link className="nav-link" to="/admin/users">Admin</Link>
-            <Link className="nav-link" to="/admin/property">Properties</Link>  
-            <Link className="nav-link" to="/info">Profile</Link> 
-            <LogOutButton className="nav-link" />
-=======
             {props.store.user.role > 1 && <Link className="nav-link" to="/info">
               Profile
             </Link>}
@@ -52,7 +46,6 @@ const Nav = (props) => {
             </>
             }
             <Link className="nav-link" to='/' onClick={() => props.dispatch({ type: 'LOGOUT' })}>Log Out</Link>
->>>>>>> 4278ee32056d4a1ee08c496ab2284b7e952d44fa
           </>
         )}
         {/* Always show this link since the about page is not protected */}
