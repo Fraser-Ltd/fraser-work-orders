@@ -7,9 +7,8 @@ body,
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-image: src="./Images/doodles.png";
-  background-repeat: repeat-y;
-  /* background-color: darkviolet; */
+  background-image: url('/Images/floor-tile.png');
+  background-repeat: repeat;
 }
 
 img {
