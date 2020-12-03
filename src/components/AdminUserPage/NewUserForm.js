@@ -62,7 +62,7 @@ class NewUserForm extends Component {
     }
     saveChanges = (event) => {
         event.preventDefault();
-        if (this.state.archiveEmployee === true ){
+        if (this.state.archiveEmployee === true) {
             swal({
                 title: "Are you sure?",
                 text: "Once removed, you will not be able to recover this employee!",
@@ -77,14 +77,15 @@ class NewUserForm extends Component {
                             payload: this.state
                         });
                         this.props.clearEditUser();
-                    } 
+                    }
                 });
-        }else if(this.state.archiveEmployee=== false){
-        this.props.dispatch({
-            type: 'UPDATE_USER_ADMIN',
-            payload: this.state
-        });
-        this.props.clearEditUser();}
+        } else if (this.state.archiveEmployee === false) {
+            this.props.dispatch({
+                type: 'UPDATE_USER_ADMIN',
+                payload: this.state
+            });
+            this.props.clearEditUser();
+        }
     }
     handleChange = (event) => {
         this.setState({
@@ -203,16 +204,19 @@ class NewUserForm extends Component {
                                 <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
                                     <Grid container direction="row" justify='space-evenly' alignItems="center" >
                                         <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
-                                            <FormControl fullWidth variant="outlined" >
-                                                <InputLabel id="role">Role</InputLabel>
-                                                <Select required id="role" labelId="Role" className={classes.input}
-                                                    name='role' value={this.state.role}//this is for the Add User info
-                                                    onChange={this.handleChange}>
-                                                    <MenuItem value={1}>Admin</MenuItem>
-                                                    <MenuItem value={2}>Maintenance</MenuItem>
-                                                    <MenuItem value={3}>Resident Coordinator</MenuItem>
-                                                </Select>
-                                            </FormControl>
+                                            {/* <FormControl fullWidth variant="outlined" > */}
+                                            {/* <InputLabel id="role">Role</InputLabel> */}
+                                            <TextField select required fullWidth className={classes.input}
+                                                id="role"
+                                                label="Role"
+                                                variant="outlined"
+                                                name='role' //this is for the Add User info
+                                                onChange={this.handleChange} value={this.state.role}>
+                                                <MenuItem value={1}>Admin</MenuItem>
+                                                <MenuItem value={2}>Maintenance</MenuItem>
+                                                <MenuItem value={3}>Resident Coordinator</MenuItem>
+                                            </TextField>
+                                            {/* </FormControl> */}
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -221,15 +225,18 @@ class NewUserForm extends Component {
                                     <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
                                         <Grid container direction="row" justify='space-evenly' alignItems="center" >
                                             <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
-                                                <FormControl fullWidth variant="outlined" >
-                                                    <InputLabel > Employee Status</InputLabel>
-                                                    <Select className={classes.input}
-                                                        fullWidth name="archiveEmployee"//this is for the Edit user info
-                                                        onChange={this.handleChange} value={this.state.archiveEmployee}>
-                                                        <MenuItem value={false}>Active</MenuItem>
-                                                        <MenuItem value={true}>Removed</MenuItem>
-                                                    </Select>
-                                                </FormControl>
+                                                {/* <FormControl  > */}
+                                                {/* <InputLabel > Employee Status</InputLabel> */}
+                                                <TextField select required fullWidth className={classes.input}
+                                                    id="Employee Status"
+                                                    label="Employee Status"
+                                                    variant="outlined"
+                                                    name="archiveEmployee"//this is for the Edit user info
+                                                    onChange={this.handleChange} value={this.state.archiveEmployee}>
+                                                    <MenuItem value={false}>Active</MenuItem>
+                                                    <MenuItem value={true}>Removed</MenuItem>
+                                                </TextField>
+                                                {/* </FormControl> */}
                                             </Grid>
                                         </Grid>
                                     </Grid>
