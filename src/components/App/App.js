@@ -17,8 +17,6 @@ import NewWorkOrderForm from '../NewWorkOrder/NewWorkOrderForm';
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
-import InfoItem from '../InfoPage/InfoItem';
-import PasswordItem from '../InfoPage/PasswordItem';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';

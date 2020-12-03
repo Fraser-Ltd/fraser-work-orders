@@ -13,7 +13,7 @@ const Nav = (props) => {
 
   if (props.store.user.id != null) {
     loginLinkData.path = '/workorders';
-    loginLinkData.text = 'Home';
+    loginLinkData.text = 'Work Orders';
   }
 
   return (
@@ -25,12 +25,11 @@ const Nav = (props) => {
       </div>
 
       <div className="column right">
-        <Link className="nav-link" to={loginLinkData.path}>
+        <Link className="nav-link" to={loginLinkData.path}>{loginLinkData.text}</Link>
           {/* Show this link if they are logged in or not,
           but call this link 'Home' if they are logged in,
           and call this link 'Login / Register' if they are not */}
-          {loginLinkData.text}
-        </Link>
+          
         {/* Show the link to the info page and the logout button if the user is logged in */}
         {props.store.user.id && (
           <>
@@ -50,9 +49,7 @@ const Nav = (props) => {
           </>
         )}
         {/* Always show this link since the about page is not protected */}
-        <Link className="nav-link" to="/about">
-          About
-        </Link>
+        <Link className="nav-link" to="/about">About</Link>
       </div>
     </div>
   );
