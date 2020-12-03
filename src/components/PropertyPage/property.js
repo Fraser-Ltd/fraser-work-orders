@@ -118,10 +118,11 @@ class property extends Component {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                            {!this.state.edit && <PropertyDetail heading='Add new property' edit={this.state.edit} properties={this.state.properties}/>}
-                            {this.state.edit && <PropertyDetail heading='Edit a property' clearEditProperty={this.clearEditProperty} edit={this.state.edit} properties={this.state.properties}/>}                            
+                          
                         </Paper>
                     </Grid>
+                    {!this.state.edit && <PropertyDetail heading='Add Property' edit={this.state.edit} properties={this.state.properties} />}
+                    {this.state.edit && <PropertyDetail heading='Edit Property' clearEditProperty={this.clearEditProperty} edit={this.state.edit} properties={this.state.properties} />}  
                 </Grid>
 
             </>
