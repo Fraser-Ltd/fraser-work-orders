@@ -8,14 +8,11 @@ import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input'
-import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
 //pages
-import Spinner from './Spinner'
-import Alert from './Alert'
 import './InfoPage.css'
 
 const styles = theme => ({
