@@ -27,6 +27,9 @@ const styles = theme => ({
         padding: 15,
         textAlign: 'center'
     },
+    subHeading:{
+        textAlign:'center'
+    },
     tableHeading: {
         textAlign: 'center', cursor: 'pointer',
         '&:hover': { backgroundColor: 'rgb(222, 221, 221)' }
@@ -61,7 +64,8 @@ class WorkOrdersTable extends Component {
                     <Grid item xs={11}>
                         <Paper>
                             <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
-                            <Typography variant='subtitle1' className={classes.heading}>{this.props.description}</Typography>
+                            <Typography variant='subtitle1' className={classes.subHeading} >{this.props.description}</Typography>
+                            <Typography variant='subtitle1' className={classes.subHeading} >Rows that are red are EMERGENCY orders</Typography>
                             <TableContainer className={classes.root} component={Paper}>
                                 <Table stickyHeader size='medium'>
                                     <TableHead>

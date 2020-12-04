@@ -1,14 +1,13 @@
-html,
-body,
-#react-root {
+html, body, #react-root {
   height: 100%;
 }
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  background-image: url('/Images/floor-tile.png');
-  background-repeat: repeat;
+  /* background-image: url('/Images/so-white.png');
+  background-repeat: repeat; */
+  background: linear-gradient(90deg, rgba(232, 232, 232, 1) 17%, rgba(255, 255, 255, 1) 46%, rgba(232, 232, 232, 1) 78%);
 }
 
 img {
@@ -62,6 +61,7 @@ Button
 }
 
 /* This line makes the "Register" and "Login" buttons look like links */
+
 .btn_asLink {
   padding: 0;
   border-width: 0;

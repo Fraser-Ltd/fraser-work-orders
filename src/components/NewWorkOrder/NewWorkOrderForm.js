@@ -10,12 +10,17 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import { FormControl, FormControlLabel, Typography } from '@material-ui/core';
+import { FormControl, FormControlLabel, Typography, withStyles } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
-
+const styles = theme => ({
+    input:{
+        marginTop: 5,
+        marginBottom:5
+    },
+})
 
 
 
@@ -82,6 +87,7 @@ class NewWorkOrderForm extends Component {
 
 
     render() {
+        const {classes} = this.props;
         return (
             <>
                 <Grid
@@ -90,12 +96,13 @@ class NewWorkOrderForm extends Component {
                     spacing={0}
 
                 >
-                    <Grid item xs={12} style={{textAlign:'center'}}>
-                        <Typography variant='h2'>Add New Work Order</Typography>
-                        <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
-                    </Grid>
+
                     <Grid item xs={11} sm={6} md={5} lg={4} style={{ marginTop: 25 }} >
                         <Paper>
+                            <Grid item xs={12} style={{ textAlign: 'center' }}>
+                                <Typography variant='h2'>Add New Work Order</Typography>
+                                <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
+                            </Grid>
                             <Grid container justify="center">
                                 <Grid item xs={10}  >
                                     <form onSubmit={this.submit}>
@@ -103,7 +110,7 @@ class NewWorkOrderForm extends Component {
                                             <Grid container direction='column' alignItems='center'   >
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
+                                                        <FormControl className={classes.input} fullWidth >
                                                             <InputLabel >Property:</InputLabel>
                                                             <Select required fullWidth name="propertyId" value={this.state.propertyId} onChange={this.handleChange}>
                                                                 {this.props.properties[0] && this.props.properties.map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)}
@@ -115,7 +122,7 @@ class NewWorkOrderForm extends Component {
                                                 this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId)[0] &&
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
+                                                        <FormControl className={classes.input} fullWidth >
                                                             <InputLabel >Unit:</InputLabel>
                                                             <Select required fullWidth name="unitId" value={this.state.unitId} onChange={this.handleChange}>
                                                                 {this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId).map(unit => <MenuItem key={unit.id} value={unit.id}>{unit.unit}</MenuItem>)}
@@ -125,7 +132,7 @@ class NewWorkOrderForm extends Component {
                                                 </Grid>}
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                    <FormControl style={{ marginBottom: 10 }} fullWidth >
+                                                        <FormControl className={classes.input} fullWidth >
                                                         <InputLabel >Order Type:</InputLabel>
                                                         <Select fullWidth name="emergency" value={this.state.emergency} onChange={this.handleChange}>
                                                             <MenuItem value={false}>Non-Emergency</MenuItem>
@@ -212,4 +219,4 @@ class NewWorkOrderForm extends Component {
 
 const mapStateToProps = (store) => ({ properties: store.properties, units: store.units, user:store.user})
 
-export default connect(mapStateToProps)(withRouter(NewWorkOrderForm));
+export default connect(mapStateToProps)(withRouter(withStyles(styles,{withTheme:true})(NewWorkOrderForm)));
