@@ -22,11 +22,11 @@ function* getWorkOrdersOrder(action){
     }
 }
 //another get for completed w/o's
-function* getCompletedWorkOrders() {
+function* getCompletedWorkOrders(action) {
     try {
         console.log('in getCompletedWorkOrders saga');
-        const response = yield axios.get('api/work_orders/complete')//IS THIS THE CORRECT ENDPOINT??
-        yield put({ type: 'SET_COMPLETEDWORKORDERS', payload: response.data })
+        const response = yield axios.get(`api/work_orders/complete/${action.payload.column}/${action.payload.order}`)//IS THIS THE CORRECT ENDPOINT??
+        yield put({ type: 'SET_COMPLETEDWORKORDERS', payload: response.data });
     } catch (error) {
         console.log('Error in getWorkOrders saga', error);
     }

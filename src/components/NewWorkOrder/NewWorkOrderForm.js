@@ -101,7 +101,8 @@ class NewWorkOrderForm extends Component {
                         <Paper>
                             <Grid item xs={12} style={{ textAlign: 'center' }}>
                                 <Typography variant='h2'>Add New Work Order</Typography>
-                                <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
+                            <Typography variant='h5' className={classes.heading}>(Fill out specific information and hit 'Submit')</Typography>
+                            <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
                             </Grid>
                             <Grid container justify="center">
                                 <Grid item xs={10}  >
