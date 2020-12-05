@@ -50,7 +50,8 @@ class EditUserPassword extends Component {
             this.props.dispatch({
                 type: 'UPDATE_PASSWORD',
                 payload: this.state.item
-            })
+            });
+            this.props.clearEdit();
         }
     }
 

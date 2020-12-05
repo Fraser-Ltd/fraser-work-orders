@@ -60,7 +60,7 @@ class UserPage extends Component {
           <Grid item xs={11} md={6}>
             <WorkOrdersTable
               heading='Current Work Orders'
-              description={user.role === 3? 'This shows work orders for properties that are assigned to you as a resident coordinator and the status is not Complete':
+              description={user.role === 3? 'This shows work orders for properties that are assigned to you as a resident coordinator':
             user.role === 2 ? 'This shows all work orders that are assigned to you but status is not Complete':'This shows all work orders assigned to maintenance in which the status is not Complete'}
               workOrders={filteredOrders2}
             />

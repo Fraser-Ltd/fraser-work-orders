@@ -73,7 +73,7 @@ class WorkOrderDetailForm extends Component {
             this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, status: 'Reviewed by Maintenance' } });
 
         } else {
-            this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority } });
+            this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, assignedTo: this.state.assignedTo === ''? null: this.state.assignedTo } });
         }
 
         this.props.history.push('/workorders');
@@ -189,7 +189,7 @@ class WorkOrderDetailForm extends Component {
                                                         </FormControl>
                                                         <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                             <InputLabel >Assigned To:</InputLabel>
-                                                            <Select disabled={this.props.user.role > 1} required fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
+                                                            <Select disabled={this.props.user.role > 1} required={this.props.user.role < 2} fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
                                                                 {this.props.allUsers.filter(user => user.role === 2)
                                                                     .map(user => <MenuItem
                                                                         key={user.id}

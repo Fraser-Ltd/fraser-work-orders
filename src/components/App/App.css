@@ -5,9 +5,8 @@ html, body, #react-root {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0px;
-  /* background-image: url('/Images/so-white.png');
-  background-repeat: repeat; */
-  background: linear-gradient(90deg, rgba(232, 232, 232, 1) 17%, rgba(255, 255, 255, 1) 46%, rgba(232, 232, 232, 1) 78%);
+  background: radial-gradient(circle, rgba(241, 241, 241, 1) 0%, rgba(218, 218, 218, 1) 29%, rgba(162, 162, 162, 1) 100%);
+  
 }
 
 img {

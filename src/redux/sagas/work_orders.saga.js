@@ -25,7 +25,7 @@ function* getWorkOrdersOrder(action){
 function* getCompletedWorkOrders() {
     try {
         console.log('in getCompletedWorkOrders saga');
-        const response = yield axios.get('api/work_orders/completed')//IS THIS THE CORRECT ENDPOINT??
+        const response = yield axios.get('api/work_orders/complete')//IS THIS THE CORRECT ENDPOINT??
         yield put({ type: 'SET_COMPLETEDWORKORDERS', payload: response.data })
     } catch (error) {
         console.log('Error in getWorkOrders saga', error);
