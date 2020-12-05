@@ -10,6 +10,7 @@ import './InfoPage.css'
 //material ui imports
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 
 const styles = theme => ({
   center: {
@@ -60,9 +61,9 @@ class UserProfile extends Component {
   
         {this.state.showUserInfo && <><h1>{this.props.user.first_name}'s Profile</h1>
         <div className="Profile-details">
-        <h3>Username: {this.props.user.username}</h3>
-        <h3>Name: {this.props.user.first_name} {this.props.user.last_name}</h3>
-        <h3>Email: {this.props.user.email}</h3>
+            <h3><strong>Username:</strong> {this.props.user.username}</h3>
+            <h3><strong>Name:</strong> {this.props.user.first_name} {this.props.user.last_name}</h3>
+            <h3><strong>Email:</strong> {this.props.user.email}</h3>
         <br></br>
         </div>
         <Button style={{margin: 10}}color="primary" variant="contained" onClick={this.editUser}>Edit Profile</Button>
