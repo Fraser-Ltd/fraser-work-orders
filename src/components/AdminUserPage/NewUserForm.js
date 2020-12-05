@@ -256,6 +256,7 @@ class NewUserForm extends Component {
 
                                                     <TextField required fullWidth className={classes.input} onChange={this.handleChange}
                                                         id="outlined"
+                                                        type="password"
                                                         label="Password"//this is for the Add User info
                                                         value={this.state.password}
                                                         variant="outlined"
@@ -292,8 +293,8 @@ class NewUserForm extends Component {
                                     <Grid item xs={12} sm={12} md={4} lg={3}>{/* this is for the outer containers*/}
                                         <Grid container direction="row" justify='space-evenly' alignItems="center">
                                             <Grid item xs={10} sm={8} md={6} lg={8}>{/* this is for the inner of the outer containers*/}
-                                                <TextField required type="password"fullWidth style={{ textAlign: 'center', marginBottom: 15 }}
-                                                    
+                                                <TextField required fullWidth style={{ textAlign: 'center', marginBottom: 15 }}
+                                                    type="password"
                                                     onChange={this.handleChange}
                                                     id="outlined"
                                                     label="Password"//this is for the Edit user info
