@@ -15,7 +15,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
@@ -109,7 +108,6 @@ class property extends Component {
                                             <TableCell className={classes.tableHeading}>Name</TableCell>
                                             <TableCell className={classes.tableHeading}>Address</TableCell>
                                             <TableCell className={classes.tableHeading}>Resident Coordinator</TableCell>
-                                            <TableCell className={classes.tableHeading}>Details</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>

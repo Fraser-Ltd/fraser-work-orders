@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 //material ui imports
@@ -16,9 +16,9 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
-    input:{
+    input: {
         marginTop: 5,
-        marginBottom:5
+        marginBottom: 5
     },
 })
 
@@ -39,14 +39,14 @@ class NewWorkOrderForm extends Component {
         unitId: '',
         tenantNotHome: false,
     }
-    componentDidMount(){
-        this.props.dispatch({ type: 'FETCH_UNITS'});
-        this.props.dispatch({ type: 'FETCH_PROPERTY'});
+    componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_UNITS' });
+        this.props.dispatch({ type: 'FETCH_PROPERTY' });
     }
 
     submit = (e) => {
         e.preventDefault()
-        this.props.dispatch({ type: 'ADD_WORKORDER', payload: {...this.state, unitId: this.state.unitId === ''? null: this.state.unitId}});
+        this.props.dispatch({ type: 'ADD_WORKORDER', payload: { ...this.state, unitId: this.state.unitId === '' ? null : this.state.unitId } });
         this.setState({
             propertyId: '',
             dateAdded: moment().format(),
@@ -87,7 +87,7 @@ class NewWorkOrderForm extends Component {
 
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
         return (
             <>
                 <Grid
@@ -101,8 +101,8 @@ class NewWorkOrderForm extends Component {
                         <Paper>
                             <Grid item xs={12} style={{ textAlign: 'center' }}>
                                 <Typography variant='h2'>Add New Work Order</Typography>
-                            <Typography variant='h5' className={classes.heading}>(Fill out specific information and hit 'Submit')</Typography>
-                            <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
+                                <Typography variant='h5' className={classes.heading}>(Fill out specific information and hit 'Submit')</Typography>
+                                <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
                             </Grid>
                             <Grid container justify="center">
                                 <Grid item xs={10}  >
@@ -119,27 +119,27 @@ class NewWorkOrderForm extends Component {
                                                         </FormControl>
                                                     </Grid>
                                                 </Grid>
-                                                {this.state.propertyId !== '' && 
-                                                this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId)[0] &&
+                                                {this.state.propertyId !== '' &&
+                                                    this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId)[0] &&
+                                                    <Grid container justify='center'>
+                                                        <Grid item xs={12} sm={10} md={8} lg={6}>
+                                                            <FormControl className={classes.input} fullWidth >
+                                                                <InputLabel >Unit:</InputLabel>
+                                                                <Select required fullWidth name="unitId" value={this.state.unitId} onChange={this.handleChange}>
+                                                                    {this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId).map(unit => <MenuItem key={unit.id} value={unit.id}>{unit.unit}</MenuItem>)}
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid>
+                                                    </Grid>}
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
                                                         <FormControl className={classes.input} fullWidth >
-                                                            <InputLabel >Unit:</InputLabel>
-                                                            <Select required fullWidth name="unitId" value={this.state.unitId} onChange={this.handleChange}>
-                                                                {this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId).map(unit => <MenuItem key={unit.id} value={unit.id}>{unit.unit}</MenuItem>)}
+                                                            <InputLabel >Order Type:</InputLabel>
+                                                            <Select fullWidth name="emergency" value={this.state.emergency} onChange={this.handleChange}>
+                                                                <MenuItem value={false}>Non-Emergency</MenuItem>
+                                                                <MenuItem value={true}>Emergency</MenuItem>
                                                             </Select>
                                                         </FormControl>
-                                                    </Grid>
-                                                </Grid>}
-                                                <Grid container justify='center'>
-                                                    <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                        <FormControl className={classes.input} fullWidth >
-                                                        <InputLabel >Order Type:</InputLabel>
-                                                        <Select fullWidth name="emergency" value={this.state.emergency} onChange={this.handleChange}>
-                                                            <MenuItem value={false}>Non-Emergency</MenuItem>
-                                                            <MenuItem value={true}>Emergency</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
@@ -218,6 +218,6 @@ class NewWorkOrderForm extends Component {
 
 }
 
-const mapStateToProps = (store) => ({ properties: store.properties, units: store.units, user:store.user})
+const mapStateToProps = (store) => ({ properties: store.properties, units: store.units, user: store.user })
 
-export default connect(mapStateToProps)(withRouter(withStyles(styles,{withTheme:true})(NewWorkOrderForm)));
+export default connect(mapStateToProps)(withRouter(withStyles(styles, { withTheme: true })(NewWorkOrderForm)));

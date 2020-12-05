@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import WorkOrdersTable from './WorkOrdersTable';
 import { withRouter } from 'react-router-dom';
 
 //material ui imports
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { Computer } from '@material-ui/icons';
 
 class UserPage extends Component {
   componentDidMount() {
@@ -62,7 +60,7 @@ class UserPage extends Component {
           <Grid item xs={11} md={6}>
             <WorkOrdersTable
               heading='Current Work Orders'
-              description={user.role === 3? 'This shows work orders for properties that are assigned to you as a resident coordinator':
+              description={user.role === 3? 'Only work orders for properties that you are assigned to will be visible':
             user.role === 2 ? 'This shows all work orders that are assigned to you but status is not Complete':'This shows all work orders assigned to maintenance in which the status is not Complete'}
               workOrders={filteredOrders2}
             />
@@ -71,7 +69,7 @@ class UserPage extends Component {
           <Grid item xs={11} md={6}>
             <WorkOrdersTable
               heading='Completed Work Orders'
-              description={user.role === 3? 'This shows completed work orders for properties that are assigned to you as a resident coordinator':
+              description={user.role === 3? 'Only work orders for properties that you are assigned to will be visible':
             user.role === 2 ? 'This shows all completed work orders that are assigned to you':'This shows all completed work orders'}
               workOrders={this.props.completedWorkOrders}
               completed={true}

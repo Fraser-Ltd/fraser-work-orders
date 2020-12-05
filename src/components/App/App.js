@@ -23,6 +23,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import AdminUserPage from '../AdminUserPage/AdminUserPage';
 import Property from '../PropertyPage/property';
 import WorkOrderDetails from '../WorkOrderDetails/WorkOrderDetails';
+import Reports from '../Reports/Reports';
 
 
 
@@ -128,6 +129,15 @@ class App extends Component {
               exact
               path="/admin/users"
               component={AdminUserPage}
+              adminRedirect="/workorders"
+              />
+            <ProtectedRoute
+              // with authRedirect:
+              // - if logged in, redirects to "/admin/users"
+              // - else shows LandingPage at "/user"
+              exact
+              path="/admin/reports"
+              component={Reports}
               adminRedirect="/workorders"
               />
 

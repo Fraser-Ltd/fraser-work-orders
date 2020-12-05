@@ -8,23 +8,12 @@ import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input'
-import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
 //pages
 import './InfoPage.css'
 
-const styles = theme => ({
-    center: {
-        [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
-        },
-        [theme.breakpoints.up('md')]: {
-            textAlign: 'right'
-        }
-    },
-})
 
 class EditUserPassword extends Component {
     state = {
@@ -85,7 +74,6 @@ class EditUserPassword extends Component {
 
     render() {
         console.log("info item props", this.props)
-        const { classes } = this.props;
         return (
             <>
                 <Grid
@@ -157,4 +145,4 @@ class EditUserPassword extends Component {
 
 }
 
-export default connect()(withRouter(withStyles(styles, { withTheme: true })(EditUserPassword)));
+export default connect()(withRouter(EditUserPassword));

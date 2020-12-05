@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-
 
 //material ui imports
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -54,7 +48,6 @@ class PropertyTableItem extends Component {
                     <TableCell className={classes.cells}>{property.property_name}</TableCell>
                     <TableCell className={classes.cells}>{property.property_address}</TableCell>
                     <TableCell className={classes.cells}>{property.rc_name}</TableCell>
-                    <TableCell className={classes.cells}><button type='submit'>Edit Property</button></TableCell>
                 </TableRow>
             </>
         );
