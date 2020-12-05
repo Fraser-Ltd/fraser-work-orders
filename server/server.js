@@ -14,6 +14,7 @@ const editUserRouter = require('./routes/edit_user.router');
 const propertiesRouter = require('./routes/properties.router');
 const workOrdersRouter = require('./routes/work_order.router');
 const unitsRouter = require('./routes/units.router');
+const reportRouter = require('./routes/report.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,6 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
+app.use('/api/reports', reportRouter);
 app.use('/api/user', userRouter);
 app.use('/api/edit_user', editUserRouter);
 app.use('/api/properties', propertiesRouter);

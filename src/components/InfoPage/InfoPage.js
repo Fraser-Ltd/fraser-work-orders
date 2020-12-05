@@ -10,7 +10,6 @@ import './InfoPage.css'
 //material ui imports
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 
 const styles = theme => ({
   center: {

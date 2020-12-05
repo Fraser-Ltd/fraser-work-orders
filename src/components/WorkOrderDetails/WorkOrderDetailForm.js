@@ -73,7 +73,7 @@ class WorkOrderDetailForm extends Component {
             this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, status: 'Reviewed by Maintenance' } });
 
         } else {
-            this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, assignedTo: this.state.assignedTo === ''? null: this.state.assignedTo } });
+            this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, assignedTo: this.state.assignedTo === '' ? null : this.state.assignedTo } });
         }
 
         this.props.history.push('/workorders');
@@ -141,12 +141,11 @@ class WorkOrderDetailForm extends Component {
                     spacing={0}
 
                 >
-                    <Grid item xs={12} style={{ textAlign: 'center' }}>
-                        <Typography variant='h2'>Work Order Details</Typography>
-                    </Grid>
-
                     <Grid item xs={11} sm={10} md={10} lg={8} xl={6} style={{ marginTop: 25 }} >
                         <Paper>
+                            <Grid item xs={12} style={{ textAlign: 'center' }}>
+                                <Typography variant='h2'>Work Order Details</Typography>
+                            </Grid>
                             <Grid container justify="center">
                                 <Grid item xs={10} className={classes.right} >
                                     <form onSubmit={this.submit}>

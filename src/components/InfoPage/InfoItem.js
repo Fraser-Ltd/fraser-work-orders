@@ -6,20 +6,9 @@ import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 
-const styles = theme => ({
-    center: {
-        [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
-        },
-        [theme.breakpoints.up('md')]: {
-            textAlign: 'right'
-        }
-    },
-})
 
 class EditProfile extends Component {
     state = {
@@ -61,7 +50,6 @@ class EditProfile extends Component {
 
     render() {
         console.log("info item props", this.props)
-        const { classes } = this.props;
         return (
             <>
                 <Grid
@@ -145,4 +133,4 @@ class EditProfile extends Component {
 
 }
 
-export default connect()(withRouter(withStyles(styles, { withTheme: true })(EditProfile)));
+export default connect()(withRouter(EditProfile));
