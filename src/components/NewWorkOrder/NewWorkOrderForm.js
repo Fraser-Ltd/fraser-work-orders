@@ -114,7 +114,10 @@ class NewWorkOrderForm extends Component {
                                                         <FormControl className={classes.input} fullWidth >
                                                             <InputLabel >Property:</InputLabel>
                                                             <Select required fullWidth name="propertyId" value={this.state.propertyId} onChange={this.handleChange}>
-                                                                {this.props.properties[0] && this.props.properties.map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)}
+                                                                {this.props.properties[0] && this.props.user.role === 3 ? 
+                                                                    this.props.properties.filter(property => property.resident_coordinator === this.props.user.id).map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)
+                                                                :
+                                                                this.props.properties.map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)}
                                                             </Select>
                                                         </FormControl>
                                                     </Grid>
