@@ -24,7 +24,7 @@ function* registerUser(action) {
     //yield put({ type: 'SET_TO_LOGIN_MODE' });
   } catch (error) {
     console.log('Error with user registration:', error);
-    yield swal("Error! Added new user failed.",
+    yield swal("Error! Added new user failed. Username may belong to archived employee.",
       { timer: 3500, buttons: false, icon: 'error' });
     yield put({ type: 'REGISTRATION_FAILED' });
   }

@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 //material ui imports
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import { Computer } from '@material-ui/icons';
 
 class UserPage extends Component {
   componentDidMount() {
@@ -14,6 +15,7 @@ class UserPage extends Component {
     this.props.dispatch({ type: 'FETCH_WORKORDERS' });
     this.props.dispatch({ type: 'FETCH_PROPERTY' });
     this.props.dispatch({ type: 'GET_USERS' });
+    this.props.dispatch({ type: 'FETCH_COMPLETEDWORKORDERS', payload: { column: 'id', order: 'asc' } });
   }
   // this component doesn't do much to start, just renders some user info to the DOM
   render() {
@@ -37,8 +39,8 @@ class UserPage extends Component {
         default:
           break;
       }
-
     }
+
 
     return (
         <Grid container justify='center'>
@@ -66,11 +68,21 @@ class UserPage extends Component {
             />
           </Grid>
 
+          <Grid item xs={11} md={6}>
+            <WorkOrdersTable
+              heading='Completed Work Orders'
+              description={user.role === 3? 'This shows completed work orders for properties that are assigned to you as a resident coordinator':
+            user.role === 2 ? 'This shows all completed work orders that are assigned to you':'This shows all completed work orders'}
+              workOrders={this.props.completedWorkOrders}
+              completed={true}
+            />
+          </Grid>
+
         </Grid>
     );
   }
 }
-const mapStateToProps = (state) => ({ user: state.user, workOrders: state.workOrders })
+const mapStateToProps = (state) => ({ user: state.user, workOrders: state.workOrders, completedWorkOrders: state.completedWorkOrders })
 
 // this allows us to use <App /> in index.js
 export default connect(mapStateToProps)(withRouter(UserPage));

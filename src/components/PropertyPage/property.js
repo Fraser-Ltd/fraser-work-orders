@@ -100,7 +100,8 @@ class property extends Component {
 
                     <Grid item xs={11}>
                         <Paper>
-                            <Typography variant='h3' className={classes.heading}>Current Properties</Typography>
+                            <Typography variant='h3' className={classes.heading}>Current Properties:</Typography>
+                            <Typography variant='h5' className={classes.heading}>(click row to edit a property or add individual units)</Typography>
                             <TableContainer className={classes.root} component={Paper}>
                                 <Table stickyHeader size='medium'>
                                     <TableHead>

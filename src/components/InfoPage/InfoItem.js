@@ -38,11 +38,13 @@ class EditProfile extends Component {
 
 
     submit = (e) => {
+        e.preventDefault();
         this.setState({ mode: 'view' });
         this.props.dispatch({
             type: 'UPDATE_USER',
             payload: this.state.item
-        })
+        });
+        this.props.clearEdit();
     }
 
     handleChange = (event) => {

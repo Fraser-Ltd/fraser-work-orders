@@ -52,7 +52,10 @@ class WorkOrdersTable extends Component {
     }
     getWorkOrders = (heading) => {
         this.setState({ order: this.state.order === 'asc' ? 'desc' : 'asc' });
-        this.props.dispatch({ type: 'FETCH_WORKORDERS_ORDER', payload: { column: heading, order: this.state.order } })
+        if (this.props.completed){
+        this.props.dispatch({ type: 'FETCH_COMPLETEDWORKORDERS', payload: { column: heading, order: this.state.order } });
+        }else{
+        this.props.dispatch({ type: 'FETCH_WORKORDERS_ORDER', payload: { column: heading, order: this.state.order } });}
     }
 
 
