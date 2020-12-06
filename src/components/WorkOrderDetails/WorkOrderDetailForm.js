@@ -353,7 +353,7 @@ class WorkOrderDetailForm extends Component {
                                         </Grid>
 
                                         <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
-                                            <Button type="submit" color="primary" variant="contained">Submit</Button>{'  '}
+                                            <Button type="submit" color="primary" variant="contained">{(this.props.user.role === 2 && this.state.status === 'Assigned To Maintenance')?'Mark as Reviewed': 'Save'}</Button>{'  '}
                                             <Button color="primary" variant="contained" onClick={this.back}>Cancel</Button>
 
                                         </Grid>
