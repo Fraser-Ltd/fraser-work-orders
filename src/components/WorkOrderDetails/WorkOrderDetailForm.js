@@ -15,6 +15,7 @@ import { FormControl, FormControlLabel, withStyles } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
     right: {
@@ -58,7 +59,7 @@ class WorkOrderDetailForm extends Component {
         priority: this.props.workOrder.priority || '',// priority will always come in as null the first time so we set it to an empty string
         timeIn: this.props.workOrder.time_in,
         timeOut: this.props.workOrder.time_out,
-        dateCompleted: this.props.workOrder.date_completed 
+        dateCompleted: this.props.workOrder.date_completed
     }
 
 
@@ -68,13 +69,13 @@ class WorkOrderDetailForm extends Component {
 
     submit = (event) => {
         event.preventDefault();
-        if (this.props.user.role === 2 && this.state.status === 'Assigned To Maintenance'){
+        if (this.props.user.role === 2 && this.state.status === 'Assigned To Maintenance') {
             this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, status: 'Reviewed by Maintenance' } });
 
-        }else{
-        this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority } });
+        } else {
+            this.props.dispatch({ type: 'UPDATE_WORKORDERS', payload: { ...this.state, priority: this.state.priority === '' ? 0 : this.state.priority, assignedTo: this.state.assignedTo === '' ? null : this.state.assignedTo } });
         }
-        
+
         this.props.history.push('/workorders');
     }
 
@@ -102,11 +103,11 @@ class WorkOrderDetailForm extends Component {
     }
 
     timeIn = () => {
-        this.props.dispatch({ type: 'SET_TIMEIN', payload: { workOrderId:this.state.workOrderId}})
+        this.props.dispatch({ type: 'SET_TIMEIN', payload: { workOrderId: this.state.workOrderId } })
     }
 
     timeOut = () => {
-        this.props.dispatch({ type: 'SET_TIMEOUT', payload:{workOrderId:this.state.workOrderId}})
+        this.props.dispatch({ type: 'SET_TIMEOUT', payload: { workOrderId: this.state.workOrderId } })
     }
     handleSelect = (event) => {
         // console.log(event.target.name);
@@ -140,12 +141,11 @@ class WorkOrderDetailForm extends Component {
                     spacing={0}
 
                 >
-                    <Grid item xs={12} style={{textAlign:'center'}}>
-                        <Typography variant='h2'>Work Order Details</Typography>
-                    </Grid>
-
                     <Grid item xs={11} sm={10} md={10} lg={8} xl={6} style={{ marginTop: 25 }} >
                         <Paper>
+                            <Grid item xs={12} style={{ textAlign: 'center' }}>
+                                <Typography variant='h2'>Work Order Details</Typography>
+                            </Grid>
                             <Grid container justify="center">
                                 <Grid item xs={10} className={classes.right} >
                                     <form onSubmit={this.submit}>
@@ -188,7 +188,7 @@ class WorkOrderDetailForm extends Component {
                                                         </FormControl>
                                                         <FormControl style={{ marginBottom: 10 }} fullWidth >
                                                             <InputLabel >Assigned To:</InputLabel>
-                                                            <Select disabled={this.props.user.role > 1} required fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
+                                                            <Select disabled={this.props.user.role > 1} required={this.props.user.role < 2} fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
                                                                 {this.props.allUsers.filter(user => user.role === 2)
                                                                     .map(user => <MenuItem
                                                                         key={user.id}
@@ -269,7 +269,7 @@ class WorkOrderDetailForm extends Component {
                                         <TextField
                                             onChange={this.handleSelect}
                                             fullWidth
-                                            disabled={this.props.user.role>2}
+                                            disabled={this.props.user.role > 2}
                                             id="outlined-multiline-static"
                                             label="Details of Work Done"
                                             multiline
@@ -279,22 +279,32 @@ class WorkOrderDetailForm extends Component {
                                             variant="outlined"
 
                                         /><br /><br />
-                                        <Grid container style={{marginBottom:15}} justify='center'>
-                                            <Grid style={{textAlign:'center', marginTop: 15, marginBottom:15}} item xs={12} md={4}>
+                                        <Grid container style={{ marginBottom: 15 }} justify='center'>
+                                            <Grid style={{ textAlign: 'center', marginTop: 15, marginBottom: 15 }} item xs={12} md={4}>
                                                 <Typography><strong>Date Completed: </strong> <br />{this.props.workOrder.date_completed === null ? '' : moment(this.props.workOrder.date_completed).format('MMMM Do YYYY')}</Typography>
                                             </Grid>
-                                            <Grid style={{ textAlign: 'center', marginTop: 15, marginBottom:15 }} item xs={12} md={4}>
+                                            <Grid style={{ textAlign: 'center', marginTop: 15, marginBottom: 15 }} item xs={12} md={4}>
                                                 {this.props.workOrder.time_in && <Typography><strong>Time In: </strong><br />{moment(this.props.workOrder.time_in).format('MMMM Do YYYY, h:mm a')}</Typography>}
-                                                {this.props.workOrder.time_in == null && <Button variant='contained' disabled={this.props.user.role !== 2} onClick={this.timeIn}>Time In</Button>}
+                                                {this.props.workOrder.time_in == null &&
+                                                    <Tooltip title={this.props.user.role === 2 ? '' : 'Only available to maintenance'}>
+                                                        <span>
+                                                            <Button variant='contained' disabled={this.props.user.role !== 2} onClick={this.timeIn}>Time In</Button>
+                                                        </span>
+                                                    </Tooltip>}
                                             </Grid>
-                                            <Grid style={{ textAlign: 'center', marginTop:15, marginBottom:15 }} item xs={12} md={4}>
+                                            <Grid style={{ textAlign: 'center', marginTop: 15, marginBottom: 15 }} item xs={12} md={4}>
                                                 {this.props.workOrder.time_out && <Typography><strong>Time Out: </strong><br />{moment(this.props.workOrder.time_out).format('MMMM Do YYYY, h:mm a')}</Typography>}
-                                                {this.props.workOrder.time_out == null && <Button variant='contained' disabled={this.props.user.role !== 2} onClick={this.timeOut}>Time Out</Button>}
+                                                {this.props.workOrder.time_out == null &&
+                                                    <Tooltip title={this.props.user.role === 2 ? '' : 'Only available to maintenance'}>
+                                                        <span>
+                                                            <Button variant='contained' disabled={this.props.user.role !== 2} onClick={this.timeOut}>Time Out</Button>
+                                                        </span>
+                                                    </Tooltip>}
                                             </Grid>
                                         </Grid>
                                         <Grid item xs={12} md={6} >
                                             <Grid container style={{ textAlign: 'left' }}>
-                                                <Grid style={{marginBottom:15}} item xs={12}>
+                                                <Grid style={{ marginBottom: 15 }} item xs={12}>
                                                     <FormControlLabel
                                                         label="Work needed as result of REAC or QMR inspection"
                                                         labelPlacement='end'
@@ -359,6 +369,6 @@ class WorkOrderDetailForm extends Component {
     }
 
 }
-const mapStateToProps = (state) => ({user: state.user});
+const mapStateToProps = (state) => ({ user: state.user });
 
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(withRouter(WorkOrderDetailForm)));

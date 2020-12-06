@@ -9,6 +9,7 @@ import allUsersSaga from './all_users.saga';
 import workOrdersSaga from './work_orders.saga';
 import propertiesSaga from './properties.saga';
 import unitSaga from './unit.saga';
+import reportsSaga from './reports.saga';
 
 
 // rootSaga is the primary saga.
@@ -27,5 +28,6 @@ export default function* rootSaga() {
     propertiesSaga(),
     unitSaga(),
     allUsersSaga(),
+    reportsSaga(),
   ]);
 }

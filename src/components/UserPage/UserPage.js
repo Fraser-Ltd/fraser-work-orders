@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import WorkOrdersTable from './WorkOrdersTable';
 import { withRouter } from 'react-router-dom';
 
@@ -14,6 +13,7 @@ class UserPage extends Component {
     this.props.dispatch({ type: 'FETCH_WORKORDERS' });
     this.props.dispatch({ type: 'FETCH_PROPERTY' });
     this.props.dispatch({ type: 'GET_USERS' });
+    this.props.dispatch({ type: 'FETCH_COMPLETEDWORKORDERS', payload: { column: 'id', order: 'asc' } });
   }
   // this component doesn't do much to start, just renders some user info to the DOM
   render() {
@@ -37,8 +37,8 @@ class UserPage extends Component {
         default:
           break;
       }
-
     }
+
 
     return (
         <Grid container justify='center'>
@@ -60,9 +60,19 @@ class UserPage extends Component {
           <Grid item xs={11} md={6}>
             <WorkOrdersTable
               heading='Current Work Orders'
-              description={user.role === 3? 'This shows work orders for properties that are assigned to you as a resident coordinator and the status is not Complete':
+              description={user.role === 3? 'Only work orders for properties that you are assigned to will be visible':
             user.role === 2 ? 'This shows all work orders that are assigned to you but status is not Complete':'This shows all work orders assigned to maintenance in which the status is not Complete'}
               workOrders={filteredOrders2}
+            />
+          </Grid>
+
+          <Grid item xs={11} md={6}>
+            <WorkOrdersTable
+              heading='Completed Work Orders'
+              description={user.role === 3? 'Only work orders for properties that you are assigned to will be visible':
+            user.role === 2 ? 'This shows all completed work orders that are assigned to you':'This shows all completed work orders'}
+              workOrders={this.props.completedWorkOrders}
+              completed={true}
             />
           </Grid>
 
@@ -70,7 +80,7 @@ class UserPage extends Component {
     );
   }
 }
-const mapStateToProps = (state) => ({ user: state.user, workOrders: state.workOrders })
+const mapStateToProps = (state) => ({ user: state.user, workOrders: state.workOrders, completedWorkOrders: state.completedWorkOrders })
 
 // this allows us to use <App /> in index.js
 export default connect(mapStateToProps)(withRouter(UserPage));

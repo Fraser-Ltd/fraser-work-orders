@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
 
 //material ui imports
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
 
@@ -48,9 +44,9 @@ class AdminUserPageTableItem extends Component {
 render() {
     const allUsers = this.props.userList;
     const role = () => {
-        if (allUsers.role == 1) return 'Admin'
-        else if (allUsers.role == 2) return 'Maintenance'
-        else if (allUsers.role == 3) return 'Resident Coordinator'
+        if (allUsers.role === 1) return 'Admin'
+        else if (allUsers.role === 2) return 'Maintenance'
+        else if (allUsers.role === 3) return 'Resident Coordinator'
     }
         const { classes } = this.props;
         console.log(this.props.userList);

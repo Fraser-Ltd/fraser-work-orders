@@ -57,17 +57,19 @@ class UserProfile extends Component {
     const user1=this.props.user
     return (
       <div className="userProfile">
-        
+  
         {this.state.showUserInfo && <><h1>{this.props.user.first_name}'s Profile</h1>
-        <h3>Username: {this.props.user.username}</h3>
-        <h3>Name: {this.props.user.first_name} {this.props.user.last_name}</h3>
-        <h3>Email: {this.props.user.email}</h3>
+        <div className="Profile-details">
+            <h3><strong>Username:</strong> {this.props.user.username}</h3>
+            <h3><strong>Name:</strong> {this.props.user.first_name} {this.props.user.last_name}</h3>
+            <h3><strong>Email:</strong> {this.props.user.email}</h3>
         <br></br>
+        </div>
         <Button style={{margin: 10}}color="primary" variant="contained" onClick={this.editUser}>Edit Profile</Button>
         <Button style={{margin: 10}}color="primary" variant="contained" onClick={this.editPassword}>Change Password</Button></>}
         {this.state.edit && this.props.user.id && !this.state.editPassword && <InfoItem clearEdit = {this.clearEdit} user={user1} username={this.props.user.username} />}
         {this.state.editPassword && this.props.user.id && !this.state.edit && <PasswordItem clearEdit = {this.clearPassword} user={user1} username={this.props.user.username} />}
-
+        
       </div>
     );
   }

@@ -10,7 +10,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     let queryText = '';
     if(role === null){res.sendStatus(403);
     }
-    else if (role <= 1 && role != null) {// get request for user with level 1 or below should recieve all work orders
+    else if (role <= 1 && role != null) {// get request for user with level 1 or below should receive all work orders
         queryText = `SELECT * FROM "work_orders" WHERE "status" != 'Complete' ORDER BY "emergency" DESC`;
         pool.query(queryText)
         .then(result => res.send(result.rows))
@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             console.log('error getting work orders for level 1', error);
             res.sendStatus(500);
         })
-    } else if (role === 2) {//user with level 2 should get all work orders assinend to that maintenance person
+    } else if (role === 2) {//user with level 2 should get all work orders assigned to that maintenance person
         queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'Complete' ORDER BY "emergency" DESC`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
@@ -72,7 +72,7 @@ setColumn()
     let queryText = '';
     if(role === null){res.sendStatus(403);
     }
-    else if (role <= 1 && role != null) {// get request for user with level 1 or below should recieve all work orders
+    else if (role <= 1 && role != null) {// get request for user with level 1 or below should receive all work orders
         queryText = `SELECT * FROM "work_orders" WHERE "status" != 'Complete' ORDER BY ${column} ${direction}`;
         pool.query(queryText)
         .then(result => res.send(result.rows))
@@ -80,7 +80,7 @@ setColumn()
             console.log('error getting work orders for level 1', error);
             res.sendStatus(500);
         })
-    } else if (role === 2) {//user with level 2 should get all work orders assinend to that maintenance person
+    } else if (role === 2) {//user with level 2 should get all work orders assigned to that maintenance person
         queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" != 'Complete' ORDER BY ${column} ${direction}`;
         pool.query(queryText,[req.user.id])
         .then(result => res.send(result.rows))
@@ -104,15 +104,69 @@ setColumn()
     }
 });
 
-//(get) api/work_orders/complete
-router.get('/complete', rejectUnauthenticated, (req, res) => {
-    let queryText = ''; 
-        queryText = `SELECT * FROM "work_orders" WHERE "status" = 'complete'`;
-    pool.query(queryText).then(result => res.send(result.rows)).catch(error => {
-        console.log('error getting completed work orders for level 1', error);
-        res.sendStatus(500);
-    })
-})
+//(get) api/work_orders/complete/id/asc
+router.get('/complete/:column/:direction', rejectUnauthenticated, (req, res) => {
+    const role = req.user.role;
+    let column;
+    let direction;
+    const setDirection = () => {
+        switch(req.params.direction){
+            case 'asc': return direction="ASC";
+            case 'desc': return direction="DESC";
+            default: return direction = "ASC";
+        }
+    }
+    const setColumn = () => {
+    switch(req.params.column){
+        case 'id': return column="id";
+        case 'property_id': return column ="property_id";
+        case 'work_to_be_done': return column='lower("work_to_be_done")';
+        case 'priority': return column="priority";
+        case 'status': return column="status";
+        case 'date_added': return column="date_added";
+        default: return column="id";
+    }
+}
+setDirection()
+setColumn()
+    console.log('param column is:', req.params.column, 'param direction is:', req.params.direction);
+    console.log('column is', column, 'direction is:', direction);
+    let queryText = '';
+    if(role === null){res.sendStatus(403);
+    }
+    else if (role <= 1 && role != null) {// get request for user with level 1 or below should receive all work orders
+        queryText = `SELECT * FROM "work_orders" WHERE "status" = 'Complete' ORDER BY ${column} ${direction}`;
+        pool.query(queryText)
+        .then(result => res.send(result.rows))
+        .catch(error => {
+            console.log('error getting work orders for level 1', error);
+            res.sendStatus(500);
+        })
+    } else if (role === 2) {//user with level 2 should get all work orders assigned to that maintenance person
+        queryText = `SELECT * FROM "work_orders" WHERE "assigned_to" = $1 AND "status" = 'Complete' ORDER BY ${column} ${direction}`;
+        pool.query(queryText,[req.user.id])
+        .then(result => res.send(result.rows))
+        .catch(error => {
+            console.log('error getting work orders for level 2', error);
+            res.sendStatus(500);
+        })
+    } else if (role === 3) {//user with level 3 should get all work orders in which they are assigned to the property as RC
+        queryText = `SELECT "work_orders"."id","priority", "property_id", "date_added", "permission_to_enter",
+            "door_hanger", "emergency", "work_to_be_done", "details_of_work_done", "time_in", "time_out",
+            "status", "assigned_to", "added_by_id", "reac_inspection", "smoke_detectors", 
+            "housekeeping_inspection", "exterminating", "remarks", "date_completed" FROM "work_orders" 
+            JOIN "properties" ON "properties"."id" = "work_orders"."property_id" 
+            WHERE "status" = 'Complete' AND "resident_coordinator" = $1 ORDER BY ${column} ${direction}`;
+        pool.query(queryText,[req.user.id])
+        .then(result => res.send(result.rows))
+        .catch(error => {
+            console.log('error getting work orders for level 3', error);
+            res.sendStatus(500);
+        })
+    }
+});
+
+
 // (post)      api/work_orders/
 // incoming body should look like:
 // {

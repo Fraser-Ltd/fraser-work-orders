@@ -25,7 +25,8 @@ const styles = theme => ({
         maxHeight: 250,
     },
     heading: {
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 10
     },
     addProperty: {
         textAlign: 'center',
@@ -194,11 +195,12 @@ class propertyDetail extends Component {
 
         return (
             <Grid container justify={this.props.edit ? 'space-evenly' : 'center'}>
-                <Grid item xs={12} className={classes.heading}>
-                    <Typography className={classes.heading} variant='h3'>{this.props.heading}</Typography>
-                </Grid>
+
                 <Grid item xs={11} sm={10} md={4} lg={3}>
                     <Card>
+                        <Grid item xs={12} className={classes.heading}>
+                            <Typography className={classes.heading} variant='h3'>{this.props.heading}</Typography>
+                        </Grid>
                         <form onSubmit={this.handleSubmit}>
                             <Grid container direction='column' alignItems='center'>
                                 <Grid container justify='center'>
