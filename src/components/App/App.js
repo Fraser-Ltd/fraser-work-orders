@@ -79,7 +79,7 @@ class App extends Component {
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
-              path="/workOrderDetails/:id"
+              path="/workOrderDetails/:id/:status"
               component={WorkOrderDetails}
             />
 
@@ -142,7 +142,7 @@ class App extends Component {
               />
 
             {/* If none of the other routes matched, we will show a 404. */}
-            <Route render={() => <h1>404</h1>} />
+            <Route render={() => <div><center><h1>Sorry This Page Does Not Exist!</h1></center></div>} />
           </Switch>
           <Footer />
         </div>

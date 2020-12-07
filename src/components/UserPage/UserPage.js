@@ -67,13 +67,13 @@ class UserPage extends Component {
           </Grid>
 
           <Grid item xs={11} md={6}>
-            <WorkOrdersTable
+            {<WorkOrdersTable
               heading='Completed Work Orders'
               description={user.role === 3? 'Only work orders for properties that you are assigned to will be visible':
             user.role === 2 ? 'This shows all completed work orders that are assigned to you':'This shows all completed work orders'}
               workOrders={this.props.completedWorkOrders}
               completed={true}
-            />
+            />}
           </Grid>
 
         </Grid>
