@@ -26,7 +26,7 @@ class WorkOrderDetails extends Component {
         const id = this.props.match.params.id
         const status = this.props.match.params.status
         console.log('workOrderDetail status is:', status)
-        const workOrder = ((this.props.workOrders[0] !== undefined && this.props.completedWorkOrders[0] !== undefined) ? (status === 'Complete' ? this.props.completedWorkOrders.filter(order => order.id === Number(id))[0]  :this.props.workOrders.filter(order => order.id === Number(id))[0]) : null);
+        const workOrder = ((this.props.workOrders[0] !== undefined) ? (status === 'Complete' ? (this.props.completedWorkOrders[0] !== undefined ? this.props.completedWorkOrders.filter(order => order.id === Number(id))[0] : null ) : this.props.workOrders.filter(order => order.id === Number(id))[0]) : null);
         const property = workOrder !== null && this.props.properties[0] && (this.props.properties.filter(prop => prop.id === workOrder.property_id)[0] || null);
         const unit = workOrder !== null && this.props.units[0] && (this.props.units.filter(unit => unit.id === workOrder.unit_id)[0] || null);
         const assignedTo = workOrder !== null && this.props.allUsers[0] && (this.props.allUsers.filter(user => user.id === workOrder.assigned_to)[0] || {first_name: '',last_name:''});
