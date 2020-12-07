@@ -9,34 +9,37 @@ import { Typography, withStyles } from '@material-ui/core';
 
 
 const styles = theme => ({
-    h4: {
-        marginLeft: 10,
-    },
-    headCaption: {
-        marginLeft: 65,
-        marginRight: 65,
-    },
-    h5: {
-        marginLeft: 65,
-    },
-    caption: {
-        marginLeft: 105,
-        marginRight: 85,
-    },
-    textIndent: {
-        marginLeft: 137,
-        marginRight: 70,
-    },
-    textIndent1: {
-        marginLeft: 150,
-        marginRight: 70,
-    },
-    textIndent2: {
-        marginLeft: 190,
-        marginRight: 70,
-    },
-
-})
+        title: {
+            marginTop: 30,
+        },
+        h4: {
+            marginLeft: 60,
+        },
+        h5: {
+            marginLeft: 78,
+        },
+        headCaption: {
+            marginLeft: 115,
+            marginRight: 70,
+        },
+        caption: {
+            marginLeft: 124,
+            marginRight: 70,
+        },
+        textIndent: {
+            marginLeft: 159,
+            marginRight: 70,
+        },
+        textIndent1: {
+            marginLeft: 180,
+            marginRight: 70,
+        },
+        textIndent2: {
+            marginLeft: 200,
+            marginRight: 70,
+        },
+    
+    })
 
 class HelpRC extends Component {
     render() {
@@ -56,7 +59,7 @@ class HelpRC extends Component {
                                 spacing={0}
                             >
                                 <Grid item xs={10} style={{ textAlign: 'center' }}>
-                                    <Typography variant='h2'>Fraser MMS</Typography>
+                                    <Typography className={classes.title} variant='h2'>Fraser MMS</Typography>
                                     <Typography variant='h4'>(Maintenance Management System)</Typography> <br />
                                     <Typography variant='h3'>Resident Coordinator Help Page</Typography>
                                     <Typography variant='caption'>These are instructions for Resident Coordinators only</Typography>
@@ -69,7 +72,7 @@ class HelpRC extends Component {
                             <Typography className={classes.h4} variant='h4'>2.0 Important Information</Typography>
                             <Typography className={classes.headCaption} variant='body2'>For trouble-free operation of the MMS, please read and understand all instructions before use.</Typography>
                             <br /> <br />
-                            <Typography  className={classes.h4} variant='h4'>3.0 Operation</Typography>
+                            <Typography  className={classes.h4} variant='h4'>3.0 Operation</Typography> <br />
                             <Typography className={classes.h5} variant='h5'>3.1 Work Orders</Typography>
                             <Typography className={classes.headCaption} variant='body2'>Once logged in, all users will be automatically directed to the Work Orders Page.  Note this page will look different depending on the User Role.</Typography> <br />
                             <Typography  className={classes.caption} variant='body2'>3.1.1 Current Work Orders</Typography>
@@ -87,13 +90,14 @@ class HelpRC extends Component {
                         
                             <Typography className={classes.textIndent} variant='body2'>Once all required fields are populated on the form the user can then submit the work order.  If not all required fields are populated, an error will pop up showing the user which required fields remain.</Typography> <br /><br />
 
-                            <Typography className={classes.h5} variant='h5'>3.2 Profile</Typography>
+                            <Typography className={classes.h5} variant='h5'>3.2 Profile</Typography> <br />
                             <Typography className={classes.caption} variant='body2'>3.2.1 Your Profile</Typography>
                             <Typography className={classes.textIndent} variant='body2'>Clicking on the 'Profile' tab on the navigation bar will direct the user to their profile information.</Typography> <br />
                             <Typography className={classes.caption} variant='body2'>3.2.2 Edit Profile</Typography> 
                             <Typography className={classes.textIndent} variant='body2'>To edit your profile simply click 'Edit Profile' and replace the necessary information before hitting the 'submit' button to save changes.</Typography> <br />
                             <Typography className={classes.caption} variant='body2'>3.2.3 Change Password</Typography>
-                            <Typography className={classes.textIndent} variant='body2'>TO change your password simply click 'Change Password'.  Enter your new password twice and hit the 'submit' button to save changes.</Typography> <br /> 
+                            <Typography className={classes.textIndent} variant='body2'>To change your password simply click 'Change Password'.  Enter your new password twice and hit the 'submit' button to save changes.</Typography> <br /> 
+                            <br /> <br />
                         </Paper>
                     </Grid>
                 </Grid>
