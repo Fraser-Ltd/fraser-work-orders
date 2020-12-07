@@ -81,7 +81,6 @@ class UserProfile extends Component {
     const user1 = this.props.user
     return (
       <>
-      
         <div className="userProfile">
         <Grid container justify="center">
           <Paper>
@@ -98,7 +97,6 @@ class UserProfile extends Component {
           </Grid>
           {this.state.edit && this.props.user.id && !this.state.editPassword && <InfoItem clearEdit={this.clearEdit} user={user1} username={this.props.user.username} />}
           {this.state.editPassword && this.props.user.id && !this.state.edit && <PasswordItem clearEdit={this.clearPassword} user={user1} username={this.props.user.username} />}
-
         </div>
       </>
     );
