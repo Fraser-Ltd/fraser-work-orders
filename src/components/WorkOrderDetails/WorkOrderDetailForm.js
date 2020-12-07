@@ -16,6 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
+import swal from 'sweetalert';
 
 const styles = theme => ({
     right: {
@@ -34,6 +35,13 @@ const styles = theme => ({
             textAlign: 'left'
         }
     },
+    heading:{
+        padding: '25px 25px 0px 25px'
+    },
+    select:{
+        marginBottom: 10,
+        marginTop: 5
+    }
 })
 
 
@@ -130,6 +138,23 @@ class WorkOrderDetailForm extends Component {
         this.props.history.push('/workorders');
     }
 
+    deleteWorkOrder = () => {
+        swal({
+            title: "Are you sure?",
+            text: "This will delete the work order and you will NOT be able to recover it.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    this.props.dispatch({ type:'REMOVE_WORKORDERS', payload:this.state.workOrderId});
+                    this.props.history.push('/workorders');
+                }
+            });
+        
+    }
+
 
     render() {
         const { classes } = this.props;
@@ -144,7 +169,7 @@ class WorkOrderDetailForm extends Component {
                     <Grid item xs={11} sm={10} md={10} lg={8} xl={6} style={{ marginTop: 25 }} >
                         <Paper>
                             <Grid item xs={12} style={{ textAlign: 'center' }}>
-                                <Typography variant='h2'>Work Order Details</Typography>
+                                <Typography className={classes.heading} variant='h2'>Work Order Details</Typography>
                             </Grid>
                             <Grid container justify="center">
                                 <Grid item xs={10} className={classes.right} >
@@ -176,41 +201,32 @@ class WorkOrderDetailForm extends Component {
                                             <Grid item xs={12} md={6}>
                                                 <Grid container justify='flex-end'>
                                                     <Grid item xs={12} md={8}>
-                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
-                                                            <InputLabel >Status</InputLabel>
-                                                            <Select fullWidth name="status" value={this.state.status} onChange={this.handleStatus}>
+                                                            <TextField className={classes.select} select variant='outlined' label='Status:' fullWidth name="status" value={this.state.status} onChange={this.handleStatus}>
                                                                 <MenuItem value={'Submitted'}>Submitted</MenuItem>
                                                                 <MenuItem value={'Assigned To Maintenance'}>Assigned To Maintenance</MenuItem>
                                                                 <MenuItem value={'Reviewed by Maintenance'}>Reviewed by Maintenance</MenuItem>
                                                                 <MenuItem value={'Waiting on Parts'}>Waiting on Parts</MenuItem>
                                                                 <MenuItem value={'Complete'}>Work Complete</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
-                                                            <InputLabel >Assigned To:</InputLabel>
-                                                            <Select disabled={this.props.user.role > 1} required={this.props.user.role < 2} fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
+                                                            </TextField>
+
+                                                            <TextField className={classes.select} select variant='outlined' label='Assigned To:' disabled={this.props.user.role > 1} required={this.props.user.role < 2} fullWidth name="assignedTo" value={this.state.assignedTo} onChange={this.assignWorkOrder}>
                                                                 {this.props.allUsers.filter(user => user.role === 2)
                                                                     .map(user => <MenuItem
                                                                         key={user.id}
                                                                         value={user.id}>{user.first_name} {user.last_name}
                                                                     </MenuItem>)}
-                                                            </Select>
-                                                        </FormControl>
-                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
-                                                            <InputLabel >Priority:</InputLabel>
-                                                            <Select disabled={this.props.user.role > 2} fullWidth name="priority" value={this.state.priority} onChange={this.handleSelect}>
+                                                            </TextField>
+
+                                                            <TextField className={classes.select} select variant='outlined' label='Priority:' disabled={this.props.user.role > 2} fullWidth name="priority" value={this.state.priority} onChange={this.handleSelect}>
                                                                 <MenuItem value={0}>No Priority</MenuItem>
                                                                 <MenuItem value={1}>Low</MenuItem>
                                                                 <MenuItem value={2}>High</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                        <FormControl style={{ marginBottom: 10 }} fullWidth >
-                                                            <InputLabel  >Order Type:</InputLabel>
-                                                            <Select disabled={this.props.user.role > 2} fullWidth name="emergency" value={this.state.emergency} onChange={this.handleSelect}>
+                                                            </TextField>
+
+                                                            <TextField className={classes.select} select variant='outlined' label='Order Type:' disabled={this.props.user.role > 2} fullWidth name="emergency" value={this.state.emergency} onChange={this.handleTextField}>
                                                                 <MenuItem value={false}>Non-Emergency</MenuItem>
                                                                 <MenuItem value={true}>Emergency</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
+                                                            </TextField>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
@@ -354,9 +370,9 @@ class WorkOrderDetailForm extends Component {
 
                                         <Grid item style={{ textAlign: 'center', marginBottom: 15 }}>
                                             <Button type="submit" color="primary" variant="contained">{(this.props.user.role === 2 && this.state.status === 'Assigned To Maintenance')?'Mark as Reviewed': 'Save'}</Button>{'  '}
-                                            <Button color="primary" variant="contained" onClick={this.back}>Cancel</Button>
-
-                                        </Grid>
+                                            <Button color="primary" variant="contained" onClick={this.back}>Cancel</Button>{' '}
+                                            {this.props.user.role < 2 && <Button variant='contained' color='primary' onClick={this.deleteWorkOrder} >Delete</Button>}
+                                        </Grid> 
                                     </form>
                                 </Grid>
                             </Grid>

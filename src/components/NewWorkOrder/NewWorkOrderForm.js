@@ -20,6 +20,9 @@ const styles = theme => ({
         marginTop: 5,
         marginBottom: 5
     },
+    heading:{
+        padding: '25px 25px 0px 25px'
+    }
 })
 
 
@@ -40,6 +43,7 @@ class NewWorkOrderForm extends Component {
         tenantNotHome: false,
     }
     componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_USER' });
         this.props.dispatch({ type: 'FETCH_UNITS' });
         this.props.dispatch({ type: 'FETCH_PROPERTY' });
     }
@@ -88,6 +92,9 @@ class NewWorkOrderForm extends Component {
 
     render() {
         const { classes } = this.props;
+        console.log('user in new work order is', this.props.user)
+        console.log(this.props.properties[0])
+       if(this.props.properties[0]){ console.log('filtered properties', this.props.properties.filter(property => property.resident_coordinator === this.props.user.id))}
         return (
             <>
                 <Grid
@@ -100,8 +107,7 @@ class NewWorkOrderForm extends Component {
                     <Grid item xs={11} sm={6} md={5} lg={4} style={{ marginTop: 25 }} >
                         <Paper>
                             <Grid item xs={12} style={{ textAlign: 'center' }}>
-                                <Typography variant='h2'>Add New Work Order</Typography>
-                                <Typography variant='h5' className={classes.heading}>(Fill out specific information and hit 'Submit')</Typography>
+                                <Typography className={classes.heading} variant='h2'>Add New Work Order</Typography>
                                 <Typography variant='caption'>If the property you are looking for is not in this list please contact admin and they will add it</Typography>
                             </Grid>
                             <Grid container justify="center">
@@ -111,38 +117,32 @@ class NewWorkOrderForm extends Component {
                                             <Grid container direction='column' alignItems='center'   >
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                        <FormControl className={classes.input} fullWidth >
-                                                            <InputLabel >Property:</InputLabel>
-                                                            <Select required fullWidth name="propertyId" value={this.state.propertyId} onChange={this.handleChange}>
-                                                                {this.props.properties[0] && this.props.user.role === 3 ? 
+                                                        { 
+                                                            <TextField className={classes.input} select variant='outlined' label='Property:' required fullWidth name="propertyId" value={this.state.propertyId} onChange={this.handleChange}>
+                                                                {this.props.properties[0] && (this.props.user.role === 3 ? 
                                                                     this.props.properties.filter(property => property.resident_coordinator === this.props.user.id).map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)
                                                                 :
-                                                                this.props.properties.map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>)}
-                                                            </Select>
-                                                        </FormControl>
+                                                                this.props.properties.map(property => <MenuItem key={property.id} value={property.id}>{property.property_name}</MenuItem>))}
+                                                            </TextField>
+                                                        }
                                                     </Grid>
                                                 </Grid>
                                                 {this.state.propertyId !== '' &&
                                                     this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId)[0] &&
                                                     <Grid container justify='center'>
                                                         <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                            <FormControl className={classes.input} fullWidth >
-                                                                <InputLabel >Unit:</InputLabel>
-                                                                <Select required fullWidth name="unitId" value={this.state.unitId} onChange={this.handleChange}>
+
+                                                                <TextField select className={classes.input} label='Unit:' variant='outlined' required fullWidth name="unitId" value={this.state.unitId} onChange={this.handleChange}>
                                                                     {this.props.units[0] && this.props.units.filter(unit => unit.property_id === this.state.propertyId).map(unit => <MenuItem key={unit.id} value={unit.id}>{unit.unit}</MenuItem>)}
-                                                                </Select>
-                                                            </FormControl>
+                                                                </TextField>
                                                         </Grid>
                                                     </Grid>}
                                                 <Grid container justify='center'>
                                                     <Grid item xs={12} sm={10} md={8} lg={6}>
-                                                        <FormControl className={classes.input} fullWidth >
-                                                            <InputLabel >Order Type:</InputLabel>
-                                                            <Select fullWidth name="emergency" value={this.state.emergency} onChange={this.handleChange}>
+                                                            <TextField variant='outlined' select className={classes.input} label='Order Type:' fullWidth name="emergency" value={this.state.emergency} onChange={this.handleChange}>
                                                                 <MenuItem value={false}>Non-Emergency</MenuItem>
                                                                 <MenuItem value={true}>Emergency</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
+                                                            </TextField>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
