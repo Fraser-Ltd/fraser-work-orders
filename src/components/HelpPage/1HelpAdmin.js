@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 //material ui imports
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { Typography, withStyles } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 class HelpAdmin extends Component {
     render() {
@@ -42,10 +42,23 @@ class HelpAdmin extends Component {
                         <br /> <br />
                         <Typography variant='h4'>4.0 Operation</Typography>
                         <Typography variant='h5'>4.1 Work Orders</Typography>
+                        <Typography variant='caption'>Once logged in, all users will be automatically directed to the Work Orders Page.  Note this page will look different depending on the User Role.</Typography> <br /><br />
                         <Typography variant='caption'>4.1.1 Work Orders to Assign</Typography> <br />
+                        <Typography variant='caption'>All work orders that are created will first appear in the 'Work Orders to Assign' table.  This is a high level view.  To see more details and to assign to Maintenance, simply click anywhere in the row of the applicable work order.  Now 'Work Orders Details' table will open.  Here the Admin can change the status of the work order. If for example, assigning the work order to Maintenance; the admin will change the Status to 'Assigned To Maintenance', assign the appropriate Maintenance staff and provide a priority.  Note there are three priority options, High, Low and No Priority.</Typography> <br /><br />
                         <Typography variant='caption'>4.1.2 Current Work Orders</Typography> <br />
+                        <Typography variant='caption'>Open Work Orders that have been Assigned to Maintenance will show here.  Admin may click on and edit work orders in this table if necessary.</Typography> <br /><br />
                         <Typography variant='caption'>4.1.3 Completed Work Orders</Typography> <br />
+                        <Typography variant='caption'>Work orders that are complete will show up here.</Typography> <br /><br />
                         <Typography variant='caption'>4.1.4 Create New Work Order</Typography> <br />
+                        <Typography variant='caption'>Clicking on the “CREATE NEW WORK ORDER” button on the Work Orders page will direct the user to the “Add New Work Order” form.  The form contains the following fields:</Typography> <br />
+                        <Typography variant='caption'>Property:  This is a drop down with all available properties*.  Choose the applicable property.  If the property has units associated with it, another drop down will appear for the user to select the applicable unit.  If a property or unit is not available, see step 4.3.2.</Typography> <br />
+                        <Typography variant='caption'>Order Type: This field is defaulted to Non-Emergency, if the work order is an Emergency, simply select “Emergency” from the drop down.</Typography> <br />
+                        <Typography variant='caption'>“Permission to Enter”, “Tenant Not Home”, and “Work needed as a result of REAC Inspection or QMR Inspection” are boxes that can be clicked if applicable.</Typography> <br />
+                        <Typography variant='caption'>Work To Be Done:  This is where the user can provide a detailed description of the issue needing to be addressed.  Keep in mind it is helpful to be specific, examples:</Typography> <br />
+                        <Typography variant='caption'>Instead or “light needs to be fixed”, address which light: “light in bathroom needs to be changed”.</Typography> <br />
+                        <Typography variant='caption'>Instead of “issues with sink”, be more specific: “sink in kitchen is leaking”.</Typography> <br />
+                        <br />
+                        <Typography variant='caption'>Once all required fields are populated on the form the user can then submit the work order.  If not all required fields are populated, an error will pop up showing the user which required fields remain.</Typography> <br /><br />
                         <br />
                         <Typography variant='h5'>4.2 Users*</Typography>
                         <Typography variant='caption'>4.2.1 Current Users</Typography>  <br />
@@ -59,14 +72,15 @@ class HelpAdmin extends Component {
                         <Typography variant='caption'>4.3.1 Current Properties</Typography>  <br />
                         <Typography variant='caption'>Properties already added to the system will show up under the 'Current Properties' table.  Admin is able to edit Properties by clicking anywhere in the row of the Property they wish to edit.</Typography> <br /><br />
                         <Typography variant='caption'>4.3.2 Add Properties</Typography>  <br />
-                        <Typography variant='caption'>To add a New Property, scroll to the 'Add Property' table.  All fields are required and must be populated before selecting the 'Add New Property' button.</Typography> <br /><br />
-                        <br />
+                        <Typography variant='caption'>To add a New Property, scroll to the 'Add Property' table.  All fields are required and must be populated before selecting the 'Add New Property' button. Admins are also able to add additional units by clicking on the applicable Property.</Typography>
+                        <br /> <br />
                         <Typography variant='h5'>4.4 Reports*</Typography>
                         <Typography variant='caption'>4.4.1 Completed Work Orders Report</Typography>  <br />
-
+                        <br /> <br />
                         <Typography variant='h5'>* signifies pages only accessible by Admin</Typography>
                     </Paper>
                 </Grid>
+                <br /> <br />
             </>
         );
     }
