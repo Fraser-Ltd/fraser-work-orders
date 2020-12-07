@@ -44,14 +44,14 @@ class UserPage extends Component {
           </Grid>}
         </Grid>
 
-        <Grid item xs={11} sm={6} md={5} lg={4} style={{ textAlign: 'center' }} >
+        {this.props.user.id === undefined && <Grid item xs={11} sm={6} md={5} lg={4} style={{ textAlign: 'center' }} >
           <Grid container justify="center">
             <Paper>
               <Typography variant='h2'>Login Help</Typography>
-              <Typography variant='h5'>If you do not have a username and password or you have forgotten your password, please contact your Administrator.</Typography>
+              <Typography variant='body1'>If you do not have a username and password or you have forgotten your password, please contact your Administrator.</Typography>
             </Paper>
           </Grid>
-        </Grid>
+        </Grid>}
 
       </Grid>
     );
