@@ -41,7 +41,7 @@ const styles = theme => ({
 class WorkOrderTableItem extends Component {
     
     details = () => {
-        this.props.history.push(`/workOrderDetails/${this.props.workOrder.id}`);
+        this.props.history.push(`/workOrderDetails/${this.props.workOrder.id}/${this.props.workOrder.status}`);
     }
 
     render(){
@@ -54,15 +54,15 @@ class WorkOrderTableItem extends Component {
         }
         return(
             <>
-                <TableRow className={workOrder.emergency ? classes.red:classes.row}  onClick={this.details}>
-                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.id}</TableCell>
-                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{this.props.properties[0] &&
+                <TableRow className={workOrder.emergency && workOrder.status !== 'Complete' ? classes.red :classes.row}  onClick={this.details}>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && workOrder.status !== 'Complete' && classes.red2}`}>{workOrder.id}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && workOrder.status !== 'Complete' && classes.red2}`}>{this.props.properties[0] &&
                                 this.props.properties.filter(prop => prop.id === workOrder.property_id)[0].property_name}
                     </TableCell>
-                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.work_to_be_done}</TableCell>
-                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{priority()}</TableCell>
-                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{workOrder.status}</TableCell>
-                    <TableCell className={`${classes.cells} ${workOrder.emergency && classes.red2}`}>{moment(workOrder.date_added).calendar()}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && workOrder.status !== 'Complete' && classes.red2}`}>{workOrder.work_to_be_done}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && workOrder.status !== 'Complete' && classes.red2}`}>{priority()}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && workOrder.status !== 'Complete' && classes.red2}`}>{workOrder.status}</TableCell>
+                    <TableCell className={`${classes.cells} ${workOrder.emergency && workOrder.status !== 'Complete' && classes.red2}`}>{moment(workOrder.date_added).calendar()}</TableCell>
                 </TableRow>  
             </>
         );

@@ -68,7 +68,7 @@ class WorkOrdersTable extends Component {
                         <Paper>
                             <Typography variant='h3' className={classes.heading}>{this.props.heading}</Typography>
                             <Typography variant='subtitle1' className={classes.subHeading} >{this.props.description}</Typography>
-                            <Typography variant='subtitle1' className={classes.subHeading} >Rows that are red are EMERGENCY orders</Typography>
+                            <Typography variant='subtitle1' className={classes.subHeading} >{this.props.heading === 'Completed Work Orders'? '':'Rows that are red are EMERGENCY orders'}</Typography>
                             <TableContainer className={classes.root} component={Paper}>
                                 <Table stickyHeader size='medium'>
                                     <TableHead>
