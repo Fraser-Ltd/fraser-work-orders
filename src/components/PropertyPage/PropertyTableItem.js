@@ -5,7 +5,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core';
 
-
 const styles = theme => ({
     root: {
         marginTop: 25,
@@ -52,7 +51,6 @@ class PropertyTableItem extends Component {
             </>
         );
     }
-
 }
 
 export default withStyles(styles, {withTheme:true})(PropertyTableItem);

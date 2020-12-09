@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropertyTableItem from './PropertyTableItem';
 import PropertyDetail from './propertyDetail';
 
-
 //material-ui imports
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -38,7 +37,6 @@ const styles = theme => ({
         '&:hover': { backgroundColor: 'green', color: 'white' }
     },
 });
-
 
 class property extends Component {
 
@@ -83,8 +81,6 @@ class property extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-
-        // simple dispatch for the saga to take care of
         this.props.dispatch({
             type: 'EDIT_PROPERTY',
             payload: this.state
@@ -96,7 +92,6 @@ class property extends Component {
         return (
             <>
                 <Grid container justify='center'>
-
                     <Grid item xs={11}>
                         <Paper>
                             <Typography variant='h3' className={classes.heading}>Current Properties:</Typography>
@@ -117,20 +112,16 @@ class property extends Component {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                          
                         </Paper>
                     </Grid>
                     {!this.state.edit && <PropertyDetail heading='Add Property' edit={this.state.edit} properties={this.state.properties} />}
                     {this.state.edit && <PropertyDetail heading='Edit Property' clearEditProperty={this.clearEditProperty} edit={this.state.edit} properties={this.state.properties} />}  
                 </Grid>
-
             </>
         );
     }
 }
 
 const mapStateToProps = (state) => ({ user: state.user, properties: state.properties })
-
-
 export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(property));
 

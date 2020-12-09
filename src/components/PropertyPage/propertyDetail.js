@@ -56,8 +56,6 @@ const styles = theme => ({
 
 class propertyDetail extends Component {
 
-    // Sets local state for the propertyDetail component
-
     state = {
         propertyName: this.props.properties.propertyName,
         propertyAddress: this.props.properties.propertyAddress,
@@ -66,9 +64,7 @@ class propertyDetail extends Component {
         unit: '',
         unitId: '',
         editUnit: false,
-
     }
-
 
     editUnit = (unitId, unit) => {
         this.setState({
@@ -77,11 +73,6 @@ class propertyDetail extends Component {
             unit: unit,
         })
     }
-
-    //  const id = req.body.id
-    // const propertyName = req.body.property_ID
-    // const unitNumber = req.body.property_Unit
-
 
     saveUnit = (event) => {
         event.preventDefault();
@@ -128,9 +119,9 @@ class propertyDetail extends Component {
         });
         console.log('after component did mount', this.props)
     }
+
     componentDidUpdate() {
         this.propsChange();
-
     }
 
     deleteProperty = (event) => {
@@ -161,15 +152,12 @@ class propertyDetail extends Component {
         }
     }
 
-
-
     handleChange = (event) => {
         console.log('in handleChange', event.target.value)
         this.setState({
             [event.target.name]: event.target.value
         });
     }
-
 
     handleSubmit = (event) => {
         console.log('in handleSubmit', this.state)
@@ -186,8 +174,6 @@ class propertyDetail extends Component {
         });
     }
 
-
-
     render() {
         const { classes } = this.props;
         console.log('property detail props', this.props);
@@ -195,7 +181,6 @@ class propertyDetail extends Component {
 
         return (
             <Grid container justify={this.props.edit ? 'space-evenly' : 'center'}>
-
                 <Grid item xs={11} sm={10} md={4} lg={3}>
                     <Card>
                         <Grid item xs={12} className={classes.heading}>
@@ -268,7 +253,6 @@ class propertyDetail extends Component {
                                         </TableContainer>
                                     </Grid>
                                 </Grid>
-
                                 {this.props.edit && <>
                                     <form onSubmit={this.state.editUnit ? this.saveUnit : this.addUnit}>
                                         <Grid item xs={12}>
