@@ -26,7 +26,7 @@ function* userUpdateSaga(action) {
         yield Axios.put(`/api/edit_user/user`, action.payload);
         yield swal("Success! User Profile Updated.",
             { timer: 1500, buttons: false, icon: 'success' })
-        yield put({ type: 'GET_USERS' })
+        yield put({ type: 'FETCH_USER' })
     } catch (err) {
         console.log('ERROR updating user (userUpdateSaga)', err);
         yield swal("Oops!", 'ERROR updating user (userUpdateSaga)',

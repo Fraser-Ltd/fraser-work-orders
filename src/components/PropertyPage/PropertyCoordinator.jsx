@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
 class propertyCoordinator extends Component {
 
     componentDidMount() {
@@ -16,8 +15,6 @@ class propertyCoordinator extends Component {
         id: this.props.user.id,
     }
 
-
-
     handleChange = (event) => {
         console.log('in handleChange', event.target.value)
         this.setState({
@@ -26,7 +23,6 @@ class propertyCoordinator extends Component {
     }
 
     render() {
-
         const users = this.props.users;
         const {classes} = this.props;
         
@@ -38,10 +34,7 @@ class propertyCoordinator extends Component {
             }
             </>
         )
-
     }
 }
-
-
 
 export default connect()(propertyCoordinator);
