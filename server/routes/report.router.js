@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 // get route to /api/reports/1/2020-12-05/2020-12-10(year-month-day)
-router.get('/:id/:start/:end', (req, res) => {
+router.get('/:id/:start/:end', rejectUnauthenticated, (req, res) => {
     
     let queryText = `SELECT COUNT(*) FROM "work_orders" WHERE "assigned_to" = $1 AND "date_completed" >= $2 AND "date_completed" <= $3;`
 
