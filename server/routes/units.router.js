@@ -67,7 +67,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 
 //  (DELETE)    /api/properties/:id
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
   let queryText = `DELETE FROM "units" WHERE id=$1`;
   pool.query(queryText, [req.params.id])
     .then(result => {
