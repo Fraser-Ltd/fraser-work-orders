@@ -227,7 +227,7 @@ class propertyDetail extends Component {
                         </form>
                     </Card>
                 </Grid>
-                {this.props.units[0] && this.props.edit &&
+                {this.props.units && this.props.edit &&
                     <Grid item xs={11} sm={10} md={4} lg={3}>
                         <Paper>
                             <Grid container direction='column' alignItems='center'>
@@ -240,7 +240,7 @@ class propertyDetail extends Component {
                                                         <TableCell className={classes.tableHeading}>{this.state.propertyName} Units</TableCell>
                                                     </TableRow>
                                                 </TableHead>
-                                                <TableBody>
+                                                { this.props.units[0] && <TableBody>
                                                     {this.props.units.filter(units => units.property_id === this.state.id)
                                                         .map(unit =>
                                                             <TableRow onClick={() => this.editUnit(unit.id, unit.unit)}>
@@ -248,7 +248,7 @@ class propertyDetail extends Component {
                                                                     {unit.unit}
                                                                 </TableCell>
                                                             </TableRow>)}
-                                                </TableBody>
+                                                </TableBody>}
                                             </Table>
                                         </TableContainer>
                                     </Grid>
